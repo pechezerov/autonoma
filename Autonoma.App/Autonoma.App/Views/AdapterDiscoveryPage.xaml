@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Autonoma.App.Views.AdapterDiscoveryPage"
+             Title="{Binding Title}"
+             xmlns:viewmodels="clr-namespace:Autonoma.App.ViewModels"  
+             xmlns:domain="clr-namespace:Autonoma.Domain;assembly=Autonoma.Domain"
+             x:Name="BrowseItemsPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Command="{Binding AddCommand}" />
+        <ToolbarItem Text="Configure" Command="{Binding ConfigureCommand}" />
+        <ToolbarItem Text="Remove" Command="{Binding RemoveCommand}" />
+    </ContentPage.ToolbarItems>
+    <!--
+      x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
+      https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
+    -->
+    <RefreshView x:DataType="viewmodels:AdapterDiscoveryViewModel" Command="{Binding LoadCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <CollectionView x:Name="ItemsListView" ItemsSource="{Binding Items}" SelectionMode="Single" SelectedItem="{Binding SelectedItem}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="10" HeightRequest="30" x:DataType="viewmodels:AdapterDetailsViewModel">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" HorizontalTextAlignment="Start"
+                            Text="{Binding Item.Name}" VerticalTextAlignment="Center" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" FontSize="16" />
+                        <Label Grid.Column="1" HorizontalTextAlignment="Start" VerticalTextAlignment="Center"
+                            Text="{Binding Item.Type}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" FontSize="16" />
+                        <Label Grid.Column="2" HorizontalTextAlignment="Start" VerticalTextAlignment="Center"
+                            Text="{Binding Item.State}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" FontSize="16" />
+                        <StackLayout Grid.Column="3" Orientation="Horizontal">
+                            <Button HeightRequest="30" Padding="5" IsVisible="False" Command="{Binding StartCommand}" Text="Start">
+                                <Button.Triggers>
+                                    <DataTrigger TargetType="Button" Binding="{Binding State}" Value="{x:Static domain:WorkState.Off}">
+                                        <DataTrigger.Setters>
+                                            <Setter Property="IsVisible" Value="True"/>
+                                        </DataTrigger.Setters>
+                                    </DataTrigger>
+                                </Button.Triggers>
+                            </Button>
+                            <Button HeightRequest="30" Padding="5" IsVisible="False" Command="{Binding StopCommand}" Text="Stop">
+                                <Button.Triggers>
+                                    <DataTrigger TargetType="Button" Binding="{Binding State}" Value="{x:Static domain:WorkState.On}">
+                                        <DataTrigger.Setters>
+                                            <Setter Property="IsVisible" Value="True"/>
+                                        </DataTrigger.Setters>
+                                    </DataTrigger>
+                                </Button.Triggers>
+                            </Button>
+                        </StackLayout>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
+</ContentPage>

@@ -1,0 +1,28 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:Autonoma.UI.FrameEditor"
+             xmlns:lcv="using:Autonoma.UI.FrameEditor.Converters"
+             xmlns:pcv="clr-namespace:Autonoma.UI.Presentation.Converters;assembly=Autonoma.UI.Presentation"
+             x:Class="Autonoma.UI.FrameEditor.App">
+    <Application.DataTemplates>
+		<local:EnhancedViewLocator/>
+    </Application.DataTemplates>
+
+	<Application.Styles>
+		<FluentTheme Mode="Light"/>
+		<StyleInclude Source="avares://Dock.Avalonia/Themes/DockFluentTheme.axaml"/>
+		<StyleInclude Source="avares://Autonoma.UI.Presentation/Themes/EditorTheme.axaml" />
+	</Application.Styles>
+
+	<Application.Resources>
+		
+		<pcv:PinToPointConverter x:Key="PinToPointConverter"/>
+		<pcv:IsNullConverter x:Key="IsNullConverter"/>
+		<pcv:InversionConverter x:Key="InversionConverter"/>
+		<pcv:VoltageColorConverter x:Key="VoltageColorConverter"/>
+		<pcv:PinMarginConverter x:Key="PinMarginConverter"/>
+
+		<lcv:ObjectToPropertiesConverter x:Key="ObjectToPropertiesConverter"/>
+
+	</Application.Resources>
+</Application>

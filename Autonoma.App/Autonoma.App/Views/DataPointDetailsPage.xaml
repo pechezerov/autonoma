@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Autonoma.App.Views.DataPointDetailsPage"
+             xmlns:vm="clr-namespace:Autonoma.App.ViewModels"
+             Title="{Binding Title}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Configure" Command="{Binding ConfigureCommand}" />
+        <ToolbarItem Text="Remove" Command="{Binding RemoveCommand}" />
+    </ContentPage.ToolbarItems>
+    <ScrollView>
+        <RefreshView x:DataType="vm:DataPointDetailsViewModel">
+            <StackLayout Spacing="20" Padding="15">
+                
+                <Label Grid.Row="0" HorizontalOptions="Center"
+                    Text="{Binding Item.Name}" FontSize="Large" TextColor="{StaticResource MainTextColor}"/>
+
+                <Grid ColumnSpacing="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="1" Text="{Binding Item.Value, Converter={StaticResource DataValueRepresentationConverter}, FallbackValue='n/a', TargetNullValue='n/a'}" Style="{StaticResource MonitorValueStyle}"/>
+                    <Label Grid.Column="2" Text="{Binding Item.Unit, StringFormat=' {0}', FallbackValue=' '}" Style="{StaticResource MonitorValueStyle}" HorizontalOptions="Start"/>
+                </Grid>
+
+                <Label HorizontalOptions="Center" 
+                    Text="{Binding Item.Value.Timestamp, StringFormat='Timestamp: {0}'}" FontSize="Large" TextColor="{StaticResource MainTextColor}"/>
+
+                <Label HorizontalOptions="Center" 
+                    Text="{Binding Item.Value.Quality, StringFormat='Quality: {0}'}" FontSize="Large" TextColor="{StaticResource MainTextColor}"/>
+            </StackLayout>
+        </RefreshView>
+    </ScrollView>
+</ContentPage>

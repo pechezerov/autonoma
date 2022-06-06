@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Autonoma.App.Views.DataPointDiscoveryPage"
+             xmlns:vm="clr-namespace:Autonoma.App.ViewModels" 
+             xmlns:domain="clr-namespace:Autonoma.Domain;assembly=Autonoma.Domain" 
+             xmlns:selectors="clr-namespace:Autonoma.App.Selectors"
+             Title="{Binding Title}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Create" Command="{Binding CreateCommand}" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="monitoringDataPointTemplate">
+                <ViewCell>
+                    <Grid x:DataType="vm:DataPointDetailsViewModel" HeightRequest="30">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="40"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.RowSpan="2" Grid.Column="0" 
+                                    Text="{Binding Item.Name}" FontAttributes="Bold" FontSize="16" Margin="5,2"
+                                    LineBreakMode="TailTruncation"/>
+                        <Label Grid.Row="1" Grid.Column="0" 
+                                    Text="{Binding Item.Type}" Margin="5,2"/>
+
+                        <ContentView BindingContext="{Binding}" HorizontalOptions="Start" Grid.RowSpan="2" Grid.Column="1" WidthRequest="160">
+                            <ContentView.Triggers>
+                                <DataTrigger TargetType="ContentView"
+                                     Binding="{Binding Item.Source}" Value="{x:Static domain:DataSource.Control}">
+                                    <Setter Property="IsVisible" Value="False" />
+                                </DataTrigger>
+                            </ContentView.Triggers>
+                            <ContentView.Content>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label HorizontalOptions="EndAndExpand" 
+                                           MaxLines="1"
+                                        Text="{Binding Item.Value, Converter={StaticResource DataValueRepresentationConverter}, FallbackValue='n/a', TargetNullValue='n/a'}"
+                                        FontAttributes="Bold" FontSize="24" VerticalTextAlignment="Center" HorizontalTextAlignment="Right" Margin="5,2" />
+                                    <Label WidthRequest="30"
+                                        Text="{Binding Item.Unit, FallbackValue='', TargetNullValue=''}"
+                                        FontSize="18" VerticalTextAlignment="Center" HorizontalTextAlignment="End" Margin="5,5,10,0" />
+                                </StackLayout>
+                            </ContentView.Content>
+                        </ContentView>
+
+                        <Label Grid.RowSpan="2" Grid.Column="2" 
+                                    Text="{Binding Item.Value.Quality}" TextColor="{StaticResource Primary}" VerticalTextAlignment="Center" Margin="5,8,0,0"/>
+
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                        NumberOfTapsRequired="1"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:DataPointDiscoveryViewModel}}, Path=SelectCommand}"		
+                                        CommandParameter="{Binding}">
+                            </TapGestureRecognizer>
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+            <DataTemplate x:Key="controlDataPointTemplate">
+                <ViewCell>
+                    <Grid x:DataType="vm:DataPointDetailsViewModel" HeightRequest="30">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="40"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.RowSpan="2" Grid.Column="0" 
+                                    Text="{Binding Item.Name}" FontAttributes="Bold" FontSize="16" Margin="5,2"
+                                    LineBreakMode="TailTruncation"/>
+                        <Label Grid.Row="1" Grid.Column="0" 
+                                    Text="{Binding Item.Type}" Margin="5,2"/>
+
+                        <StackLayout Grid.Column="1" Grid.RowSpan="2" Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="Start" WidthRequest="160">
+                            <Button Text="On" HeightRequest="30" Padding="5" />
+                            <Button Text="Off" HeightRequest="30" Padding="5" />
+                        </StackLayout>
+                        
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                        NumberOfTapsRequired="1"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:DataPointDiscoveryViewModel}}, Path=SelectCommand}"		
+                                        CommandParameter="{Binding}">
+                            </TapGestureRecognizer>
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+            <selectors:DataPointDataTemplateSelector x:Key="DataPointDataTemplateSelector"
+                MonitoringTemplate="{StaticResource monitoringDataPointTemplate}"
+                ControlTemplate="{StaticResource controlDataPointTemplate}" />
+        </ResourceDictionary>
+
+    </ContentPage.Resources>
+    <RefreshView x:DataType="vm:DataPointDiscoveryViewModel" Command="{Binding LoadCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+
+        <ListView x:Name="dataPointsListView"
+                ItemsSource="{Binding DataPoints}"
+                SelectionMode="None" ItemTemplate="{StaticResource DataPointDataTemplateSelector}">
+        </ListView>
+
+    </RefreshView>
+</ContentPage>

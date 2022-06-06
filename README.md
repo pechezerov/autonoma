@@ -1,15 +1,7 @@
-# Pretty Screen
+﻿# Autonoma
 ------
 
-A small SCADA application built with Xamarin.
-
-
-## Built with
-* [Pancake View](https://github.com/sthewissen/Xamarin.Forms.PancakeView)
-* [Xamarin.Essentials](https://docs.microsoft.com/xamarin/essentials/)
-* [Xamarin.Forms](http://xamarin.com/forms)
-
-
-## Misc
+Распределённая система диспетчеризации на базе .NET Core / SignalR / Avalonia.
+Упор сделан на кроссплатформенность как серверных, так и клиентских компонентов.
 
 Licenses under MIT

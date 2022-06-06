@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Autonoma.Communication.ModbusTCP.Client": {
+      "commandName": "Project",
+      "commandLineArgs": "-I 31 -M \"http:\\\\localhost:5000\""
+    }
+  }
+}

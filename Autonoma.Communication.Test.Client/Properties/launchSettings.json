@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Autonoma.Communication.Test.Client": {
+      "commandName": "Project",
+      "commandLineArgs": "-I 2 -M \"http:\\\\localhost:5000\""
+    }
+  }
+}

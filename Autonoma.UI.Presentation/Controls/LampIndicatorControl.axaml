@@ -1,0 +1,17 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             x:Class="Autonoma.UI.Presentation.Controls.LampIndicatorControl"
+			 xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+             xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+			 mc:Ignorable="d" d:DesignWidth="50" d:DesignHeight="50"
+			 Background="Transparent">
+        <Viewbox>
+			<Grid>
+				<Ellipse Fill="#666" Width="100" Height="100"/>
+				<Ellipse Fill="#333" Width="85" Height="85"/>
+				<Ellipse x:Name="light_body" Width="70" Height="70" Fill="{Binding IndicationBrush, FallbackValue=#444}"/>
+			</Grid>
+		</Viewbox>
+</UserControl>

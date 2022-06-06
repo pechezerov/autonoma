@@ -1,0 +1,101 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Autonoma.UI.Operation.ViewModels"
+        xmlns:pvm="using:Autonoma.UI.Presentation.ViewModels"
+        xmlns:pv="using:Autonoma.UI.Presentation.Views"
+		xmlns:local="using:Autonoma.UI.Operation.Controls"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="1080"
+        x:Class="Autonoma.UI.Operation.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Autonoma.UI.Operation">
+	
+	<Window.Styles>
+		<!-- Цветовые стили -->
+		<Style Selector="Grid.main">
+			<Setter Property="Background" Value="Gray"/>
+		</Style>
+		<Style Selector="ListBox.main">
+			<Setter Property="Background" Value="Gray"/>
+		</Style>
+		
+	</Window.Styles>
+	
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="140"/>
+			<RowDefinition Height="20"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="100"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="300"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+
+		<Grid x:Name="headerPanel" Grid.Row="0" Grid.Column="0"
+			  Classes="main">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="110"/>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="110"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			
+			<Rectangle x:Name="titleLogo" Grid.Row="0" Height="100" Width="100" Fill="Black" Margin="5"/>
+			<local:DigitalClock x:Name="titleClock" Grid.Row="1"/>
+
+			<Rectangle Grid.Row="1" Grid.Column="1"/>
+			<Rectangle Grid.Row="0" Grid.Column="1"/>
+		</Grid>
+		
+		<Grid x:Name="headerMenu" Grid.Row="0" Grid.Column="1"
+			  Classes="main">
+			<ListBox Items="{Binding Frames}" SelectedItem="{Binding SelectedFrame}"
+					 Classes="main">
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<Grid Margin="-3">
+							<Border BorderBrush="Black" BorderThickness="0.5"
+									Margin="0 0 -5 -5" Padding="4 5"
+									VerticalAlignment="Center">
+								<TextBlock Text="{Binding Title}" Width="300" Height="25"
+										   VerticalAlignment="Center"/>
+							</Border>
+						</Grid>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+				<ListBox.ItemsPanel>
+					<ItemsPanelTemplate>
+						<WrapPanel/>
+					</ItemsPanelTemplate>
+				</ListBox.ItemsPanel>
+			</ListBox>
+		</Grid>
+
+		<Grid x:Name="breadCrumbs" Grid.Row="1" Grid.ColumnSpan="2"
+			  Classes="main">
+			<TextBlock DataContext="{Binding SelectedFrame}" Text="{Binding Title}" 
+					   VerticalAlignment="Center" HorizontalAlignment="Left"/>
+		</Grid>
+
+		<Grid x:Name="frameArea" Grid.Row="2" Grid.ColumnSpan="2"
+			  Classes="main">
+			<pv:FrameView DataContext="{Binding SelectedFrame}"/>
+		</Grid>
+
+		<Grid x:Name="footerMenu" Grid.Row="3" Grid.ColumnSpan="2"
+			  Classes="main">
+		
+		</Grid>
+		
+	</Grid>
+
+</Window>

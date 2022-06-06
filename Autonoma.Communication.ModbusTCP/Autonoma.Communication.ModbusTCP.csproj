@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NModbus" Version="3.0.72" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Autonoma.Communication\Autonoma.Communication.csproj" />
+    <ProjectReference Include="..\Autonoma.Domain\Autonoma.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

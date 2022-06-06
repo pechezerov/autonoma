@@ -1,0 +1,68 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="0.10.12" />
+    <PackageReference Include="Avalonia.Controls.PanAndZoom" Version="10.12.0" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.10.12" />
+    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.12" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.12" />
+    <PackageReference Include="Avalonia.Xaml.Behaviors" Version="0.10.12.2" />
+    <PackageReference Include="Avalonia.Xaml.Interactivity" Version="0.10.12.2" />
+    <PackageReference Include="ReactiveUI.Fody" Version="18.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Autonoma.Domain.Electric\Autonoma.Domain.Electric.csproj" />
+    <ProjectReference Include="..\Autonoma.Domain\Autonoma.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaXaml Update="Controls\Electric\SwitchControl.axaml">
+      <SubType>Designer</SubType>
+    </AvaloniaXaml>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Controls\DigitalIndicatorControl.axaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\Electric\GeneratorControl.axaml.cs">
+      <DependentUpon>GeneratorControl.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\Electric\GroundControl.axaml.cs">
+      <DependentUpon>GroundControl.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\Electric\DisconnectorControl.axaml.cs">
+      <DependentUpon>DisconnectorControl.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\Electric\SwitchControl.axaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>SwitchControl.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\LampIndicatorControl.axaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\LooklessControl.axaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="Views\FrameView.axaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="Views\FrameView.axaml.cs">
+      <DependentUpon>FrameView.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Views\FrameView.axaml">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+
+</Project>

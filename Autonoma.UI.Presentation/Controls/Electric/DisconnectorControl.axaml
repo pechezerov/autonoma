@@ -1,0 +1,62 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:ed="clr-namespace:Autonoma.Domain.Electric;assembly=Autonoma.Domain.Electric"
+			 xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+             xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+             x:Class="Autonoma.UI.Presentation.Controls.Electric.DisconnectorControl"
+			 mc:Ignorable="d" d:DesignWidth="25" d:DesignHeight="50"
+			 Background="Transparent">
+        <Viewbox>
+
+			<i:Interaction.Behaviors>
+				<ia:DataTriggerBehavior Binding="{Binding Position}" ComparisonCondition="Equal" Value="{x:Static ed:SwitchPosition.On}">
+					<ia:ChangePropertyAction TargetObject="{Binding #switch_body}" PropertyName="Fill" Value="{Binding #switch_body.Stroke}"/>
+				</ia:DataTriggerBehavior>
+				<ia:DataTriggerBehavior Binding="{Binding Position}" ComparisonCondition="Equal" Value="{x:Static ed:SwitchPosition.Error}">
+					<ia:ChangePropertyAction TargetObject="{Binding #breaked_body}" PropertyName="IsVisible" Value="True"/>
+				</ia:DataTriggerBehavior>
+				<ia:DataTriggerBehavior Binding="{Binding Position}" ComparisonCondition="Equal" Value="{x:Static ed:SwitchPosition.Unknown}">
+					<ia:ChangePropertyAction TargetObject="{Binding #unknown_body}" PropertyName="IsVisible" Value="True"/>
+				</ia:DataTriggerBehavior>
+			</i:Interaction.Behaviors>
+
+			<Grid VerticalAlignment="Top" Width="25" Height="50">
+
+				<Line x:Name="switch_body" Margin="0" StartPoint="0,25" EndPoint="25,25"
+					  StrokeThickness="2">
+					<Line.Stroke>
+						<MultiBinding Converter="{StaticResource VoltageColorConverter}">
+							<MultiBinding.Bindings>
+								<Binding Path="VoltageState" />
+								<Binding Path="GroundState" />
+								<Binding Path="VoltageClass" />
+								<Binding Path="Position" />
+							</MultiBinding.Bindings>
+						</MultiBinding>
+					</Line.Stroke>
+				</Line>
+				
+				<Label x:Name="unknown_body"
+					HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center"
+					Content="?" FontSize="30"
+					IsVisible="False"/>
+					
+				<Rectangle x:Name="breaked_body" Width="3" Height="75"
+						HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.48,0.48" 
+						Fill="Red" IsVisible="False">
+					<Rectangle.RenderTransform>
+						<TransformGroup>
+							<ScaleTransform/>
+							<SkewTransform/>
+							<RotateTransform Angle="45"/>
+							<TranslateTransform/>
+						</TransformGroup>
+					</Rectangle.RenderTransform>
+				</Rectangle>
+
+			</Grid>
+
+		</Viewbox>
+</UserControl>

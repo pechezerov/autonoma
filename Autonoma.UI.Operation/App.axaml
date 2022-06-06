@@ -1,0 +1,19 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:Autonoma.UI.Operation"
+             xmlns:converters="using:Autonoma.UI.Operation.Converters"
+             xmlns:presentation="clr-namespace:Autonoma.UI.Presentation;assembly=Autonoma.UI.Presentation"
+             x:Class="Autonoma.UI.Operation.App">
+	<Application.DataTemplates>
+		<presentation:ViewLocator/>
+	</Application.DataTemplates>
+
+    <Application.Styles>
+        <FluentTheme Mode="Light"/>
+    </Application.Styles>
+
+	<Application.Resources>
+		<converters:IndicationColorConverter x:Key="IndicationColorConverter"/>
+	</Application.Resources>
+
+</Application>

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:Autonoma.App.ViewModels"
+             x:Class="Autonoma.App.Views.AdapterDetailsPage"
+             Title="{Binding Title}">
+    
+    <ScrollView x:DataType="viewmodels:AdapterDetailsViewModel">
+        <StackLayout Spacing="20" Padding="15">
+            <Label Text="Name:" FontSize="Medium" />
+            <Entry Text="{Binding Item.Name}" FontSize="Small"/>
+            <Label Text="Type:" FontSize="Medium" />
+            <Picker Title="Select type"
+                    ItemsSource="{Binding AllTypes}"
+                    SelectedItem="{Binding Item.Type}"/>
+
+            <Label Text="IP address:" FontSize="Medium" />
+            <Entry Text="{Binding Item.IpAddress}" FontSize="Small"/>
+            <Label Text="Port:" FontSize="Medium" />
+            <Entry Text="{Binding Item.Port}" FontSize="Small"/>
+
+            <Label Text="Address:" FontSize="Medium" />
+            <Entry Text="{Binding Item.Address}" FontSize="Small"/>
+
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Cancel" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
+                <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>
