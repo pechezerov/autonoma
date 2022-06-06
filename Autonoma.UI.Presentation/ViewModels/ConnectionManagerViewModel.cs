@@ -1,4 +1,4 @@
-﻿namespace Autonoma.UI.FrameEditor.Views.Tools
+﻿namespace Autonoma.UI.Presentation.ViewModels
 {
     public class ConnectionManagerViewModel
     {

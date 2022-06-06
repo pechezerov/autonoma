@@ -1,7 +1,6 @@
 using Autonoma.UI.FrameEditor.Services.ServiceBus.Messages;
 using Autonoma.UI.FrameEditor.ViewModels.Documents;
 using Autonoma.UI.FrameEditor.ViewModels.Tools;
-using Autonoma.UI.FrameEditor.Views.Tools;
 using Autonoma.UI.Presentation.Abstractions;
 using Autonoma.UI.Presentation.Model;
 using Autonoma.UI.Presentation.Services;
@@ -34,7 +33,7 @@ namespace Autonoma.UI.FrameEditor.ViewModels
         protected IList<Tool> _tools;
         protected IList<DocumentViewModel> _documents;
 
-        #region
+        #region Commands
 
         public ICommand? NewCommand { get; }
 
@@ -147,7 +146,7 @@ namespace Autonoma.UI.FrameEditor.ViewModels
                 if (CurrentDocument == null)
                     return;
                 var taskPath = new SaveFileDialog().ShowAsync((Avalonia.Application.Current!.ApplicationLifetime! as IClassicDesktopStyleApplicationLifetime)!.MainWindow);
-                var frameData = serializer.Serialize(CurrentDocument);
+                var frameData = _serializer.Serialize(CurrentDocument);
                 var path = await taskPath;
                 if (path != null)
                     File.WriteAllText(path, frameData);
@@ -161,7 +160,7 @@ namespace Autonoma.UI.FrameEditor.ViewModels
                 var path = await taskPath;
                 if (path != null)
                 {
-                    var frameData = serializer.Serialize(CurrentDocument.Frame);
+                    var frameData = _serializer.Serialize(CurrentDocument.Frame);
                     File.WriteAllText(path, frameData);
                 }
             });

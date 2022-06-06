@@ -2,7 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace Autonoma.UI.FrameEditor.Views
+namespace Autonoma.UI.Presentation.Views
 {
     public partial class ConnectionManager : UserControl
     {

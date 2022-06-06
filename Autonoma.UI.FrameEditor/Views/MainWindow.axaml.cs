@@ -1,6 +1,7 @@
 using Autonoma.UI.FrameEditor.ViewModels;
-using Autonoma.UI.FrameEditor.Views.Tools;
 using Autonoma.UI.Presentation.Model;
+using Autonoma.UI.Presentation.ViewModels;
+using Autonoma.UI.Presentation.Views;
 using Avalonia;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
