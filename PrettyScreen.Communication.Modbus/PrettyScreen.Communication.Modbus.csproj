@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NModbus" Version="3.0.62" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PrettyScreen.Core\PrettyScreen.Core.csproj" />
+  </ItemGroup>
+
+</Project>

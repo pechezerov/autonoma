@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:PrettyScreen.App.ViewModels"
+             x:Class="PrettyScreen.App.Views.DataPointConfigurationPage"
+             Title="{Binding Title}">
+
+    <ScrollView>
+        <StackLayout Spacing="20" Padding="15">
+            <Label Text="Name:" FontSize="Medium" />
+            <Entry Text="{Binding Edited.Name}" FontSize="Small"/>
+            <Label Text="Type:" FontSize="Medium" />
+            <Picker Title="Select type"
+                    ItemsSource="{Binding AllTypes}"
+                    SelectedItem="{Binding Edited.Type}"/>
+
+            <Label Text="Source:" FontSize="Medium" />
+            <Picker Title="Select source type"
+                    ItemsSource="{Binding AllSourceTypes}"
+                    SelectedItem="{Binding Edited.Source}"/>
+            <Label Text="Adapter:" FontSize="Medium" />
+            <Picker Title="Select adapter"
+                    ItemsSource="{Binding AllAdapters}"
+                    SelectedItem="{Binding Adapter, Mode=TwoWay}"/>
+
+            <Label Text="Mapping:" FontSize="Medium" />
+            <Entry Text="{Binding Edited.Mapping}" FontSize="Small"/>
+
+            <Label Text="Unit:" FontSize="Medium" />
+            <Entry Text="{Binding Edited.Unit}" FontSize="Small"/>
+
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Cancel" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
+                <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>
