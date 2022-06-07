@@ -5,5 +5,6 @@ namespace Autonoma.Domain.Abstractions
 {
     public interface IDataAdapter : IHostedService, IUnique, IDisposable
     {
+        WorkState State { get; }
     }
 }

@@ -46,21 +46,21 @@ namespace Autonoma.UI.Presentation.ViewModels
             this.WhenAnyValue(x => x.Start)
                 .Subscribe(start =>
                 {
-                    if (start?.Parent is { })
+                    if (start?.Parent is not null)
                     {
                         start.Parent.WhenAnyValue(x => x.X).Subscribe(_ => this.RaisePropertyChanged(nameof(Start)));
                         start.Parent.WhenAnyValue(x => x.Y).Subscribe(_ => this.RaisePropertyChanged(nameof(Start)));
                     }
                     else
                     {
-                        if (start is { })
+                        if (start is not null)
                         {
                             start.WhenAnyValue(x => x.X).Subscribe(_ => this.RaisePropertyChanged(nameof(Start)));
                             start.WhenAnyValue(x => x.Y).Subscribe(_ => this.RaisePropertyChanged(nameof(Start)));
                         }
                     }
 
-                    if (start is { })
+                    if (start is not null)
                     {
                         start.WhenAnyValue(x => x.Alignment).Subscribe(_ => this.RaisePropertyChanged(nameof(Start)));
                     }
@@ -69,21 +69,21 @@ namespace Autonoma.UI.Presentation.ViewModels
             this.WhenAnyValue(x => x.End)
                 .Subscribe(end =>
                 {
-                    if (end?.Parent is { })
+                    if (end?.Parent is not null)
                     {
                         end.Parent.WhenAnyValue(x => x.X).Subscribe(_ => this.RaisePropertyChanged(nameof(End)));
                         end.Parent.WhenAnyValue(x => x.Y).Subscribe(_ => this.RaisePropertyChanged(nameof(End)));
                     }
                     else
                     {
-                        if (end is { })
+                        if (end is not null)
                         {
                             end.WhenAnyValue(x => x.X).Subscribe(_ => this.RaisePropertyChanged(nameof(End)));
                             end.WhenAnyValue(x => x.Y).Subscribe(_ => this.RaisePropertyChanged(nameof(End)));
                         }
                     }
 
-                    if (end is { })
+                    if (end is not null)
                     {
                         end.WhenAnyValue(x => x.Alignment).Subscribe(_ => this.RaisePropertyChanged(nameof(End)));
                     }

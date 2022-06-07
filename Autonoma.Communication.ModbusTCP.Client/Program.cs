@@ -4,20 +4,16 @@ using Autonoma.Communication.Hosting;
 using Autonoma.Communication.Hosting.Remote;
 using Autonoma.Communication.Infrastructure;
 using Autonoma.Communication.Modbus;
-using Autonoma.Configuration;
 using Autonoma.Core.Infrastructure;
 using Autonoma.Domain.Entities;
 using IO.Swagger.Api;
-using IO.Swagger.Client;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Autonoma.Communication.ModbusTCP.Client
 {
@@ -30,6 +26,14 @@ namespace Autonoma.Communication.ModbusTCP.Client
                  { "-I", "AdapterRunSettings:AdapterId" },
                  { "-M", "AdapterRunSettings:MainApiUrl" }
              };
+
+            var cts = new CancellationTokenSource();
+            Console.CancelKeyPress += (s, e) =>
+            {
+                Console.WriteLine("Canceling...");
+                cts.Cancel();
+                e.Cancel = true;
+            };
 
             var appConfiguration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
@@ -44,20 +48,30 @@ namespace Autonoma.Communication.ModbusTCP.Client
                 .ConfigureServices((_, services) =>
                     // configuration file
                     services.AddSingleton<IConfiguration>(appConfiguration)
-                            .AddCustomDbContext(appConfiguration)
                             // mapper configuration modules
                             .AddSingleton<IMapperConfiguration, ContractMapperConfiguration>()
                             // mapper configuration module registration method
                             .AddSingleton<AdapterConfiguration>(provider =>
                             {
-                                var mapper = provider
-                                    .GetRequiredService<IMapper>();
-                                var adapterConfigurationApi = provider
-                                    .GetRequiredService<IAdaptersConfigurationApi>();
-                                var adapterConfigurationResult = adapterConfigurationApi
-                                    .AdaptersConfigurationIdGet(adapterId);
-                                var adapterConfiguration = mapper.Map<AdapterConfiguration>(adapterConfigurationResult.Adapter);
-                                return adapterConfiguration;
+                                while (!cts.IsCancellationRequested)
+                                {
+                                    try
+                                    {
+                                        var mapper = provider.GetRequiredService<IMapper>();
+                                        var adapterConfigurationApi = provider
+                                            .GetRequiredService<IAdaptersConfigurationApi>();
+                                        var adapterConfigurationResult = adapterConfigurationApi
+                                            .AdaptersConfigurationIdGet(adapterId);
+                                        var adapterConfiguration = mapper.Map<AdapterConfiguration>(adapterConfigurationResult.Adapter);
+                                        Console.WriteLine("Подключение установлено");
+                                        return adapterConfiguration;
+                                    }
+                                    catch (Exception)
+                                    {
+                                        Console.WriteLine("Не удалось подключиться к серверу, ожидание...");
+                                    }
+                                }
+                                throw new TaskCanceledException();
                             })
                             // mapper configuration module registration method
                             .AddSingleton<IMapper>(provider =>
@@ -82,7 +96,19 @@ namespace Autonoma.Communication.ModbusTCP.Client
             using IServiceScope serviceScope = host.Services.CreateScope();
             IServiceProvider provider = serviceScope.ServiceProvider;
 
-            var modbusClient = provider.GetRequiredService<ModbusClient>();
+            while (!cts.IsCancellationRequested)
+            {
+                try
+                {
+                    var modbusClient = provider.GetRequiredService<ModbusClient>();
+                    var workTask = modbusClient.StartAsync(cts.Token);
+                    Task.WaitAll(new[] { workTask });
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Не удалось подключиться к серверу, ожидание...");
+                }
+            }
         }
     }
 }

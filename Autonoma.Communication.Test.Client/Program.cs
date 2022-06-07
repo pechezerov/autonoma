@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Autonoma.Communication.Test.Client
@@ -19,6 +20,14 @@ namespace Autonoma.Communication.Test.Client
     {
         static async Task Main(string[] args)
         {
+            var cts = new CancellationTokenSource();
+            Console.CancelKeyPress += (s, e) =>
+            {
+                Console.WriteLine("Canceling...");
+                cts.Cancel();
+                e.Cancel = true;
+            };
+
             var commandLineSwitchMappings = new Dictionary<string, string>()
              {
                  { "-I", "AdapterRunSettings:AdapterId" },
@@ -38,7 +47,6 @@ namespace Autonoma.Communication.Test.Client
                 .ConfigureServices((_, services) =>
                     // configuration file
                     services.AddSingleton<IConfiguration>(appConfiguration)
-                            .AddCustomDbContext(appConfiguration)
                             // mapper configuration modules
                             .AddSingleton<IMapperConfiguration, ContractMapperConfiguration>()
                             // mapper configuration module registration method
@@ -54,7 +62,7 @@ namespace Autonoma.Communication.Test.Client
                             // adapter configuration
                             .AddSingleton<AdapterConfiguration>(provider =>
                             {
-                                while (true)
+                                while (!cts.IsCancellationRequested)
                                 {
                                     try
                                     {
@@ -73,6 +81,7 @@ namespace Autonoma.Communication.Test.Client
                                         Console.WriteLine("Не удалось подключиться к серверу, ожидание...");
                                     }
                                 }
+                                throw new TaskCanceledException();
                             })
 
                             // communication services
@@ -89,7 +98,7 @@ namespace Autonoma.Communication.Test.Client
             using IServiceScope serviceScope = host.Services.CreateScope();
             IServiceProvider provider = serviceScope.ServiceProvider;
 
-            await host.RunAsync();
+            await host.RunAsync(cts.Token);
         }
     }
 }

@@ -135,9 +135,9 @@ namespace Autonoma.UI.Presentation.ViewModels
 
         public void CancelConnector()
         {
-            if (_connector is { })
+            if (_connector is not null)
             {
-                if (Connectors is { })
+                if (Connectors is not null)
                 {
                     Connectors.Remove(_connector);
                 }
@@ -168,7 +168,7 @@ namespace Autonoma.UI.Presentation.ViewModels
                 var x = pin.X;
                 var y = pin.Y;
 
-                if (pin.Parent is { })
+                if (pin.Parent is not null)
                 {
                     x += pin.Parent.X;
                     y += pin.Parent.Y;
@@ -226,7 +226,7 @@ namespace Autonoma.UI.Presentation.ViewModels
 
         public bool IsConnectorMoving()
         {
-            if (_connector is { })
+            if (_connector is not null)
                 return true;
 
             return false;
@@ -234,7 +234,7 @@ namespace Autonoma.UI.Presentation.ViewModels
 
         public bool IsPinConnected(IPin pin)
         {
-            if (Connectors is { })
+            if (Connectors is not null)
             {
                 foreach (var connector in Connectors)
                 {
@@ -254,7 +254,7 @@ namespace Autonoma.UI.Presentation.ViewModels
 
         public virtual bool CanSelectConnectors()
         {
-            if (_connector is { })
+            if (_connector is not null)
             {
                 return false;
             }
@@ -264,7 +264,7 @@ namespace Autonoma.UI.Presentation.ViewModels
 
         public virtual bool CanSelectNodes()
         {
-            if (_connector is { })
+            if (_connector is not null)
             {
                 return false;
             }
@@ -375,7 +375,7 @@ namespace Autonoma.UI.Presentation.ViewModels
 
             _clipboard = _serializer.Serialize(clipboard);
 
-            if (clipboard.SelectedNodes is { })
+            if (clipboard.SelectedNodes is not null)
             {
                 foreach (var node in clipboard.SelectedNodes)
                 {
@@ -386,7 +386,7 @@ namespace Autonoma.UI.Presentation.ViewModels
                 }
             }
 
-            if (clipboard.SelectedConnectors is { })
+            if (clipboard.SelectedConnectors is not null)
             {
                 foreach (var connector in clipboard.SelectedConnectors)
                 {

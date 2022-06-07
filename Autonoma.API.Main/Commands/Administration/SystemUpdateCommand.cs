@@ -18,10 +18,11 @@ namespace Autonoma.API.Main.Commands.Administration
 
         public override async Task ExecuteAsync(SystemUpdateCommand command)
         {
+            throw new NotImplementedException();
+
             var adapters = _uow.AdapterRepository.AllIncludeAsQueryable(a => a.AdapterTypeId);
             foreach (var adapter in adapters)
             {
-                throw new NotImplementedException();
             }
 
             await Task.CompletedTask;

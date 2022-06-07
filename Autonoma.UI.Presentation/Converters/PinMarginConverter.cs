@@ -8,7 +8,7 @@ namespace Autonoma.UI.Presentation.Converters
 {
     public class PinMarginConverter : IValueConverter
     {
-        public static PinMarginConverter Instance = new();
+        public readonly static PinMarginConverter Instance = new();
 
         public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {

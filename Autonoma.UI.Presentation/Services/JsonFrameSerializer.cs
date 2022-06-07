@@ -47,9 +47,9 @@ namespace Autonoma.UI.Presentation.Services
             return JsonConvert.SerializeObject(value, _settings);
         }
 
-        public T? Deserialize<T>(string text)
+        public T? Deserialize<T>(string data)
         {
-            var result = JsonConvert.DeserializeObject<T>(text, _settings);
+            var result = JsonConvert.DeserializeObject<T>(data, _settings);
             return result;
         }
     }

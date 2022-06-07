@@ -12,17 +12,6 @@ namespace Autonoma.API
 {
     public static class StartupBusinnessExtensions
     {
-		public static void AddCustomDbContext(this IServiceCollection services, IConfiguration configuration)
-		{
-			string cs = configuration.GetConnectionString("ConfigurationDatabase");
-			services.AddDbContext<ConfigurationContext>(cfg =>
-			{
-				cfg.UseSqlite(cs)
-					.UseLoggerFactory(LoggerFactory.Create(builder => { builder.AddConsole(); }))
-					.EnableSensitiveDataLogging();
-			});
-		}
-
 		public static void AddBusinessServices(this IServiceCollection services, IConfiguration configuration)
         {
 			services

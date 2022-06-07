@@ -20,7 +20,7 @@ namespace Autonoma.UI.Presentation.Behaviors
         {
             base.OnAttached();
 
-            if (AssociatedObject is { })
+            if (AssociatedObject is not null)
             {
                 _isEditModeDisposable = AssociatedObject.GetObservable(FrameControl.IsEditModeProperty)
                     .Subscribe(x =>
@@ -67,9 +67,9 @@ namespace Autonoma.UI.Presentation.Behaviors
         {
             base.OnDetaching();
 
-            if (AssociatedObject is { })
+            if (AssociatedObject is not null)
             {
-                if (_drawingNodePropertyChanged is { })
+                if (_drawingNodePropertyChanged is not null)
                 {
                     _drawingNodePropertyChanged.PropertyChanged -= DrawingNode_PropertyChanged;
                 }
@@ -88,7 +88,7 @@ namespace Autonoma.UI.Presentation.Behaviors
 
             if (e.PropertyName == nameof(IFrame.SelectedNodes) || e.PropertyName == nameof(IFrame.SelectedConnectors))
             {
-                if (_frame is { })
+                if (_frame is not null)
                 {
                     if (_frame.SelectedNodes is { Count: > 0 } || _frame.SelectedConnectors is { Count: > 0 })
                     {

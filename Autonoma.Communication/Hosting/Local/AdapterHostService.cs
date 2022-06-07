@@ -43,7 +43,10 @@ namespace Autonoma.Communication.Hosting.Local
 
             var existingAdapter = Adapters.FirstOrDefault(a => a.Id == adapterConfiguration.Id);
             if (existingAdapter != null)
+            {
+                initialState = existingAdapter.State;
                 await DeleteAdapter(adapterConfiguration.Id);
+            }
 
             // create adapter
             var newAdapter = CreateAdapter(adapterConfiguration);

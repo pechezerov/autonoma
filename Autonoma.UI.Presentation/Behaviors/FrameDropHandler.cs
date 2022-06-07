@@ -38,7 +38,7 @@ namespace Autonoma.UI.Presentation.Behaviors
 
                 if (bExecute)
                 {
-                    if (text is { })
+                    if (text is not null)
                     {
                         // TODO: text
                     }
@@ -58,7 +58,7 @@ namespace Autonoma.UI.Presentation.Behaviors
                             if (bExecute)
                             {
                                 var node = drawing.Clone(template.Template);
-                                if (node is { })
+                                if (node is not null)
                                 {
                                     node.Parent = drawing;
                                     node.Move(point.X, point.Y);

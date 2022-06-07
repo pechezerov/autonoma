@@ -1,5 +1,6 @@
 ﻿using Autonoma.Communication.Hosting;
 using Autonoma.Communication.Modbus;
+using Autonoma.Core;
 using Autonoma.Domain;
 using Autonoma.Domain.Entities;
 using System;
@@ -13,8 +14,11 @@ namespace Autonoma.Communication.Test.Client
     public class TestClient : DataAdapterBase<TestClientConfiguration>
     {
         private WorkState _state;
-        public override int AdapterTypeId => 2;
+
+        public override int AdapterTypeId => Globals.TestAdapterTypeId;
+
         public Random Randomizer { get; }
+
         public override WorkState State => _state;
 
         public TestClient(IDataPointService dps, AdapterConfiguration config) : base(dps, config)
@@ -22,7 +26,7 @@ namespace Autonoma.Communication.Test.Client
             Randomizer = new Random(DateTime.Now.Millisecond);
         }
 
-        protected override async Task ExecuteAsync(System.Threading.CancellationToken cancellationToken)
+        protected override async Task ExecuteAsync(CancellationToken cancellationToken)
         {
             _state = WorkState.On;
 
@@ -34,7 +38,7 @@ namespace Autonoma.Communication.Test.Client
                     await EmitTestData();
                     await Task.Delay(1000);
                 }
-                catch (Exception exception)
+                catch (Exception)
                 {
                 }
             }

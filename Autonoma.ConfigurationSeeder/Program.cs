@@ -3,6 +3,7 @@ using Autonoma.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System;
 
 namespace Autonoma.ConfigurationSeeder
@@ -20,7 +21,7 @@ namespace Autonoma.ConfigurationSeeder
                    {
                        // configuration file
                        services.AddSingleton<IConfiguration>(appConfiguration)
-                               .AddCustomDbContext(appConfiguration);
+                               .AddCustomDbContext(appConfiguration, LoggerFactory.Create(builder => { builder.AddConsole(); }));
                    })
                 .Build();
 

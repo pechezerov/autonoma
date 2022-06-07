@@ -1,6 +1,4 @@
 ﻿using Autonoma.UI.FrameEditor.ViewModels;
-using Autonoma.UI.Presentation.Infrastructure;
-using Autonoma.UI.Presentation.Services;
 using System.Linq;
 
 namespace Autonoma.UI.FrameEditor.Design

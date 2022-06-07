@@ -48,7 +48,7 @@ namespace Autonoma.UI.Presentation
 
             var p0X = start.X;
             var p0Y = start.Y;
-            if (start.Parent is { })
+            if (start.Parent is not null)
             {
                 p0X += start.Parent.X;
                 p0Y += start.Parent.Y;
@@ -56,7 +56,7 @@ namespace Autonoma.UI.Presentation
 
             var p3X = end.X;
             var p3Y = end.Y;
-            if (end.Parent is { })
+            if (end.Parent is not null)
             {
                 p3X += end.Parent.X;
                 p3Y += end.Parent.Y;
@@ -105,7 +105,7 @@ namespace Autonoma.UI.Presentation
 
             var p0X = start.X;
             var p0Y = start.Y;
-            if (start.Parent is { })
+            if (start.Parent is not null)
             {
                 p0X += start.Parent.X;
                 p0Y += start.Parent.Y;
@@ -113,7 +113,7 @@ namespace Autonoma.UI.Presentation
 
             var p3X = end.X;
             var p3Y = end.Y;
-            if (end.Parent is { })
+            if (end.Parent is not null)
             {
                 p3X += end.Parent.X;
                 p3Y += end.Parent.Y;

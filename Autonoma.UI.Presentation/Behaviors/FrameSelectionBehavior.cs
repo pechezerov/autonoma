@@ -81,7 +81,7 @@ namespace Autonoma.UI.Presentation.Behaviors
             {
                 DeInitialize();
 
-                if (AssociatedObject is { } && InputSource is { })
+                if (AssociatedObject is { } && InputSource is not null)
                 {
                     Initialize();
                 }
@@ -149,7 +149,7 @@ namespace Autonoma.UI.Presentation.Behaviors
 
         private void DeInitialize()
         {
-            if (_fixedInputSource is { })
+            if (_fixedInputSource is not null)
             {
                 _fixedInputSource.RemoveHandler(InputElement.PointerPressedEvent, Pressed);
                 _fixedInputSource.RemoveHandler(InputElement.PointerReleasedEvent, Released);
@@ -158,7 +158,7 @@ namespace Autonoma.UI.Presentation.Behaviors
                 _fixedInputSource = null;
             }
 
-            if (_framePropertyChanged is { })
+            if (_framePropertyChanged is not null)
             {
                 _framePropertyChanged.PropertyChanged -= Frame_PropertyChanged;
                 _framePropertyChanged = null;
@@ -175,7 +175,7 @@ namespace Autonoma.UI.Presentation.Behaviors
         {
             base.OnAttached();
 
-            if (AssociatedObject is { } && InputSource is { })
+            if (AssociatedObject is { } && InputSource is not null)
             {
                 Initialize();
             }
@@ -197,13 +197,13 @@ namespace Autonoma.UI.Presentation.Behaviors
 
             if (e.PropertyName == nameof(IFrame.SelectedNodes) || e.PropertyName == nameof(IFrame.SelectedConnectors))
             {
-                if (_frame is { })
+                if (_frame is not null)
                 {
                     if (_frame.SelectedNodes is { Count: > 0 } || _frame.SelectedConnectors is { Count: > 0 })
                     {
                         _selectedRect = HitTestHelper.CalculateSelectedRect(AssociatedObject);
 
-                        if (_selectedAdorner is { })
+                        if (_selectedAdorner is not null)
                         {
                             RemoveSelected();
                         }
@@ -323,7 +323,7 @@ namespace Autonoma.UI.Presentation.Behaviors
 
                     if (e.Source is not Control { DataContext: not IFrame })
                     {
-                        if (_selectionAdorner is { })
+                        if (_selectionAdorner is not null)
                         {
                             HitTestHelper.FindSelectedNodes(AssociatedObject, _selectionAdorner.GetRect());
                         }

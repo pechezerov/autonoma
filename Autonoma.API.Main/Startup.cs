@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Autonoma.Configuration;
 using Autonoma.API.Main.Infrastructure;
+using Microsoft.Extensions.Logging;
 
 namespace Autonoma.API
 {
@@ -29,7 +30,7 @@ namespace Autonoma.API
                 .AddNewtonsoftJson();
 
             // add database contexts
-            services.AddCustomDbContext(Configuration);
+            services.AddCustomDbContext(Configuration, LoggerFactory.Create(builder => { builder.AddConsole(); }));
             // add services
             services.AddBusinessServices(Configuration);
             // configure mapper

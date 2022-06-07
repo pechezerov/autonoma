@@ -8,24 +8,27 @@ namespace Autonoma.Core
     {
         static Globals()
         {
-            DataPointTypeSizes.Add(TypeCode.Boolean, 1);
-            DataPointTypeSizes.Add(TypeCode.SByte, 1);
-            DataPointTypeSizes.Add(TypeCode.Byte, 1);
-            DataPointTypeSizes.Add(TypeCode.Int16, 2);
-            DataPointTypeSizes.Add(TypeCode.UInt16, 2);
-            DataPointTypeSizes.Add(TypeCode.Single, 2);
-            DataPointTypeSizes.Add(TypeCode.Int32, 4);
-            DataPointTypeSizes.Add(TypeCode.UInt32, 4);
-            DataPointTypeSizes.Add(TypeCode.Double, 4);
+            _dataPointTypeSizes.Add(TypeCode.Boolean, 1);
+            _dataPointTypeSizes.Add(TypeCode.SByte, 1);
+            _dataPointTypeSizes.Add(TypeCode.Byte, 1);
+            _dataPointTypeSizes.Add(TypeCode.Int16, 2);
+            _dataPointTypeSizes.Add(TypeCode.UInt16, 2);
+            _dataPointTypeSizes.Add(TypeCode.Single, 2);
+            _dataPointTypeSizes.Add(TypeCode.Int32, 4);
+            _dataPointTypeSizes.Add(TypeCode.UInt32, 4);
+            _dataPointTypeSizes.Add(TypeCode.Double, 4);
 
             foreach (var typeInfo in DataPointTypeSizes)
             {
-                DataPointTypes.Add(typeInfo.Key);
+                _dataPointTypes.Add(typeInfo.Key);
             }
         }
 
-        public readonly static HashSet<TypeCode> DataPointTypes = new HashSet<TypeCode>();
-        public readonly static Dictionary<TypeCode, ushort> DataPointTypeSizes = new Dictionary<TypeCode, ushort>();
+        private static HashSet<TypeCode> _dataPointTypes = new HashSet<TypeCode>();
+        private static Dictionary<TypeCode, ushort> _dataPointTypeSizes = new Dictionary<TypeCode, ushort>();
+        public static IReadOnlySet<TypeCode> DataPointTypes => _dataPointTypes;
+        public static IReadOnlyDictionary<TypeCode, ushort> DataPointTypeSizes => _dataPointTypeSizes;
+
         public const int IdleAdapterTypeId  = 1;
         public const int IdleAdapterId  = 1;
         public const int TestAdapterTypeId  = 2;

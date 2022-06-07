@@ -7,7 +7,7 @@ namespace Autonoma.UI.Presentation.Abstractions
     {
         string Serialize<T>(T value);
 
-        T? Deserialize<T>(string value);
+        T? Deserialize<T>(string data);
 
         FrameViewModel DeserializeFrame(string data);
 

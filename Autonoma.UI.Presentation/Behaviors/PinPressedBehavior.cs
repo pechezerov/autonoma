@@ -13,7 +13,7 @@ namespace Autonoma.UI.Presentation.Behaviors
         {
             base.OnAttached();
 
-            if (AssociatedObject is { })
+            if (AssociatedObject is not null)
             {
                 AssociatedObject.AddHandler(InputElement.PointerPressedEvent, Pressed, RoutingStrategies.Tunnel);
             }
@@ -23,7 +23,7 @@ namespace Autonoma.UI.Presentation.Behaviors
         {
             base.OnDetaching();
 
-            if (AssociatedObject is { })
+            if (AssociatedObject is not null)
             {
                 AssociatedObject.RemoveHandler(InputElement.PointerPressedEvent, Pressed);
             }
