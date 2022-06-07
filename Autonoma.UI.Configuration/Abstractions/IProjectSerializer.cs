@@ -1,13 +1,9 @@
-﻿using Autonoma.UI.FrameEditor.ViewModels;
-using Autonoma.UI.Presentation.Infrastructure;
-using Autonoma.UI.Presentation.ViewModels;
-
-namespace Autonoma.UI.Configuration.Abstractions
+﻿namespace Autonoma.UI.Configuration.Abstractions
 {
     public interface IProjectSerializer
     {
-        string SerializeProject(ProjectViewModel value);
+        string SerializeProject(IProject value);
 
-        ProjectViewModel DeserializeProject(string data);
+        IProject DeserializeProject<T>(string path) where T: IProject;
     }
 }

@@ -8,15 +8,15 @@ namespace Autonoma.Domain.Entities
 
         public int AdapterId { get; set; }
 
-        public string? Mapping { get; set; }
+        public string Mapping { get; set; } = "";
 
-        public string? Name { get; set; }
+        public string Name { get; set; } = "";
 
         public DataSource Source { get; set; }
 
         public TypeCode Type { get; set; } = TypeCode.Int32;
 
-        public string? Unit { get; set; }
+        public string Unit { get; set; } = "";
 
         public DataPointConfiguration()
         {

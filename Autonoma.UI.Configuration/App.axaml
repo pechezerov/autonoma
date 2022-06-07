@@ -1,12 +1,28 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="using:Autonoma.UI.Configuration"
+             xmlns:ccv="using:Autonoma.UI.Configuration.Converters"
+             xmlns:pcv="clr-namespace:Autonoma.UI.Presentation.Converters;assembly=Autonoma.UI.Presentation"
              x:Class="Autonoma.UI.Configuration.App">
     <Application.DataTemplates>
 		<local:EnhancedViewLocator/>
     </Application.DataTemplates>
 
-    <Application.Styles>
-        <FluentTheme Mode="Light"/>
-    </Application.Styles>
+	<Application.Resources>
+		<FontFamily x:Key="UiFontFamily">Segoe UI, SF Pro Display, Noto Sans, Cantarel</FontFamily>
+		<FontFamily x:Key="CodeFontFamily">Consolas, Menlo, Monaco, Courier, Courier New, Andale Mono, DejaVu Sans Mono</FontFamily>
+		<StaticResource x:Key="ContentControlThemeFontFamily" ResourceKey="UiFontFamily" />
+	</Application.Resources>
+
+	<Application.Styles>
+		<StyleInclude Source="avares://Autonoma.UI.Presentation/Themes/FluentDark.axaml" />
+		<StyleInclude Source="avares://Dock.Avalonia/Themes/DockFluentTheme.axaml"/>
+		<StyleInclude Source="avares://Autonoma.UI.Presentation/Themes/EditorTheme.axaml" />
+	</Application.Styles>
+
+
+	<Application.Resources>
+		<pcv:ObjectToPropertiesConverter x:Key="ObjectToPropertiesConverter"/>
+	</Application.Resources>
+	
 </Application>

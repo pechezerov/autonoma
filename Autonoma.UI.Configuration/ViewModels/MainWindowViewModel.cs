@@ -1,11 +1,11 @@
 using Autonoma.UI.Configuration.Abstractions;
-using Autonoma.UI.FrameEditor.ViewModels;
 using Autonoma.UI.Presentation.Model;
 using Autonoma.UI.Presentation.ViewModels;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Dock.Model.Controls;
 using Dock.Model.ReactiveUI.Controls;
+using Microsoft.Extensions.DependencyInjection;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using System;
@@ -20,40 +20,45 @@ namespace Autonoma.UI.Configuration.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        protected IRootDock _layout;
-        protected IProjectSerializer _serializer;
+        private IProject? _project;
 
-        #region
+        #region Commands
 
         public ICommand? NewCommand { get; }
 
         public ICommand OpenCommand { get; }
 
+        public ICommand SaveCommand { get; }
+
         public ICommand SaveAsCommand { get; }
 
         #endregion
 
-        [Reactive]
-        public ProjectViewModel? Project { get; set; }
-
-        public IRootDock Layout
+        public IProject? Project
         {
-            get => _layout;
-            set => this.RaiseAndSetIfChanged(ref _layout, value);
+            get => _project;
+            set => this.RaiseAndSetIfChanged(ref _project, value);
         }
+
+        [Reactive]
+        public IRootDock Layout { get; set; }
+
+        [Reactive]
         public IList<Tool> Tools { get; set; }
 
         public ICommand? ShowConnectionManagerCommand { get; }
 
+        public IServiceProvider Provider { get; }
+
         public Interaction<ConnectionManagerViewModel, DataPointConnection?> ShowConnectionManagerDialog { get; }
 
-        public MainWindowViewModel(IMainDockFactory dockFactory, IProjectSerializer serializer)
+        public MainWindowViewModel(IMainDockFactory dockFactory, IServiceProvider provider)
         {
-            _serializer = serializer;
+            Provider = provider;
             Tools = new ObservableCollection<Tool>();
             dockFactory.MainContext = this;
-            _layout = dockFactory.CreateLayout() ?? throw new InvalidOperationException("Не удалось инициализировать панель управления");
-            dockFactory.InitLayout(_layout);
+            Layout = dockFactory.CreateLayout() ?? throw new InvalidOperationException("Не удалось инициализировать панель управления");
+            dockFactory.InitLayout(Layout);
 
             // команды
 
@@ -67,25 +72,27 @@ namespace Autonoma.UI.Configuration.ViewModels
                 if (paths != null)
                 {
                     var path = paths.First();
-                    var projectData = File.ReadAllText(path);
-                    var project = _serializer.DeserializeProject(projectData);
-                    if (project != null)
-                    {
-                        project.FilePath = path;
-                        dockFactory.LoadProject(project);
-                    }
+
+                    File.Copy(path, "configuration.db3", true);
+
+                    var serializer = provider.GetRequiredService<IProjectSerializer>();
+                    var project = serializer.DeserializeProject<IProject>(path);
+                    if (project is ProjectViewModel projectVm)
+                        dockFactory.LoadProject(projectVm);
                 }
             });
 
-            SaveAsCommand = ReactiveCommand.CreateFromTask(async () =>
+            SaveCommand = ReactiveCommand.CreateFromTask(async () =>
             {
                 if (Project == null)
                     return;
-                var taskPath = new SaveFileDialog().ShowAsync((Avalonia.Application.Current!.ApplicationLifetime! as IClassicDesktopStyleApplicationLifetime)!.MainWindow);
-                var frameData = _serializer.SerializeProject(Project);
-                var path = await taskPath;
+                var path = Project.FilePath;
                 if (path != null)
-                    File.WriteAllText(path, frameData);
+                {
+                    var serializer = provider.GetRequiredService<IProjectSerializer>();
+                    var projectDate = serializer.SerializeProject(Project);
+                    File.WriteAllText(path, projectDate);
+                }
             });
 
             SaveAsCommand = ReactiveCommand.CreateFromTask(async () =>
@@ -96,9 +103,10 @@ namespace Autonoma.UI.Configuration.ViewModels
                 var path = await taskPath;
                 if (path != null)
                 {
-                    var frameData = _serializer.SerializeProject(Project);
-                    File.WriteAllText(path, frameData);
-                }
+                    var serializer = provider.GetRequiredService<IProjectSerializer>(); 
+                    var projectDate = serializer.SerializeProject(Project);
+                    File.WriteAllText(path, projectDate);
+                } 
             });
 
             ShowConnectionManagerCommand = ReactiveCommand.CreateFromTask(async () =>

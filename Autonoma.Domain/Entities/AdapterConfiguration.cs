@@ -9,17 +9,17 @@ namespace Autonoma.Domain.Entities
 
         public int AdapterTypeId { get; set; } = Globals.IdleAdapterTypeId;
 
-        public string? Address { get; set; }
+        public string Address { get; set; } = "";
 
-        public List<DataPointConfiguration> DataPoints { get; set; }
+        public string IpAddress { get; set; } = "";
 
-        public string? IpAddress { get; set; }
+        public string Name { get; set; } = "";
 
-        public string? Name { get; set; }
-
-        public string? Configuration { get; set; }
+        public string Configuration { get; set; } = "";
 
         public int Port { get; set; }
+
+        public List<DataPointConfiguration> DataPoints { get; set; }
 
         public AdapterConfiguration()
         {

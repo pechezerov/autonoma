@@ -1,5 +1,4 @@
 ﻿using Autonoma.UI.Configuration.ViewModels;
-using Autonoma.UI.FrameEditor.ViewModels;
 using Dock.Model.Controls;
 using Dock.Model.Core;
 

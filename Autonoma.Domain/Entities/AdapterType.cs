@@ -5,7 +5,7 @@
         /// <summary>
         /// Имя класса-конфигурации адаптера
         /// </summary>
-        public string? AssemblyQualifiedConfigurationTypeName { get; set; }
+        public string AssemblyQualifiedConfigurationTypeName { get; set; } = "";
 
         /// <summary>
         /// Имя класса-адаптера
@@ -13,7 +13,7 @@
         /// <remarks>
         /// Заполняется только для "внутренних" адаптеров
         /// </remarks>
-        public string? AssemblyQualifiedAdapterTypeName { get; set; }
+        public string AssemblyQualifiedAdapterTypeName { get; set; } = "";
 
         /// <summary>
         /// Наименование адаптера
@@ -26,7 +26,7 @@
         /// <remarks>
         /// Заполняется только для "внешних" адаптеров
         /// </remarks>
-        public string? ProcessWrapperDiagCommand { get; set; }
+        public string ProcessWrapperDiagCommand { get; set; } = "";
 
         /// <summary>
         /// Команда для запуска внешнего процесса
@@ -34,7 +34,7 @@
         /// <remarks>
         /// Заполняется только для "внешних" адаптеров
         /// </remarks>
-        public string? ProcessWrapperStartCommand { get; set; }
+        public string ProcessWrapperStartCommand { get; set; } = "";
 
         /// <summary>
         /// Команда для останова внешнего процесса
@@ -42,6 +42,6 @@
         /// <remarks>
         /// Заполняется только для "внешних" адаптеров
         /// </remarks>
-        public string? ProcessWrapperStopCommand { get; set; }
+        public string ProcessWrapperStopCommand { get; set; } = "";
     }
 }

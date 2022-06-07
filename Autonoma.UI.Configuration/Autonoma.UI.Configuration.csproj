@@ -11,6 +11,20 @@
     <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
     <None Remove=".gitignore" />
+    <None Remove="appsettings.Development.json" />
+    <None Remove="appsettings.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="appsettings.Development.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <!--This helps with theme dll-s trimming.
@@ -33,5 +47,13 @@
     <ProjectReference Include="..\Autonoma.ConfigurationManagement\Autonoma.ConfigurationManagement.csproj" />
     <ProjectReference Include="..\Autonoma.ConfigurationSeeder\Autonoma.ConfigurationSeeder.csproj" />
     <ProjectReference Include="..\Autonoma.UI.Presentation\Autonoma.UI.Presentation.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\ProjectView.axaml.cs">
+      <DependentUpon>ProjectView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Tools\NavigatorToolView.axaml.cs">
+      <DependentUpon>NavigatorToolView.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

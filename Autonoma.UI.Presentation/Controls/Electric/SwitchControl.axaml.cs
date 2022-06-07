@@ -23,6 +23,7 @@ namespace Autonoma.UI.Presentation.Controls.Electric
     }
 
     [DefaultSize(50, 50)]
+    [FixedSize]
     [Pin(0, 25, Model.PinAlignment.Left)]
     [Pin(50, 25, Model.PinAlignment.Right)]
     public class SwitchControlViewModel : VoltageControlViewModel

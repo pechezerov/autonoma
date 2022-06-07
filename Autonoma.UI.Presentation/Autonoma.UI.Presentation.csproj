@@ -25,6 +25,9 @@
     <AvaloniaXaml Update="Controls\Electric\SwitchControl.axaml">
       <SubType>Designer</SubType>
     </AvaloniaXaml>
+    <AvaloniaXaml Update="Controls\PropertiesEditor.axaml">
+      <SubType>Designer</SubType>
+    </AvaloniaXaml>
   </ItemGroup>
 
   <ItemGroup>
@@ -49,6 +52,10 @@
     </Compile>
     <Compile Update="Controls\LooklessControl.axaml.cs">
       <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\PropertiesEditor.axaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>PropertiesEditor.axaml</DependentUpon>
     </Compile>
     <Compile Update="Views\ConnectionManager.axaml.cs">
       <DependentUpon>%(Filename)</DependentUpon>

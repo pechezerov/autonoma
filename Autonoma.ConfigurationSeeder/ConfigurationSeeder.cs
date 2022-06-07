@@ -20,6 +20,7 @@ namespace Autonoma.ConfigurationSeeder
 
         public void Seed()
         {
+            _context.Database.EnsureDeleted();
             _context.Database.EnsureCreated();
 
             CheckTestAdapters();
@@ -42,7 +43,7 @@ namespace Autonoma.ConfigurationSeeder
                 Id = Globals.IdleAdapterId,
                 IpAddress = "",
                 Name = "Пассивный",
-                AdapterTypeId = Globals.IdleAdapterTypeId,
+                AdapterType = idleAdapterType,
             });
 
             var testAdapterType = new AdapterType
@@ -58,7 +59,7 @@ namespace Autonoma.ConfigurationSeeder
                 Id = Globals.TestAdapterId,
                 IpAddress = "",
                 Name = "Тестовый",
-                AdapterTypeId = Globals.TestAdapterTypeId,
+                AdapterType = testAdapterType,
             });
 
             var modbusAdapterType = new AdapterType
@@ -74,7 +75,7 @@ namespace Autonoma.ConfigurationSeeder
                 Id = 31,
                 IpAddress = "",
                 Name = "Modbus #1",
-                AdapterTypeId = 3,
+                AdapterType = modbusAdapterType,
                 Configuration = ""
             });
 

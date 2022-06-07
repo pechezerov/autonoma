@@ -1,4 +1,6 @@
-﻿using Autonoma.UI.Presentation.ViewModels;
+﻿using Autonoma.UI.Presentation.Attributes;
+using Autonoma.UI.Presentation.Controls;
+using Autonoma.UI.Presentation.ViewModels;
 using Avalonia.Data.Converters;
 using System;
 using System.Collections;
@@ -21,35 +23,46 @@ namespace Autonoma.UI.FrameEditor.Converters
 
             if (value != null)
             {
-                var basicObject = value as ElementViewModel;
-                if (basicObject != null)
+                // Свойства оболочки
+                if (value is ElementViewModel wrapperObject)
                 {
-                    var properties = basicObject
+                    var wrapperProperties = wrapperObject
                         .GetType().GetProperties().OrderBy(o => o.Name);
-                    foreach (var property in properties)
+                    var fixedSize = wrapperObject.GetType().GetCustomAttribute<FixedSizeAttribute>() != null;
+
+                    foreach (var property in wrapperProperties)
                     {
+                        if ((property.Name == nameof(ElementViewModel.Width) || property.Name == nameof(ElementViewModel.Height))
+                            && fixedSize)
+                            continue;
+
                         if (!property.CanWrite && !(property.PropertyType.IsGenericType
                             && typeof(IEnumerable).IsAssignableFrom(property.PropertyType))
                             || property.GetCustomAttribute<BrowsableAttribute>()?.Browsable == false)
                             continue;
-                        result.Add(new PropertyViewModel(property, basicObject));
+
+                        var wrapperPropertyModel = new PropertyViewModel(property, wrapperObject);
+                        result.Add(wrapperPropertyModel);
                     }
 
-                    var controlObject = basicObject.Content;
-                    if (controlObject != null)
+                    // позволяем обработать свойства элемента
+                    value = wrapperObject.Content;
+                }
+
+                // Свойства элемента
+                if (value is LooklessControlViewModel controlObject)
+                {
+                    var controlProperties = controlObject
+                        .GetType().GetProperties()
+                        .OrderBy(o => o.Name);
+                    foreach (var controlProperty in controlProperties)
                     {
-                        var controlProperties = controlObject
-                            .GetType().GetProperties()
-                            .OrderBy(o => o.Name);
-                        foreach (var controlProperty in controlProperties)
-                        {
-                            if (!controlProperty.CanWrite && !(controlProperty.PropertyType.IsGenericType
-                                && typeof(IEnumerable).IsAssignableFrom(controlProperty.PropertyType))
-                                || controlProperty.GetCustomAttribute<BrowsableAttribute>()?.Browsable == false)
-                                continue;
-                            var property = new PropertyViewModel(controlProperty, controlObject);
-                            result.Add(property);
-                        }
+                        if (!controlProperty.CanWrite && !(controlProperty.PropertyType.IsGenericType
+                            && typeof(IEnumerable).IsAssignableFrom(controlProperty.PropertyType))
+                            || controlProperty.GetCustomAttribute<BrowsableAttribute>()?.Browsable == false)
+                            continue;
+                        var property = new PropertyViewModel(controlProperty, controlObject);
+                        result.Add(property);
                     }
                 }
             }

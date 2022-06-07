@@ -1,11 +1,11 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace Autonoma.UI.FrameEditor.Views.Tools
+namespace Autonoma.UI.Configuration.Views
 {
-    public partial class PropertiesToolView : UserControl
+    public partial class ProjectView : UserControl
     {
-        public PropertiesToolView()
+        public ProjectView()
         {
             this.InitializeComponent();
         }

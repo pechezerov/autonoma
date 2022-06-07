@@ -39,6 +39,8 @@ namespace Autonoma.UI.FrameEditor.ViewModels
 
         public ICommand OpenCommand { get; }
 
+        public ICommand SaveCommand { get; }
+        
         public ICommand SaveAsCommand { get; }
 
         #endregion
@@ -141,15 +143,16 @@ namespace Autonoma.UI.FrameEditor.ViewModels
                 }
             });
 
-            SaveAsCommand = ReactiveCommand.CreateFromTask(async () =>
+            SaveCommand = ReactiveCommand.CreateFromTask(async () =>
             {
                 if (CurrentDocument == null)
                     return;
-                var taskPath = new SaveFileDialog().ShowAsync((Avalonia.Application.Current!.ApplicationLifetime! as IClassicDesktopStyleApplicationLifetime)!.MainWindow);
-                var frameData = _serializer.Serialize(CurrentDocument);
-                var path = await taskPath;
+                var path = CurrentDocument.FilePath;
                 if (path != null)
+                {
+                    var frameData = _serializer.Serialize(CurrentDocument.Frame);
                     File.WriteAllText(path, frameData);
+                }
             });
 
             SaveAsCommand = ReactiveCommand.CreateFromTask(async () =>

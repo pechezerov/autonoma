@@ -1,0 +1,81 @@
+﻿<UserControl x:Class="Autonoma.UI.Presentation.Controls.PropertiesEditor"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:sys="clr-namespace:System;assembly=mscorlib"
+			 xmlns:syscol="clr-namespace:System.Collections;assembly=mscorlib"
+             xmlns:design="using:Autonoma.UI.FrameEditor.Design"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="400"
+			 xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+			 xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+			 x:Name="propertiesToolViewHost">
+	
+	<Grid>
+		<ListBox x:Name="lstProperties" Grid.Row="1" BorderThickness="0"
+				 Items="{Binding #propertiesToolViewHost.EditedObject, Converter={StaticResource ObjectToPropertiesConverter}}">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid ColumnDefinitions="150,3,20,3,*" Height="32">
+						<TextBlock Grid.Column="0" Text="{Binding Name}" HorizontalAlignment="Right" VerticalAlignment="Center" />
+						<ContentControl Grid.Column="4" Content="{Binding Path=Value}" Margin="2">
+							<ContentControl.DataTemplates>
+								<DataTemplate DataType="x:Double">
+									<TextBox Text="{Binding $parent[2].DataContext.Value,Mode=TwoWay}" />
+								</DataTemplate>
+								<DataTemplate DataType="x:Single">
+									<TextBox Text="{Binding $parent[2].DataContext.Value,Mode=TwoWay}" />
+								</DataTemplate>
+								<DataTemplate DataType="x:Int32">
+									<NumericUpDown Value="{Binding $parent[2].DataContext.Value,Mode=TwoWay}" Minimum="0" />
+								</DataTemplate>
+								<DataTemplate DataType="x:Int16">
+									<NumericUpDown Value="{Binding $parent[2].DataContext.Value,Mode=TwoWay}" Minimum="0" />
+								</DataTemplate>
+								<DataTemplate DataType="x:Byte">
+									<NumericUpDown Value="{Binding $parent[2].DataContext.Value,Mode=TwoWay}" Minimum="0" />
+								</DataTemplate>
+								<DataTemplate DataType="x:Boolean">
+									<CheckBox IsChecked="{Binding $parent[2].DataContext.Value,Mode=TwoWay}" />
+								</DataTemplate>
+								<DataTemplate DataType="x:String">
+									<TextBox Text="{Binding $parent[2].DataContext.Value,Mode=TwoWay}"/>
+								</DataTemplate>
+								<DataTemplate DataType="x:Enum">
+									<ComboBox Items="{Binding $parent[2].DataContext.Values}" SelectedItem="{Binding $parent[2].DataContext.Value,Mode=TwoWay}"
+											  Padding="0" Margin="0" HorizontalAlignment="Stretch">
+										<ComboBox.ItemTemplate>
+											<DataTemplate>
+												<TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding .}"
+														   Height="25" Padding="1,3" Margin="2,5"/>
+											</DataTemplate>
+										</ComboBox.ItemTemplate>
+									</ComboBox>
+								</DataTemplate>
+								<DataTemplate DataType="syscol:IList">
+									<Grid ColumnDefinitions="Auto,*,Auto">
+										<StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+											<TextBlock Text="Collection with " />
+											<TextBlock Text="{Binding Count}" />
+											<TextBlock Text=" items" />
+										</StackPanel>
+										<Button Grid.Column="2">
+											<DrawingPresenter Width="8" Height="8" Drawing="{DynamicResource MaterialDesign.Edit}" />
+										</Button>
+									</Grid>
+								</DataTemplate>
+								<DataTemplate>
+									<TextBlock Text="Unknown type" />
+								</DataTemplate>
+							</ContentControl.DataTemplates>
+						</ContentControl>
+						<Button Grid.Column="4" Height="25" Width="20" Padding="0"
+								IsVisible="{Binding IsConnectable}"
+								Command="{Binding DataContext.ShowConnectionManagerCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}">
+						</Button>
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+	</Grid>
+</UserControl>

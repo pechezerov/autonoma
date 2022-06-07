@@ -1,20 +1,21 @@
-﻿<UserControl x:Class="Autonoma.UI.FrameEditor.Views.Tools.PropertiesToolView"
+﻿<UserControl x:Class="Autonoma.UI.Configuration.Views.Tools.NavigatorToolView"
              xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:sys="clr-namespace:System;assembly=mscorlib"
 			 xmlns:syscol="clr-namespace:System.Collections;assembly=mscorlib"
-             xmlns:design="using:Autonoma.UI.FrameEditor.Design"
-			 xmlns:pc="using:Autonoma.UI.Presentation.Controls"
+             xmlns:design="using:Autonoma.UI.Configuration.Design"
              mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="400"
 			 xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
 			 xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
 			 x:Name="propertiesToolViewHost">
 	
 	<Design.DataContext>
-		<design:DesignPropertiesToolViewModel />
+		<design:DesignNavigatorToolViewModel />
 	</Design.DataContext>
 
-	<pc:PropertiesEditor EditedObject="{Binding EditedObject}"/>
+	<Grid>
+		
+	</Grid>
 </UserControl>

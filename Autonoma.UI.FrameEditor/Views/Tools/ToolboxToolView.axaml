@@ -42,11 +42,11 @@
 			<ListBox.ItemTemplate>
 				<DataTemplate DataType="pa:IElementPrototype">
 					<DockPanel>
-						<Viewbox DockPanel.Dock="Left" Width="60" Height="25" Stretch="Uniform">
-							<ContentControl Content="{Binding Preview}"/>
+						<Viewbox DockPanel.Dock="Left" Width="60" Height="25" Stretch="Uniform" VerticalAlignment="Center">
+							<ContentControl Content="{Binding Preview}" Margin="3,0"/>
 						</Viewbox>
 						<Panel Margin="12,6,12,6">
-							<TextBlock Text="{Binding Title}" FontSize="12" VerticalAlignment="Center" />
+							<TextBlock Text="{Binding Title}" FontSize="12" Margin="0" VerticalAlignment="Center" />
 						</Panel>
 					</DockPanel>
 				</DataTemplate>

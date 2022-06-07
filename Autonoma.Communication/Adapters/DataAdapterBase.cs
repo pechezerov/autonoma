@@ -34,15 +34,26 @@ namespace Autonoma.Communication
 
             if (config.AdapterTypeId != AdapterTypeId)
                 throw new InvalidOperationException();
-            if (config.AdapterType.AssemblyQualifiedAdapterTypeName == null)
+            if (String.IsNullOrEmpty(config.AdapterType.AssemblyQualifiedAdapterTypeName))
                 throw new InvalidOperationException();
             if (GetType() != Type.GetType(config.AdapterType.AssemblyQualifiedAdapterTypeName))
                 throw new InvalidOperationException();
 
-            var options = JsonConvert.DeserializeObject(config.Configuration ?? "{}", typeof(TOptions)) as TOptions;
-            if (options == null)
-                throw new ArgumentNullException(nameof(options));
-            Options = options;
+            var cfg = config.Configuration;
+
+            TOptions? options;
+            try
+            {
+                options = JsonConvert.DeserializeObject(cfg, typeof(TOptions)) as TOptions;
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
+            }
+            catch (Exception)
+            {
+                options = Activator.CreateInstance(typeof(TOptions), true) as TOptions;
+            }
+
+            Options = options!;
         }
 
         public void Dispose()

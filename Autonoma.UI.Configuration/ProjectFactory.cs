@@ -1,4 +1,4 @@
-﻿using Autonoma.UI.FrameEditor.ViewModels;
+﻿using Autonoma.UI.Configuration.ViewModels;
 using System;
 
 namespace Autonoma.UI.Configuration

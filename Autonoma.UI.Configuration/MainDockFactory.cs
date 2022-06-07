@@ -1,6 +1,5 @@
 ﻿using Autonoma.UI.Configuration.ViewModels;
 using Autonoma.UI.Configuration.ViewModels.Tools;
-using Autonoma.UI.FrameEditor.ViewModels;
 using Avalonia.Controls;
 using Avalonia.Data;
 using Dock.Avalonia.Controls;
@@ -28,8 +27,8 @@ namespace Autonoma.UI.Configuration
         {
             var navigatorTool = new NavigatorToolViewModel
             {
-                Id = "Properties",
-                Title = "Properties",
+                Id = "Navigator",
+                Title = "Navigator",
                 Context = MainContext
             };
             MainContext.Tools.Add(navigatorTool);
@@ -153,7 +152,7 @@ namespace Autonoma.UI.Configuration
                 [nameof(IDockWindow)] = () => MainContext,
                 [nameof(IDocument)] = () => MainContext,
                 [nameof(ITool)] = () => MainContext,
-                ["Toolbox"] = () => MainContext,
+                ["Navigator"] = () => MainContext,
                 ["LeftPane"] = () => MainContext,
                 ["LeftPaneTop"] = () => MainContext,
                 ["LeftPaneTopSplitter"] = () => MainContext,
