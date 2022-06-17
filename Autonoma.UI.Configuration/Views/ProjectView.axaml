@@ -73,17 +73,11 @@
 
 				<Grid Grid.Column="0">
 					<TreeView x:Name="treeTopology"
-						Items="{Binding LogicalDevices}" SelectionMode="Single">
+						Items="{Binding Elements}" SelectionMode="Single">
 						<TreeView.DataTemplates>
-							<TreeDataTemplate DataType="a:ILogicalNode" ItemsSource="{Binding Elements}">
+							<TreeDataTemplate DataType="a:IModelElement" ItemsSource="{Binding Elements}">
 								<TextBlock Text="{Binding Name}" />
 							</TreeDataTemplate>
-							<DataTemplate DataType="a:IDataObject">
-								<TextBlock Text="{Binding Name}" />
-							</DataTemplate>
-							<DataTemplate DataType="a:IDataPoint">
-								<TextBlock Text="{Binding Name}" />
-							</DataTemplate>
 						</TreeView.DataTemplates>
 					</TreeView>
 				</Grid>

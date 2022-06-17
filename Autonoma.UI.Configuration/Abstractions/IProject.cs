@@ -33,16 +33,8 @@ namespace Autonoma.UI.Configuration.Abstractions
     /// <summary>
     /// Корневой узел иерархии информационной модели
     /// </summary>
-    public interface ITopologyProject : ILogicalNode
+    public interface ITopologyProject : IModelElement
     {
-    }
-
-    /// <summary>
-    /// Логический узел (объединение в составе информационной модели)
-    /// </summary>
-    public interface ILogicalNode : IModelElement
-    {
-        public IEnumerable<IModelElement> Elements { get; }
     }
 
     /// <summary>

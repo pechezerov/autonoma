@@ -1,6 +1,7 @@
 ﻿using Autonoma.Configuration;
 using Autonoma.Configuration.Repositories;
 using Autonoma.Configuration.Repositories.Abstractions;
+using Autonoma.ConfigurationManagement.Repositories;
 using System;
 using System.Threading.Tasks;
 
@@ -14,6 +15,7 @@ namespace Autonoma.API.Infrastructure
 
         public IAdapterRepository AdapterRepository { get; }
         public IDataPointRepository DataPointRepository { get; }
+        public IModelRepository ModelRepository { get; }
 
         public UnitOfWork(ConfigurationContext context)
         {
@@ -21,6 +23,7 @@ namespace Autonoma.API.Infrastructure
 
             AdapterRepository = new AdapterConfigurationRepository(_context);
             DataPointRepository = new DataPointConfigurationRepository(_context);
+            ModelRepository = new ModelConfigurationRepository(_context);
         }
 
         public int Commit()

@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Akka" Version="1.4.39" />
+    <PackageReference Include="Akka.DependencyInjection" Version="1.4.39" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Autonoma.API.Shared\Autonoma.API.Shared.csproj" />
+    <ProjectReference Include="..\Autonoma.Domain\Autonoma.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

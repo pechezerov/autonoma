@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Autonoma.Configuration;
 using Autonoma.API.Main.Infrastructure;
 using Microsoft.Extensions.Logging;
+using Autonoma.Model.Akka.Services;
 
 namespace Autonoma.API
 {
@@ -40,6 +41,9 @@ namespace Autonoma.API
 
             services.AddSignalR()
                 .AddNewtonsoftJsonProtocol();
+
+            // starts the IHostedService, which creates the ActorSystem and actors
+            services.AddTransient<IHostedService, AkkaService>();
         }
 
         public void ConfigureContainer(ContainerBuilder builder)

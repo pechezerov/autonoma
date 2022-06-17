@@ -25,6 +25,7 @@
     <ProjectReference Include="..\Autonoma.ConfigurationManagement\Autonoma.ConfigurationManagement.csproj" />
     <ProjectReference Include="..\Autonoma.Core\Autonoma.Core.csproj" />
     <ProjectReference Include="..\Autonoma.Domain\Autonoma.Domain.csproj" />
+    <ProjectReference Include="..\Autonoma.Model.Akka\Autonoma.Model.Akka.csproj" />
     <ProjectReference Include="..\Autonoma.ProcessManagement\Autonoma.ProcessManagement.csproj" />
   </ItemGroup>
 

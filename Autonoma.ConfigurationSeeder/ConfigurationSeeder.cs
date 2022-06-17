@@ -5,6 +5,7 @@ using Autonoma.Core;
 using Autonoma.Domain;
 using Autonoma.Domain.Entities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Autonoma.ConfigurationSeeder
@@ -25,6 +26,8 @@ namespace Autonoma.ConfigurationSeeder
 
             CheckTestAdapters();
             CheckTestDataPoints();
+
+            CheckTestModel();
         }
 
         private void CheckTestAdapters()
@@ -114,6 +117,91 @@ namespace Autonoma.ConfigurationSeeder
                     AdapterId = Globals.TestAdapterId,
                     Mapping = $"mappingparams({i})"
                 });
+            }
+
+            _context.SaveChanges();
+        }
+
+        private void CheckTestModel()
+        {
+            if (_context.ModelTemplates.Any())
+                return;
+            if (_context.ModelElements.Any())
+                return;
+
+            var baseTemplate = new ModelElementTemplateConfiguration
+            {
+                Name = $"BaseTemplate"
+            };
+            baseTemplate.Attributes.Add(new ModelAttributeTemplateConfiguration
+            {
+                Name = "AttributeInt",
+                Type = TypeCode.Int32,
+                Template = baseTemplate
+            });
+            baseTemplate.Attributes.Add(new ModelAttributeTemplateConfiguration
+            {
+                Name = "AttributeString",
+                Type = TypeCode.String,
+                Template = baseTemplate
+            });
+
+            var derivedTemplate = new ModelElementTemplateConfiguration
+            {
+                Name = $"DerivedTemplate",
+                BaseTemplate = baseTemplate,
+            };
+            derivedTemplate.Attributes.Add(new ModelAttributeTemplateConfiguration
+            {
+                Name = "AttributeInt2",
+                Type = TypeCode.Int32,
+                Template = derivedTemplate
+            });
+            derivedTemplate.Attributes.Add(new ModelAttributeTemplateConfiguration
+            {
+                Name = "AttributeString2",
+                Type = TypeCode.String,
+                Template = derivedTemplate
+            });
+
+            _context.ModelTemplates.Add(baseTemplate);
+            _context.ModelTemplates.Add(derivedTemplate);
+
+            _context.SaveChanges();
+
+            if (_context.ModelElements.Any())
+                return;
+
+            for (int j = 0; j < 4; j++)
+            {
+                var groupElement = new ModelElementConfiguration
+                {
+                    Name = $"Element{j}",
+                    Template = baseTemplate,
+                };
+                _context.ModelElements.Add(groupElement);
+
+                for (int i = 0; i < 10; i++)
+                {
+                    var element = new ModelElementConfiguration
+                    {
+                        Name = $"Element{j}-{i}",
+                        Template = baseTemplate,
+                        ParentElement = groupElement,
+                    };
+                    _context.ModelElements.Add(element);
+                }
+
+                for (int i = 0; i < 10; i++)
+                {
+                    var element = new ModelElementConfiguration
+                    {
+                        Name = $"Element{j}-{i}",
+                        Template = derivedTemplate,
+                        ParentElement = groupElement,
+                    };
+                    _context.ModelElements.Add(element);
+                }
             }
 
             _context.SaveChanges();

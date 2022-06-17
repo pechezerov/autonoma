@@ -17,6 +17,10 @@ namespace Autonoma.Configuration
 
         public DbSet<DataPointConfiguration> DataPoints { get; set; }
 
+        public DbSet<ModelElementConfiguration> ModelElements { get; set; }
+
+        public DbSet<ModelElementTemplateConfiguration> ModelTemplates { get; set; }
+
         public DbSet<User> Users { get; set; }
 
         public ConfigurationContext(DbContextOptions<ConfigurationContext> options) : base(options)
@@ -39,7 +43,7 @@ namespace Autonoma.Configuration
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AdapterConfiguration>()
-                .HasKey(a => a.Id);
+                .HasKey(x => x.Id);
             modelBuilder.Entity<AdapterConfiguration>()
                 .HasMany(a => a.DataPoints)
                 .WithOne(p => p.Adapter)
@@ -47,7 +51,44 @@ namespace Autonoma.Configuration
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<DataPointConfiguration>()
-                .HasKey(a => a.Id);
+                .HasKey(x => x.Id);
+
+            modelBuilder.Entity<ModelElementConfiguration>()
+               .HasKey(a => a.Id);
+            modelBuilder.Entity<ModelElementConfiguration>()
+                .HasMany(t => t.Elements)
+                .WithOne(e => e.ParentElement)
+                .HasForeignKey(e => e.ParentElementId)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<ModelElementConfiguration>()
+                .HasMany(t => t.Attributes)
+                .WithOne(e => e.Element)
+                .HasForeignKey(e => e.ElementId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<ModelElementTemplateConfiguration>()
+                .HasKey(x => x.Id);
+            modelBuilder.Entity<ModelElementTemplateConfiguration>()
+                .HasMany(t => t.Elements)
+                .WithOne(e => e.Template)
+                .HasForeignKey(e => e.TemplateId)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<ModelElementTemplateConfiguration>()
+                .HasMany(t => t.Attributes)
+                .WithOne(a => a.Template)
+                .HasForeignKey(a => a.TemplateId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<ModelAttributeTemplateConfiguration>()
+                .HasKey(x => x.Id);
+            modelBuilder.Entity<ModelAttributeTemplateConfiguration>()
+                .HasMany(t => t.Attributes)
+                .WithOne(a => a.Template)
+                .HasForeignKey(a => a.TemplateId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<ModelAttributeConfiguration>()
+                .HasKey(x => x.Id);
 
             modelBuilder.Entity<User>().HasOne(o => o.CreatedBy).WithMany();
             modelBuilder.Entity<User>().HasOne(o => o.ModifiedBy).WithMany();

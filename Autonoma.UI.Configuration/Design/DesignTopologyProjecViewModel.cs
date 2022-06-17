@@ -1,16 +1,41 @@
 ﻿using Autonoma.UI.Configuration.Abstractions;
+using Autonoma.UI.Configuration.ViewModels;
+using System;
 using System.Collections.Generic;
 
 namespace Autonoma.UI.Configuration.Design
 {
     internal class DesignTopologyProjectViewModel : ITopologyProject
     {
-        public IList<ILogicalNode> LogicalNodes
-            => new List<ILogicalNode>()
+        private static int _counter = 0;
+        private static int _maxDepth = 3;
+
+        private static IModelElement GenerateDesignModelViewModel(int depth = 1)
+        {
+            var result = new ModelElementViewModel
             {
+                Name = $"Element{_counter++}"
             };
 
-        public IEnumerable<IModelElement> Elements => LogicalNodes;
+            if (depth < _maxDepth)
+            {
+                result.AddElement(GenerateDesignModelViewModel(depth + 1));
+                result.AddElement(GenerateDesignModelViewModel(depth + 1));
+                result.AddElement(GenerateDesignModelViewModel(depth + 1));
+                result.AddElement(GenerateDesignModelViewModel(depth + 1));
+            }
+
+            return result;
+        }
+
+        public IEnumerable<IModelElement> Elements { get; set; } = new List<IModelElement>()
+        {
+            GenerateDesignModelViewModel(),
+            GenerateDesignModelViewModel(),
+            GenerateDesignModelViewModel(),
+            GenerateDesignModelViewModel(),
+            GenerateDesignModelViewModel(),
+        };
 
         public string Name => "Test";
     }
