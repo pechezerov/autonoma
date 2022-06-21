@@ -16,20 +16,5 @@ namespace Autonoma.UI.Presentation.Controls
         {
             AvaloniaXamlLoader.Load(this);
         }
-
-        public static readonly StyledProperty<object?> EditedObjectProperty =
-            AvaloniaProperty.Register<PropertiesEditor, object?>(nameof(EditedObject), null, false, Avalonia.Data.BindingMode.OneWay, 
-                notifying: OnEditableObjectChanged);
-
-        public object? EditedObject
-        {
-            get { return GetValue(EditedObjectProperty); }
-            set { SetValue(EditedObjectProperty, value); }
-        }
-
-        private static void OnEditableObjectChanged(IAvaloniaObject arg1, bool arg2)
-        {
-
-        }
     }
 }

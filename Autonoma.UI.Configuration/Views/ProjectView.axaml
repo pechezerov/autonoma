@@ -9,7 +9,7 @@
              xmlns:a="using:Autonoma.UI.Configuration.Abstractions"
              xmlns:vm="using:Autonoma.UI.Configuration.ViewModels"
              xmlns:pc="clr-namespace:Autonoma.UI.Presentation.Controls;assembly=Autonoma.UI.Presentation"
-             mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="800"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
 			 xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
 			 xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
 			 x:Name="propertiesToolViewHost">
@@ -20,7 +20,7 @@
 
 	<TabControl x:Name="tabProject">
 
-		<TabItem x:Name="tabTechnology" TabIndex="1" 
+		<TabItem x:Name="tabTechnology" TabIndex="1" Header="TechnologyTree" 
 				 DataContext="{Binding Technology}">
 			
 			<Grid x:Name="grdTechnology" DataContext="{Binding Technology}"
@@ -44,8 +44,7 @@
 				<Grid Grid.Column="2" RowDefinitions="200, Auto, *"
 					  DataContext="{Binding #treeTechnology.SelectedItem}">
 					
-					<pc:PropertiesEditor Grid.Row="0"
-						EditedObject="{Binding .}"/>
+					<pc:PropertiesEditor Grid.Row="0" DataContext="{Binding .}"/>
 
 					<GridSplitter Grid.Row="1" 
 						HorizontalAlignment="Stretch" Height="3" Margin="0"/>
@@ -66,7 +65,7 @@
 
 		</TabItem>
 
-		<TabItem x:Name="tabTopology" TabIndex="2" DataContext="{Binding Topology}">
+		<TabItem x:Name="tabTopology" TabIndex="2" Header="TopologyTree"  DataContext="{Binding Topology}">
 
 			<Grid x:Name="grdTopology" DataContext="{Binding Topology}"
 				  ColumnDefinitions="*,Auto,2*">
@@ -85,7 +84,7 @@
 				<GridSplitter Grid.Column="1" VerticalAlignment="Stretch" Width="3" Margin="0"/>
 
 				<Grid Grid.Column="2">
-					<pc:PropertiesEditor EditedObject="{Binding #treeTopology.SelectedItem}"
+					<pc:PropertiesEditor DataContext="{Binding #treeTopology.SelectedItem}"
 										 HorizontalAlignment="Stretch"/>
 				</Grid>
 

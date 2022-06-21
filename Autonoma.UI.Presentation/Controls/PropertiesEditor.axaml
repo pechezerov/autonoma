@@ -5,35 +5,47 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:sys="clr-namespace:System;assembly=mscorlib"
 			 xmlns:syscol="clr-namespace:System.Collections;assembly=mscorlib"
-             xmlns:design="using:Autonoma.UI.FrameEditor.Design"
-             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="400"
+             xmlns:design="using:Autonoma.UI.Presentation.Design"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="600"
+			 xmlns:ad="clr-namespace:Autonoma.Domain.Abstractions;assembly=Autonoma.Domain"
+			 xmlns:pe="clr-namespace:Autonoma.UI.Presentation.Extensions;assembly=Autonoma.UI.Presentation"
 			 xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
 			 xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
 			 x:Name="propertiesToolViewHost">
 	
+	<Design.DataContext>
+		<design:EditedViewModel />
+	</Design.DataContext>
+	
 	<Grid>
 		<ListBox x:Name="lstProperties" Grid.Row="1" BorderThickness="0"
-				 Items="{Binding #propertiesToolViewHost.EditedObject, Converter={StaticResource ObjectToPropertiesConverter}}">
+				 Items="{Binding ., Converter={StaticResource ObjectToPropertiesConverter}}">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<Grid ColumnDefinitions="150,3,20,3,*" Height="32">
 						<TextBlock Grid.Column="0" Text="{Binding Name}" HorizontalAlignment="Right" VerticalAlignment="Center" />
 						<ContentControl Grid.Column="4" Content="{Binding Path=Value}" Margin="2">
 							<ContentControl.DataTemplates>
-								<DataTemplate DataType="x:Double">
+								<DataTemplate DataType="{pe:Nullable x:Boolean}">
+									<TextBox Text="{Binding $parent[2].DataContext.Value,Mode=TwoWay}" />
+								</DataTemplate>
+								<DataTemplate DataType="x:Boolean">
 									<TextBox Text="{Binding $parent[2].DataContext.Value,Mode=TwoWay}" />
 								</DataTemplate>
 								<DataTemplate DataType="x:Single">
 									<TextBox Text="{Binding $parent[2].DataContext.Value,Mode=TwoWay}" />
 								</DataTemplate>
+								<DataTemplate DataType="x:Double">
+									<TextBox Text="{Binding $parent[2].DataContext.Value,Mode=TwoWay}" />
+								</DataTemplate>
 								<DataTemplate DataType="x:Int32">
-									<NumericUpDown Value="{Binding $parent[2].DataContext.Value,Mode=TwoWay}" Minimum="0" />
+									<NumericUpDown Value="{Binding $parent[2].DataContext.Value,Mode=TwoWay}"/>
 								</DataTemplate>
 								<DataTemplate DataType="x:Int16">
-									<NumericUpDown Value="{Binding $parent[2].DataContext.Value,Mode=TwoWay}" Minimum="0" />
+									<NumericUpDown Value="{Binding $parent[2].DataContext.Value,Mode=TwoWay}"/>
 								</DataTemplate>
 								<DataTemplate DataType="x:Byte">
-									<NumericUpDown Value="{Binding $parent[2].DataContext.Value,Mode=TwoWay}" Minimum="0" />
+									<NumericUpDown Value="{Binding $parent[2].DataContext.Value,Mode=TwoWay}"/>
 								</DataTemplate>
 								<DataTemplate DataType="x:Boolean">
 									<CheckBox IsChecked="{Binding $parent[2].DataContext.Value,Mode=TwoWay}" />
@@ -67,12 +79,24 @@
 								<DataTemplate>
 									<TextBlock Text="Unknown type" />
 								</DataTemplate>
+
+								<DataTemplate DataType="ad:IDataPoint">
+									<Grid ColumnDefinitions="*, 25">
+										<TextBox Grid.Column="0" Text="{Binding $parent[2].DataContext.Value,Mode=TwoWay}"/>
+										<Button Grid.Column="1" Height="25" Width="20" Padding="0"
+											Command="{Binding DataContext.ShowConnectionManagerCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}">
+										</Button>
+									</Grid>
+								</DataTemplate>
+
 							</ContentControl.DataTemplates>
 						</ContentControl>
+						
 						<Button Grid.Column="4" Height="25" Width="20" Padding="0"
 								IsVisible="{Binding IsConnectable}"
 								Command="{Binding DataContext.ShowConnectionManagerCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}">
 						</Button>
+						
 					</Grid>
 				</DataTemplate>
 			</ListBox.ItemTemplate>

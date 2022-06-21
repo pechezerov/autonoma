@@ -5,7 +5,7 @@ using System;
 
 namespace Autonoma.UI.Configuration.ViewModels
 {
-    internal class DataPointViewModel : ViewModelBase, IDataPoint
+    public class DataPointViewModel : ViewModelBase, IDataPoint
     {
         public DataPointViewModel(DataPointConfiguration configuration)
         {

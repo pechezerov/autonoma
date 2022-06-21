@@ -16,5 +16,5 @@
 		<design:DesignPropertiesToolViewModel />
 	</Design.DataContext>
 
-	<pc:PropertiesEditor EditedObject="{Binding EditedObject}"/>
+	<pc:PropertiesEditor DataContext="{Binding EditedObject}"/>
 </UserControl>

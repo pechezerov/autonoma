@@ -13,10 +13,18 @@ namespace Autonoma.UI.Presentation.Converters
     public class ObjectToPropertiesConverter : IValueConverter
     {
         public readonly static ObjectToPropertiesConverter Instance = new();
+        private static PropertyViewModelBase? CreatePropertyViewModel(object basicObject, PropertyInfo property)
+        {
+            Type propertyViewModelGenericType = typeof(PropertyViewModel<>);
+            Type[] propertyTypeArg = { property.PropertyType };
+            Type propertyViewModelType = propertyViewModelGenericType.MakeGenericType(propertyTypeArg);
+            var propertyViewModel = Activator.CreateInstance(propertyViewModelType, new object[] { property, basicObject }) as PropertyViewModelBase;
+            return propertyViewModel;
+        }
 
         public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            var result = new List<PropertyViewModel>();
+            var result = new List<PropertyViewModelBase>();
 
             if (value != null)
             {
@@ -31,7 +39,10 @@ namespace Autonoma.UI.Presentation.Converters
                             && typeof(IEnumerable).IsAssignableFrom(property.PropertyType))
                             || property.GetCustomAttribute<BrowsableAttribute>()?.Browsable == false)
                             continue;
-                        result.Add(new PropertyViewModel(property, basicObject));
+
+                        var propertyViewModel = CreatePropertyViewModel(basicObject, property);
+                        if (propertyViewModel != null)
+                            result.Add(propertyViewModel);
                     }
 
                     if (basicObject is ElementViewModel basicElement)
@@ -48,8 +59,10 @@ namespace Autonoma.UI.Presentation.Converters
                                     && typeof(IEnumerable).IsAssignableFrom(controlProperty.PropertyType))
                                     || controlProperty.GetCustomAttribute<BrowsableAttribute>()?.Browsable == false)
                                     continue;
-                                var property = new PropertyViewModel(controlProperty, controlObject);
-                                result.Add(property);
+
+                                var propertyViewModel = CreatePropertyViewModel(controlObject, controlProperty);
+                                if (propertyViewModel != null)
+                                    result.Add(propertyViewModel);
                             }
                         }
                     }

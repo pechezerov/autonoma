@@ -5,35 +5,50 @@ using System.Reflection;
 
 namespace Autonoma.UI.Presentation.ViewModels
 {
-    public class PropertyViewModel : ReactiveObject
+    public abstract class PropertyViewModelBase : ReactiveObject
     {
-        private readonly object source;
-        private readonly PropertyInfo pi;
+        public string Name { get; }
+        public abstract Type Type { get; }
 
-        public PropertyViewModel(PropertyInfo pi, object source)
+        public PropertyViewModelBase(string name)
         {
-            this.pi = pi;
-            this.source = source;
-            IsConnectable = pi.GetCustomAttribute<ConnectedAttribute>() != null;
-            Name = pi.Name;
-            Value = pi.GetMethod?.Invoke(source, null);
+            Name = name;
+        }
+    }
+
+    public class PropertyViewModel<T> : PropertyViewModelBase
+    {
+        private readonly object _source;
+        private readonly PropertyInfo _property;
+
+        public PropertyViewModel(PropertyInfo prop, object source) : base(prop.Name)
+        {
+            this._property = prop;
+            this._source = source;
+
+            IsConnectable = prop.GetCustomAttribute<ConnectedAttribute>() != null;
+
+            Value = (T?)prop.GetMethod?.Invoke(source, null);
         }
 
-        public string Name { get; }
+        public override Type Type => _property.PropertyType;
 
         public bool IsConnectable { get; }
 
-        public object? Value
+        public T? Value
         {
             get
             {
-                return pi.GetMethod?.Invoke(source, null);
+                var v =  _property.GetMethod?.Invoke(_source, null);
+                if (v is T)
+                    return (T)v;
+                return default(T);
             }
             set
             {
                 try
                 {
-                    pi.SetMethod?.Invoke(source, new[] { Convert.ChangeType(value, pi.PropertyType) });
+                    _property.SetMethod?.Invoke(_source, new[] { Convert.ChangeType(value, _property.PropertyType) });
                 }
                 catch { }
             }
@@ -43,8 +58,8 @@ namespace Autonoma.UI.Presentation.ViewModels
         {
             get
             {
-                if (pi.PropertyType.IsEnum)
-                    return Enum.GetValues(pi.PropertyType);
+                if (_property.PropertyType.IsEnum)
+                    return Enum.GetValues(_property.PropertyType);
                 return Array.Empty<object>();
             }
         }
