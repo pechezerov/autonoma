@@ -53,12 +53,12 @@
     <Compile Update="Controls\LooklessControl.axaml.cs">
       <DependentUpon>%(Filename)</DependentUpon>
     </Compile>
+    <Compile Update="Controls\DataPointNavigator.axaml.cs">
+      <DependentUpon>DataPointNavigator.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Controls\PropertiesEditor.axaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>PropertiesEditor.axaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\ConnectionManager.axaml.cs">
-      <DependentUpon>%(Filename)</DependentUpon>
     </Compile>
     <Compile Update="Views\ConnectionManagerWindow.axaml.cs">
       <DependentUpon>%(Filename)</DependentUpon>

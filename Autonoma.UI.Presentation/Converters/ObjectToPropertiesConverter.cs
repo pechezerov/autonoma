@@ -13,6 +13,7 @@ namespace Autonoma.UI.Presentation.Converters
     public class ObjectToPropertiesConverter : IValueConverter
     {
         public readonly static ObjectToPropertiesConverter Instance = new();
+
         private static PropertyViewModelBase? CreatePropertyViewModel(object basicObject, PropertyInfo property)
         {
             Type propertyViewModelGenericType = typeof(PropertyViewModel<>);
@@ -40,9 +41,13 @@ namespace Autonoma.UI.Presentation.Converters
                             || property.GetCustomAttribute<BrowsableAttribute>()?.Browsable == false)
                             continue;
 
+                        var isReadOnly = property.GetCustomAttribute<ReadOnlyAttribute>()?.IsReadOnly == true;
                         var propertyViewModel = CreatePropertyViewModel(basicObject, property);
                         if (propertyViewModel != null)
+                        {
+                            propertyViewModel.IsReadOnly = isReadOnly;
                             result.Add(propertyViewModel);
+                        }
                     }
 
                     if (basicObject is ElementViewModel basicElement)

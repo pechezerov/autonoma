@@ -2,13 +2,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:pv="using:Autonoma.UI.Presentation.Views"
+        xmlns:pc="using:Autonoma.UI.Presentation.Controls"
         mc:Ignorable="d" d:DesignWidth="250" d:DesignHeight="300"
         x:Class="Autonoma.UI.Presentation.Views.ConnectionManagerWindow"
         Title="ConnectionManagerWindow">
 	<Grid RowDefinitions="*, 30">
 
-		<pv:ConnectionManager/>
+		<pc:DataPointNavigator/>
 		
 		<Grid ColumnDefinitions="*,Auto,*">
 			<StackPanel Grid.Column="1">

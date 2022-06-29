@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="Autonoma.UI.Presentation.Controls.DataPointNavigator"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:sys="clr-namespace:System;assembly=mscorlib"
+			 xmlns:syscol="clr-namespace:System.Collections;assembly=mscorlib"
+             xmlns:design="using:Autonoma.UI.Presentation.Design"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="600"
+			 xmlns:ad="clr-namespace:Autonoma.Domain.Abstractions;assembly=Autonoma.Domain"
+			 xmlns:pe="clr-namespace:Autonoma.UI.Presentation.Extensions;assembly=Autonoma.UI.Presentation"
+			 xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+			 xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+			 x:Name="propertiesToolViewHost">
+	
+	<Design.DataContext>
+		<design:DesignDataPointViewModel />
+	</Design.DataContext>
+
+	<Border Padding="5" BorderBrush="Gray">
+		<Grid RowDefinitions="20,20,20,20,20,20,20" ColumnDefinitions="150,5,*">
+			<GridSplitter Grid.Column="1" VerticalAlignment="Stretch" Width="3"/>
+
+			<TextBlock Grid.Row="0" Text="Name"/>
+			<TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Name}"/>
+
+			<TextBlock Grid.Row="1" Text="Type"/>
+			<TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Type}"/>
+
+			<TextBlock Grid.Row="2" Text="Source"/>
+			<TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Source}"/>
+
+			<TextBlock Grid.Row="3" Text="Mapping"/>
+			<TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding Mapping}"/>
+
+			<TextBlock Grid.Row="4" Text="Unit"/>
+			<TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding Unit}"/>
+		</Grid>
+	</Border>
+
+</UserControl>

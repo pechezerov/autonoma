@@ -27,15 +27,33 @@
 				  ColumnDefinitions="*,Auto,2*">
 
 				<Grid Grid.Column="0" Grid.RowSpan="2">
-					<TreeView x:Name="treeTechnology" Items="{Binding Routers}" SelectionMode="Single">
+					<TreeView x:Name="treeTechnology" Items="{Binding Routers}" SelectionMode="Single" SelectedItem="{Binding SelectedElement}">
 						<TreeView.DataTemplates>
 							<TreeDataTemplate DataType="a:IRouter" ItemsSource="{Binding Adapters}">
-								<TextBlock Text="{Binding Name}"/>
+								<TextBlock Text="{Binding Name}">
+									<TextBlock.ContextMenu>
+										<ContextMenu>
+											<MenuItem Header="Add new adapter" Command="{Binding #grdTechnology.DataContext.CreateAdapterCommand}"/>
+											<MenuItem Header="Remove" Command="{Binding #grdTechnology.DataContext.RemoveRouterCommand}"/>
+										</ContextMenu>
+									</TextBlock.ContextMenu>
+								</TextBlock>
 							</TreeDataTemplate>
 							<DataTemplate DataType="a:IAdapter">
-								<TextBlock Text="{Binding Name}" />
+								<TextBlock Text="{Binding Name}">
+									<TextBlock.ContextMenu>
+										<ContextMenu>
+											<MenuItem Header="Remove" Command="{Binding #grdTechnology.DataContext.RemoveAdapterCommand}"/>
+										</ContextMenu>
+									</TextBlock.ContextMenu>
+								</TextBlock>
 							</DataTemplate>
 						</TreeView.DataTemplates>
+						<TreeView.ContextMenu>
+							<ContextMenu>
+								<MenuItem Header="Add new router" Command="{Binding #grdTechnology.DataContext.CreateRouterCommand}" CommandParameter="root"/>
+							</ContextMenu>
+						</TreeView.ContextMenu>
 					</TreeView>
 				</Grid>
 
@@ -72,20 +90,45 @@
 
 				<Grid Grid.Column="0">
 					<TreeView x:Name="treeTopology"
-						Items="{Binding Elements}" SelectionMode="Single">
+						Items="{Binding Elements}" SelectionMode="Single" SelectedItem="{Binding SelectedElement}">
 						<TreeView.DataTemplates>
 							<TreeDataTemplate DataType="a:IModelElement" ItemsSource="{Binding Elements}">
-								<TextBlock Text="{Binding Name}" />
+								<TextBlock Text="{Binding Name}">
+									<TextBlock.ContextMenu>
+										<ContextMenu>
+											<MenuItem Header="Add new" Command="{Binding CreateElementCommand}"/>
+											<MenuItem Header="Remove" Command="{Binding RemoveElementCommand}"/>
+										</ContextMenu>
+									</TextBlock.ContextMenu>
+								</TextBlock>
 							</TreeDataTemplate>
 						</TreeView.DataTemplates>
+						<TreeView.ContextMenu>
+							<ContextMenu>
+								<MenuItem Header="Add new" Command="{Binding #grdTopology.DataContext.CreateElementCommand}"/>
+							</ContextMenu>
+						</TreeView.ContextMenu>
 					</TreeView>
 				</Grid>
 
 				<GridSplitter Grid.Column="1" VerticalAlignment="Stretch" Width="3" Margin="0"/>
 
 				<Grid Grid.Column="2">
-					<pc:PropertiesEditor DataContext="{Binding #treeTopology.SelectedItem}"
-										 HorizontalAlignment="Stretch"/>
+					
+					<Grid RowDefinitions="Auto, Auto, *">
+						<pc:PropertiesEditor Grid.Row="0" DataContext="{Binding #treeTopology.SelectedItem}"
+							HorizontalAlignment="Stretch"/>
+						
+						<pc:DataPointNavigator Grid.Row="1" DataContext="{Binding #treeTopology.SelectedItem.DataPoint}"
+							HorizontalAlignment="Stretch"/>
+						
+						<DataGrid Grid.Row="2" Items="{Binding #treeTopology.SelectedItem.Attributes}">
+							<DataGrid.Columns>
+								<DataGridTextColumn Binding="{Binding Name}"/>
+								<DataGridTextColumn Binding="{Binding Value}"/>
+							</DataGrid.Columns>
+						</DataGrid>
+					</Grid>
 				</Grid>
 
 			</Grid>

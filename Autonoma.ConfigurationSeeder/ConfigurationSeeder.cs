@@ -129,43 +129,61 @@ namespace Autonoma.ConfigurationSeeder
             if (_context.ModelElements.Any())
                 return;
 
-            var baseTemplate = new ModelElementTemplateConfiguration
+            var dataObjectTemplate = new ModelElementTemplateConfiguration
             {
-                Name = $"BaseTemplate"
+                Name = "DataObject",
+                Id = Globals.DataObjectTemplateId,
             };
-            baseTemplate.Attributes.Add(new ModelAttributeTemplateConfiguration
-            {
-                Name = "AttributeInt",
-                Type = TypeCode.Int32,
-                Template = baseTemplate
-            });
-            baseTemplate.Attributes.Add(new ModelAttributeTemplateConfiguration
-            {
-                Name = "AttributeString",
-                Type = TypeCode.String,
-                Template = baseTemplate
-            });
 
-            var derivedTemplate = new ModelElementTemplateConfiguration
+            var measuredValueIntTemplate = new ModelElementTemplateConfiguration
             {
-                Name = $"DerivedTemplate",
-                BaseTemplate = baseTemplate,
+                Name = "MeasuredValueDouble",
+                Id = Globals.MeasuredValueIntModelTemplateId,
+                BaseTemplate = dataObjectTemplate
             };
-            derivedTemplate.Attributes.Add(new ModelAttributeTemplateConfiguration
-            {
-                Name = "AttributeInt2",
-                Type = TypeCode.Int32,
-                Template = derivedTemplate
-            });
-            derivedTemplate.Attributes.Add(new ModelAttributeTemplateConfiguration
-            {
-                Name = "AttributeString2",
-                Type = TypeCode.String,
-                Template = derivedTemplate
-            });
+            measuredValueIntTemplate.AddAttribute("Value", TypeCode.Int32);
+            measuredValueIntTemplate.AddAttribute("Timestamp", TypeCode.DateTime);
 
-            _context.ModelTemplates.Add(baseTemplate);
-            _context.ModelTemplates.Add(derivedTemplate);
+            var measuredValueIntQualifiedTemplate = new ModelElementTemplateConfiguration
+            {
+                Name = "MeasuredValueIntWithQuality",
+                Id = Globals.MeasuredValueIntWithQualityModelTemplateId,
+                BaseTemplate = measuredValueIntTemplate,
+            };
+            measuredValueIntQualifiedTemplate.AddAttribute("Quality", TypeCode.Int32);
+            measuredValueIntQualifiedTemplate.AddAttribute("High", TypeCode.Int32, ModelAttributeType.Setting);
+            measuredValueIntQualifiedTemplate.AddAttribute("Low", TypeCode.Int32, ModelAttributeType.Setting);
+            measuredValueIntQualifiedTemplate.AddAttribute("HighHigh", TypeCode.Int32, ModelAttributeType.Setting);
+            measuredValueIntQualifiedTemplate.AddAttribute("LowLow", TypeCode.Int32, ModelAttributeType.Setting);
+            measuredValueIntQualifiedTemplate.AddAttribute("Range", TypeCode.Int32);
+
+            var measuredValueDoubleTemplate = new ModelElementTemplateConfiguration
+            {
+                Name = "MeasuredValueDouble",
+                Id = Globals.MeasuredValueDoubleModelTemplateId,
+                BaseTemplate = dataObjectTemplate
+            };
+            measuredValueDoubleTemplate.AddAttribute("Value", TypeCode.Double);
+            measuredValueDoubleTemplate.AddAttribute("Timestamp", TypeCode.DateTime);
+
+            var measuredValueDoubleQualifiedTemplate = new ModelElementTemplateConfiguration
+            {
+                Name = "MeasuredValueDoubleWithQuality",
+                Id = Globals.MeasuredValueDoubleWithQualityModelTemplateId,
+                BaseTemplate = measuredValueDoubleTemplate,
+            };
+            measuredValueDoubleQualifiedTemplate.AddAttribute("Quality",TypeCode.Int32);
+            measuredValueDoubleQualifiedTemplate.AddAttribute("High", TypeCode.Double, ModelAttributeType.Setting);
+            measuredValueDoubleQualifiedTemplate.AddAttribute("Low", TypeCode.Double, ModelAttributeType.Setting);
+            measuredValueDoubleQualifiedTemplate.AddAttribute("HighHigh", TypeCode.Double, ModelAttributeType.Setting);
+            measuredValueDoubleQualifiedTemplate.AddAttribute("LowLow", TypeCode.Double, ModelAttributeType.Setting);
+            measuredValueDoubleQualifiedTemplate.AddAttribute("Range", TypeCode.Int32);
+
+            _context.ModelTemplates.Add(dataObjectTemplate);
+            _context.ModelTemplates.Add(measuredValueIntTemplate);
+            _context.ModelTemplates.Add(measuredValueIntQualifiedTemplate);
+            _context.ModelTemplates.Add(measuredValueDoubleTemplate);
+            _context.ModelTemplates.Add(measuredValueDoubleQualifiedTemplate);
 
             _context.SaveChanges();
 
@@ -177,7 +195,7 @@ namespace Autonoma.ConfigurationSeeder
                 var groupElement = new ModelElementConfiguration
                 {
                     Name = $"Element{j}",
-                    Template = baseTemplate,
+                    Template = measuredValueDoubleTemplate,
                 };
                 _context.ModelElements.Add(groupElement);
 
@@ -186,7 +204,7 @@ namespace Autonoma.ConfigurationSeeder
                     var element = new ModelElementConfiguration
                     {
                         Name = $"Element{j}-{i}",
-                        Template = baseTemplate,
+                        Template = measuredValueDoubleTemplate,
                         ParentElement = groupElement,
                     };
                     _context.ModelElements.Add(element);
@@ -197,7 +215,7 @@ namespace Autonoma.ConfigurationSeeder
                     var element = new ModelElementConfiguration
                     {
                         Name = $"Element{j}-{i}",
-                        Template = derivedTemplate,
+                        Template = measuredValueDoubleQualifiedTemplate,
                         ParentElement = groupElement,
                     };
                     _context.ModelElements.Add(element);

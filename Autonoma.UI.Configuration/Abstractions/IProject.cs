@@ -47,7 +47,7 @@ namespace Autonoma.UI.Configuration.Abstractions
     /// <summary>
     /// Неструктурированная единица информационной модели
     /// </summary>
-    public interface IDataPoint : IModelElement
+    public interface IDataPoint
     {
     }
 
@@ -57,5 +57,21 @@ namespace Autonoma.UI.Configuration.Abstractions
     public interface IModelElement
     {
         public string Name { get; }
+
+        IModelElement? Parent { get; }
+
+        IList<IModelElement> Elements { get; }
+
+        IList<IModelAttribute> Attributes { get; }
+
+        bool AllowEditElements { get; }
+
+        void AddElement(IModelElement element);
+    }
+
+    public interface IModelAttribute
+    {
+        public string Name { get; }
+        public string Value { get; }
     }
 }

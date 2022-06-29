@@ -21,6 +21,10 @@ namespace Autonoma.Configuration
 
         public DbSet<ModelElementTemplateConfiguration> ModelTemplates { get; set; }
 
+        public DbSet<ModelAttributeConfiguration> ModelAttributes { get; set; }
+
+        public DbSet<ModelAttributeTemplateConfiguration> ModelAttributeTemplates { get; set; }
+
         public DbSet<User> Users { get; set; }
 
         public ConfigurationContext(DbContextOptions<ConfigurationContext> options) : base(options)
@@ -75,8 +79,8 @@ namespace Autonoma.Configuration
                 .OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<ModelElementTemplateConfiguration>()
                 .HasMany(t => t.Attributes)
-                .WithOne(a => a.Template)
-                .HasForeignKey(a => a.TemplateId)
+                .WithOne(a => a.ElementTemplate)
+                .HasForeignKey(a => a.BaseTemplateId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<ModelAttributeTemplateConfiguration>()

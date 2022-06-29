@@ -8,7 +8,12 @@ namespace Autonoma.UI.Presentation.ViewModels
     public abstract class PropertyViewModelBase : ReactiveObject
     {
         public string Name { get; }
+
+        public string? Description { get; }
+
         public abstract Type Type { get; }
+
+        public bool? IsReadOnly { get; set; }
 
         public PropertyViewModelBase(string name)
         {
@@ -28,27 +33,33 @@ namespace Autonoma.UI.Presentation.ViewModels
 
             IsConnectable = prop.GetCustomAttribute<ConnectedAttribute>() != null;
 
-            Value = (T?)prop.GetMethod?.Invoke(source, null);
+            Value = (T)prop.GetMethod?.Invoke(source, null);
         }
 
         public override Type Type => _property.PropertyType;
 
         public bool IsConnectable { get; }
 
-        public T? Value
+        private T? _value;
+        public T Value
         {
             get
             {
-                var v =  _property.GetMethod?.Invoke(_source, null);
-                if (v is T)
-                    return (T)v;
-                return default(T);
+                if (_value == null)
+                {
+                    var v = _property.GetMethod?.Invoke(_source, null);
+                    if (v is T)
+                        _value = (T)v;
+                    _value =  Activator.CreateInstance<T>();
+                }
+                return _value;
             }
             set
             {
                 try
                 {
-                    _property.SetMethod?.Invoke(_source, new[] { Convert.ChangeType(value, _property.PropertyType) });
+                    _value = (T)Convert.ChangeType(value, _property.PropertyType);
+                    _property.SetMethod?.Invoke(_source, new object?[] { _value });
                 }
                 catch { }
             }

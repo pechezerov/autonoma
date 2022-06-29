@@ -2,6 +2,7 @@
 using Autonoma.UI.Configuration.Abstractions;
 using Autonoma.UI.Presentation.ViewModels;
 using System;
+using System.Collections.Generic;
 
 namespace Autonoma.UI.Configuration.ViewModels
 {
@@ -15,6 +16,8 @@ namespace Autonoma.UI.Configuration.ViewModels
             Mapping = configuration.Mapping;
         }
 
+        public bool AllowEditElements => false;
+
         public string Name { get; set; }
 
         public TypeCode Type { get; set; } = TypeCode.Int32;
@@ -23,5 +26,13 @@ namespace Autonoma.UI.Configuration.ViewModels
 
         public string Mapping { get; set; } = "";
 
+        public IModelElement? Parent { get; set; }
+
+        public IList<IModelElement> Elements => Array.Empty<IModelElement>();
+
+        public void AddElement(IModelElement element)
+        {
+            
+        }
     }
 }

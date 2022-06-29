@@ -38,5 +38,11 @@ namespace Autonoma.Core
         {
             return DataPointTypeSizes[valueType];
         }
+
+        public const int DataObjectTemplateId = 1;
+        public const int MeasuredValueIntModelTemplateId = 101;
+        public const int MeasuredValueIntWithQualityModelTemplateId = 102;
+        public const int MeasuredValueDoubleModelTemplateId = 111;
+        public const int MeasuredValueDoubleWithQualityModelTemplateId = 112;
     }
 }

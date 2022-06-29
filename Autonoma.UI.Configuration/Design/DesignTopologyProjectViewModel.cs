@@ -1,7 +1,9 @@
-﻿using Autonoma.UI.Configuration.Abstractions;
+﻿using Autonoma.Domain.Entities;
+using Autonoma.UI.Configuration.Abstractions;
 using Autonoma.UI.Configuration.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Autonoma.UI.Configuration.Design
 {
@@ -12,10 +14,7 @@ namespace Autonoma.UI.Configuration.Design
 
         private static IModelElement GenerateDesignModelViewModel(int depth = 1)
         {
-            var result = new ModelElementViewModel
-            {
-                Name = $"Element{_counter++}"
-            };
+            var result = new DesignModelElementViewModel(_counter++);
 
             if (depth < _maxDepth)
             {
@@ -28,7 +27,12 @@ namespace Autonoma.UI.Configuration.Design
             return result;
         }
 
-        public IEnumerable<IModelElement> Elements { get; set; } = new List<IModelElement>()
+        public void AddElement(IModelElement element)
+        {
+            Elements.Add(element);
+        }
+
+        public ObservableCollection<IModelElement> Elements { get; set; } = new ObservableCollection<IModelElement>()
         {
             GenerateDesignModelViewModel(),
             GenerateDesignModelViewModel(),
@@ -36,7 +40,17 @@ namespace Autonoma.UI.Configuration.Design
             GenerateDesignModelViewModel(),
             GenerateDesignModelViewModel(),
         };
+        IList<IModelElement> IModelElement.Elements => Elements;
 
+        public bool AllowEditElements => true;
         public string Name => "Test";
+
+        public IModelElement? Parent { get; set; }
+
+        public IList<IModelAttribute> Attributes => new List<IModelAttribute>
+        {
+            new ModelAttributeViewModel { Name = "IntProperty", Value = "1" },
+            new ModelAttributeViewModel { Name = "StringProperty", Value = "text" },
+        };
     }
 }

@@ -61,11 +61,17 @@ namespace Autonoma.UI.Configuration
 
         private void FillTopology(ProjectViewModel project)
         {
-            var templates = Context.ModelTemplates
-                .ToList();
+            var templatesDict = Context.ModelTemplates
+                .Include(t => t.Attributes)
+                .Include(t => t.BaseTemplate!.Attributes)
+                .ToDictionary(t => t.Id, t => t);
+
             var flatModel = Context.ModelElements
-                .Include(m => m.Attributes)
+                .Include(e => e.Attributes)
                 .ToList();
+
+            foreach (var modelElement in flatModel)
+                modelElement.Template = templatesDict[modelElement.TemplateId];
 
             var treeModel = GenerateModelTree(flatModel);
 
@@ -77,10 +83,11 @@ namespace Autonoma.UI.Configuration
 
         private ModelElementViewModel BuildElementViewModel(ModelElementConfiguration elementConfig, ModelElementViewModel? parentElementViewModel)
         {
-            var element = new ModelElementViewModel
-            {
-                Name = elementConfig.Name
-            };
+            var element = new SimpleModelElementViewModel(elementConfig);
+            element.Parent = parentElementViewModel;
+
+            foreach (var elementAttributeTemplate in elementConfig.Template.GetModelAttributes())
+                element.Attributes.Add(new ModelAttributeViewModel(elementAttributeTemplate));
 
             foreach (var childConfig in elementConfig.Elements)
             {
