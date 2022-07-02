@@ -1,31 +1,33 @@
-﻿using Akka.Actor;
-using Akka.DependencyInjection;
-using Akka.Event;
+﻿using Akka.Event;
 using Autonoma.Domain;
 using Autonoma.Domain.Entities;
 using Autonoma.Model.Akka.Events;
+using Autonoma.Model.Akka.Services;
 
 namespace Autonoma.Model.Akka.Actors
 {
     public class DataPointActor : BaseActor
     {
-        private DataValue? _lastValue;
-
-        public DataPointActor(DataPointConfiguration dataPointPrototype)
+        public DataPointActor(ModelElementConfiguration elementPrototype, AkkaHostService host)
         {
-            DataPointPrototype = dataPointPrototype;
+            Host = host;
+            DataPointPrototype = elementPrototype;
             Receive<DataValue>(OnUpdate);
             Context.System.EventStream.Subscribe<DataPointActorInitializedEvent>(Self);
         }
 
-        public DataPointConfiguration DataPointPrototype { get; }
+        protected override void PreStart()
+        {
+            Host.ReceiveUpdateCallback(DataPointPrototype.Id, DataValue.NoData);
+        }
+
+        public AkkaHostService Host { get; }
+
+        public ModelElementConfiguration DataPointPrototype { get; private set; }
 
         private void OnUpdate(DataValue value)
         {
-            if (value == _lastValue)
-                return;
-
-            _lastValue = value;
+            Host.ReceiveUpdateCallback(DataPointPrototype.Id, value);
         }
     }
 }

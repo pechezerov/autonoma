@@ -7,7 +7,8 @@ namespace Autonoma.API.Infrastructure
     {
         public IAdapterRepository AdapterRepository { get; }
         public IDataPointRepository DataPointRepository { get; }
-        public IModelRepository ModelRepository { get; }
+        public IModelElementRepository ModelRepository { get; }
+        public IModelElementTemplateRepository ModelTemplateRepository { get; }
 
         int Commit();
         Task<int> CommitAsync();

@@ -6,8 +6,11 @@ namespace Autonoma.Configuration.Repositories.Abstractions
     {
     }
 
-    public interface IModelRepository : IGenericRepository<ModelElementConfiguration>
+    public interface IModelElementRepository : IGenericRepository<ModelElementConfiguration>
     {
+    }
 
+    public interface IModelElementTemplateRepository : IGenericRepository<ModelElementTemplateConfiguration>
+    {
     }
 }

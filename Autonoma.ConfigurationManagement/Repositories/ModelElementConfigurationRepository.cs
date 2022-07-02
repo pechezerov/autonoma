@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Autonoma.ConfigurationManagement.Repositories
 {
-    public class ModelConfigurationRepository : GenericRepository<ModelElementConfiguration>, IModelRepository
+    public class ModelElementConfigurationRepository : GenericRepository<ModelElementConfiguration>, IModelElementRepository
     {
-        public ModelConfigurationRepository(DbContext context) : base(context)
+        public ModelElementConfigurationRepository(DbContext context) : base(context)
         {
         }
     }

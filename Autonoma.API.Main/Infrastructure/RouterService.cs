@@ -54,19 +54,24 @@ namespace Autonoma.API.Main.Infrastructure
             dataPointSubscriptionsTable.Add(connectionId, subscriptions);
         }
 
-        protected override async Task ExecuteAsync(CancellationToken cancellationToken)
+        protected override Task ExecuteAsync(CancellationToken cancellationToken)
         {
-            while (!cancellationToken.IsCancellationRequested)
+            Task.Run(async () =>
             {
-                try
+                while (!cancellationToken.IsCancellationRequested)
                 {
-                    await WriteDataStep();
+                    try
+                    {
+                        await WriteDataStep();
+                    }
+                    catch (Exception exception)
+                    {
+                        _logger.LogError(exception, "Error on handling queue");
+                    }
                 }
-                catch (Exception exception)
-                {
-                    _logger.LogError(exception, "Error on handling queue");
-                }
-            }
+            });
+
+            return Task.CompletedTask;
         }
 
         protected int GetFlushTimeoutMs()

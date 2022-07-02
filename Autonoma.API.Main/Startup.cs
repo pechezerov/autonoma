@@ -1,25 +1,23 @@
 using Autofac;
+using Autonoma.API.Main.Infrastructure;
+using Autonoma.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Autonoma.Configuration;
-using Autonoma.API.Main.Infrastructure;
 using Microsoft.Extensions.Logging;
-using Autonoma.Model.Akka.Services;
 
 namespace Autonoma.API
 {
     public partial class Startup
     {
+        private readonly IConfiguration _configuration;
+
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -31,22 +29,19 @@ namespace Autonoma.API
                 .AddNewtonsoftJson();
 
             // add database contexts
-            services.AddCustomDbContext(Configuration, LoggerFactory.Create(builder => { builder.AddConsole(); }));
+            services.AddCustomDbContext(_configuration, LoggerFactory.Create(builder => { builder.AddConsole(); }));
             // add services
-            services.AddBusinessServices(Configuration);
+            services.AddBusinessServices(_configuration);
             // configure mapper
-            services.AddCustomMapper(Configuration);
+            services.AddCustomMapper(_configuration);
             // configure swagger
             services.AddCustomSwagger();
 
             services.AddSignalR()
                 .AddNewtonsoftJsonProtocol();
-
-            // starts the IHostedService, which creates the ActorSystem and actors
-            services.AddTransient<IHostedService, AkkaService>();
         }
 
-        public void ConfigureContainer(ContainerBuilder builder)
+        public static void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterModule<BusinessModule>();
         }
@@ -62,8 +57,6 @@ namespace Autonoma.API
                     options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
                 });
             }
-
-            app.UseHttpsRedirection();
 
             app.UseRouting();
 

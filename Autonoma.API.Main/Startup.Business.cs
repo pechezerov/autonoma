@@ -1,8 +1,10 @@
 ﻿using Autonoma.API.Infrastructure;
+using Autonoma.API.Main.Infrastructure;
 using Autonoma.Configuration;
 using Autonoma.Configuration.Repositories;
 using Autonoma.Configuration.Repositories.Abstractions;
 using Autonoma.Domain.Entities;
+using Autonoma.Model.Akka.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +19,10 @@ namespace Autonoma.API
 			services
 				.AddTransient<IUnitOfWork, UnitOfWork>()
 				.AddTransient<IGenericRepository<AdapterConfiguration>, AdapterConfigurationRepository>()
-                .AddTransient<IGenericRepository<DataPointConfiguration>, DataPointConfigurationRepository>();
-		}
+                .AddTransient<IGenericRepository<DataPointConfiguration>, DataPointConfigurationRepository>()
+
+                .AddHostedService<RouterService>()
+                .AddHostedService<AkkaHostService>();
+        }
     }
 }

@@ -38,7 +38,5 @@ namespace Autonoma.Communication.Hosting
         /// </summary>
         /// <param name="id"></param>
         void RemoveDataPoint(int id);
-
-        void Initialize(List<DataPointConfiguration> pointConfigs);
     }
 }

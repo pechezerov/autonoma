@@ -85,32 +85,41 @@ namespace Autonoma.ConfigurationSeeder
             _context.SaveChanges();
         }
 
+        // 40 тегов, 3 команды
         private void CheckTestDataPoints()
         {
             if (_context.DataPoints.Any())
                 return;
 
-            for (int i = 0; i < 50; i++)
+            for (int i = 1; i <= 20; i++)
             {
                 _context.DataPoints.Add(new DataPointConfiguration
                 {
+                    Id = i,
                     Name = $"Variable{i}",
                     Type = TypeCode.Double,
                     AdapterId = Globals.TestAdapterId,
                     Mapping = $"mappingparams({i})"
                 });
+            }
+
+            for (int i = 21; i <= 40; i++)
+            {
                 _context.DataPoints.Add(new DataPointConfiguration
                 {
+                    Id = i,
                     Name = $"Variable{i}",
                     Type = TypeCode.Double,
                     AdapterId = 31,
                     Mapping = $"mappingparams({i})"
                 });
             }
-            for (int i = 0; i < 10; i++)
+
+            for (int i = 1001; i <= 1010; i++)
             {
                 _context.DataPoints.Add(new DataPointConfiguration
                 {
+                    Id = i,
                     Name = $"Command{i}",
                     Type = TypeCode.Boolean,
                     Source = DataSource.Control,
@@ -122,6 +131,7 @@ namespace Autonoma.ConfigurationSeeder
             _context.SaveChanges();
         }
 
+        // 40 элементов
         private void CheckTestModel()
         {
             if (_context.ModelTemplates.Any())
@@ -172,7 +182,7 @@ namespace Autonoma.ConfigurationSeeder
                 Id = Globals.MeasuredValueDoubleWithQualityModelTemplateId,
                 BaseTemplate = measuredValueDoubleTemplate,
             };
-            measuredValueDoubleQualifiedTemplate.AddAttribute("Quality",TypeCode.Int32);
+            measuredValueDoubleQualifiedTemplate.AddAttribute("Quality", TypeCode.Int32);
             measuredValueDoubleQualifiedTemplate.AddAttribute("High", TypeCode.Double, ModelAttributeType.Setting);
             measuredValueDoubleQualifiedTemplate.AddAttribute("Low", TypeCode.Double, ModelAttributeType.Setting);
             measuredValueDoubleQualifiedTemplate.AddAttribute("HighHigh", TypeCode.Double, ModelAttributeType.Setting);
@@ -190,33 +200,38 @@ namespace Autonoma.ConfigurationSeeder
             if (_context.ModelElements.Any())
                 return;
 
-            for (int j = 0; j < 4; j++)
+            for (int j = 0; j <= 3; j++)
             {
                 var groupElement = new ModelElementConfiguration
                 {
-                    Name = $"Element{j}",
+                    Id = j * 1000,
+                    Name = $"ElementOwner_{j}",
                     Template = measuredValueDoubleTemplate,
                 };
                 _context.ModelElements.Add(groupElement);
 
-                for (int i = 0; i < 10; i++)
+                for (int i = 1; i <= 5; i++)
                 {
                     var element = new ModelElementConfiguration
                     {
-                        Name = $"Element{j}-{i}",
+                        Id = j * 10 + i,
+                        Name = $"Element{j * 10 + i}",
                         Template = measuredValueDoubleTemplate,
                         ParentElement = groupElement,
+                        DataPointId = j * 10 + i,
                     };
                     _context.ModelElements.Add(element);
                 }
 
-                for (int i = 0; i < 10; i++)
+                for (int i = 6; i <= 10; i++)
                 {
                     var element = new ModelElementConfiguration
                     {
-                        Name = $"Element{j}-{i}",
+                        Id = j * 10 + i,
+                        Name = $"Element{j * 10 + i}",
                         Template = measuredValueDoubleQualifiedTemplate,
                         ParentElement = groupElement,
+                        DataPointId = j * 10 + i,
                     };
                     _context.ModelElements.Add(element);
                 }

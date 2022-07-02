@@ -15,7 +15,8 @@ namespace Autonoma.API.Infrastructure
 
         public IAdapterRepository AdapterRepository { get; }
         public IDataPointRepository DataPointRepository { get; }
-        public IModelRepository ModelRepository { get; }
+        public IModelElementRepository ModelRepository { get; }
+        public IModelElementTemplateRepository ModelTemplateRepository { get; }
 
         public UnitOfWork(ConfigurationContext context)
         {
@@ -23,7 +24,8 @@ namespace Autonoma.API.Infrastructure
 
             AdapterRepository = new AdapterConfigurationRepository(_context);
             DataPointRepository = new DataPointConfigurationRepository(_context);
-            ModelRepository = new ModelConfigurationRepository(_context);
+            ModelRepository = new ModelElementConfigurationRepository(_context);
+            ModelTemplateRepository = new ModelElementTemplateConfigurationRepository(_context);
         }
 
         public int Commit()

@@ -11,6 +11,7 @@ using System.Reflection;
 using Autofac.Integration.WebApi;
 using Autofac.Integration.SignalR;
 using Microsoft.Extensions.Hosting;
+using Autonoma.Model.Akka.Services;
 
 namespace Autonoma.API
 {
@@ -21,15 +22,6 @@ namespace Autonoma.API
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
             builder.RegisterHubs(Assembly.GetExecutingAssembly());
 
-            // Services
-            builder.RegisterType<RouterService>()
-                .As<IRouterService>()
-                .As<IHostedService>()
-                .SingleInstance();
-            builder.RegisterType<DataPointHostService>()
-                .As<IDataPointService>()
-                .SingleInstance();
-
             // Infrastructure
             builder
                .RegisterType<DatabaseInitializer>()
@@ -39,6 +31,15 @@ namespace Autonoma.API
                .RegisterType<DataPointServiceStartupInitializer>()
                .As<IStartable>()
                .SingleInstance();
+
+            builder.RegisterType<RouterService>()
+                .As<IRouterService>()
+                .As<IHostedService>()
+                .SingleInstance();
+            builder.RegisterType<AkkaHostService>()
+                .As<IDataPointService>()
+                .As<IHostedService>()
+                .SingleInstance();
 
             // CQRS
             builder.RegisterGeneric(typeof(QueryHandler<,>)).As(typeof(IQueryHandler<,>)).InstancePerLifetimeScope();

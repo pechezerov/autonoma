@@ -2,6 +2,7 @@
 using Autonoma.API.Infrastructure;
 using Autonoma.Communication.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using System.Linq;
 
 namespace Autonoma.API
@@ -19,7 +20,8 @@ namespace Autonoma.API
 
         public void Start()
         {
-            _dps.Initialize(_uow.DataPointRepository.All().ToList());
+            if (_dps is IHostedService hdps)
+               hdps.StartAsync(default);
         }
     }
 }

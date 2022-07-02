@@ -97,6 +97,10 @@ namespace Autonoma.Domain.Entities
 
         public int TemplateId { get; set; }
 
+        public DataPointConfiguration? DataPoint { get; set; }
+
+        public int? DataPointId { get; set; }
+
         public ModelElementConfiguration()
         {
             Name = "";

@@ -1,6 +1,8 @@
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using System.Threading.Tasks;
 
 namespace Autonoma.API
 {
@@ -9,8 +11,12 @@ namespace Autonoma.API
         public static void Main(string[] args)
         {
             CreateHostBuilder(args)
-                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
-                .Build().Run();
+                .ConfigureAppConfiguration(config =>
+                {
+                    config.AddJsonFile("appsettings.Local.json", optional: true, reloadOnChange: true);
+                })
+               .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+               .Build().Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -18,7 +24,6 @@ namespace Autonoma.API
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    //webBuilder.UseUrls("http://localhost:5000", "https://localhost:5001");
                 });
     }
 }
