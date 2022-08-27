@@ -1,4 +1,5 @@
 ﻿using Autonoma.Core;
+using Autonoma.Core.Extensions;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -47,14 +48,13 @@ namespace Autonoma.Domain.Entities
 
         public ModelAttributeType AttributeType { get; set; }
 
-        public string Description { get; set; } = "";
+        public int BaseTemplateId { get; set; }
 
-        public string Name { get; set; } = "";
+        public string Description { get; set; } = "";
 
         public ModelElementTemplateConfiguration ElementTemplate { get; set; } = null!;
 
-        public int BaseTemplateId { get; set; }
-
+        public string Name { get; set; } = "";
         public TypeCode Type { get; set; }
 
         public UOM UOM { get; set; }
@@ -74,16 +74,11 @@ namespace Autonoma.Domain.Entities
 
     public class ModelElementConfiguration : Entity
     {
-        public static ModelElementConfiguration CreateNew()
-        {
-            return new ModelElementConfiguration()
-            {
-                Name = "New",
-                Template = ModelElementTemplateConfiguration.Default
-            };
-        }
-
         public List<ModelAttributeConfiguration> Attributes { get; set; }
+
+        public DataPointConfiguration? DataPoint { get; set; }
+
+        public int? DataPointId { get; set; }
 
         public List<ModelElementConfiguration> Elements { get; set; }
 
@@ -97,9 +92,10 @@ namespace Autonoma.Domain.Entities
 
         public int TemplateId { get; set; }
 
-        public DataPointConfiguration? DataPoint { get; set; }
-
-        public int? DataPointId { get; set; }
+        public string Path
+        {
+            get { return ParentElement == null ? Name : $"{ParentElement.Path}/{Name}"; }
+        }
 
         public ModelElementConfiguration()
         {
@@ -107,10 +103,42 @@ namespace Autonoma.Domain.Entities
             Elements = new List<ModelElementConfiguration>();
             Attributes = new List<ModelAttributeConfiguration>();
         }
+
+        public static ModelElementConfiguration CreateNew()
+        {
+            return new ModelElementConfiguration()
+            {
+                Name = "New",
+                Template = ModelElementTemplateConfiguration.Default
+            };
+        }
+
+        public static IEnumerable<ModelElementConfiguration> GenerateModelTree(
+            IEnumerable<ModelElementConfiguration> items,
+            ModelElementConfiguration? localRoot = null)
+        {
+            var localRootElements = items.Where(c => c.ParentElementId == localRoot?.Id)
+                .ToList();
+            foreach (var localRootChild in localRootElements)
+            {
+                localRoot?.Elements.Add(localRootChild);
+                localRootChild.ParentElement = localRoot;
+                GenerateModelTree(items, localRootChild);
+            }
+
+            return localRootElements;
+        }
     }
 
     public class ModelElementTemplateConfiguration : Entity
     {
+        public static ModelElementTemplateConfiguration Default { get; }
+            = new ModelElementTemplateConfiguration()
+            {
+                Name = "MeasuredValueDouble",
+                Id = Globals.MeasuredValueIntModelTemplateId,
+            };
+
         public List<ModelAttributeTemplateConfiguration> Attributes { get; set; }
 
         public virtual ModelElementTemplateConfiguration? BaseTemplate { get; set; }
@@ -122,23 +150,10 @@ namespace Autonoma.Domain.Entities
         public List<ModelElementConfiguration> Elements { get; set; }
 
         public string Name { get; set; } = "";
-
-        public static ModelElementTemplateConfiguration Default { get; }
-            = new ModelElementTemplateConfiguration()
-            {
-                Name = "MeasuredValueDouble",
-                Id = Globals.MeasuredValueIntModelTemplateId,
-            };
-
         public ModelElementTemplateConfiguration()
         {
             Attributes = new List<ModelAttributeTemplateConfiguration>();
             Elements = new List<ModelElementConfiguration>();
-        }
-
-        public IEnumerable<ModelAttributeTemplateConfiguration> GetModelAttributes()
-        {
-            return Attributes.Concat(BaseTemplate?.GetModelAttributes() ?? Enumerable.Empty<ModelAttributeTemplateConfiguration>());
         }
 
         public void AddAttribute(ModelAttributeTemplateConfiguration configuration)
@@ -157,6 +172,11 @@ namespace Autonoma.Domain.Entities
                     AttributeType = attributeType,
                     Description = description
                 });
+        }
+
+        public IEnumerable<ModelAttributeTemplateConfiguration> GetModelAttributes()
+        {
+            return Attributes.Concat(BaseTemplate?.GetModelAttributes() ?? Enumerable.Empty<ModelAttributeTemplateConfiguration>());
         }
     }
 }

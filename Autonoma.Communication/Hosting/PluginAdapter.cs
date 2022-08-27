@@ -19,7 +19,7 @@ namespace Autonoma.Communication.Hosting
 
         public int Id => _adapterConfiguration.Id;
 
-        private int HealthDataPointId => -(Id * 1000) + 1;
+        private int GetInternalDataPointId(InternalDataPoints pointType) => -(Id * 1000) + (int)pointType;
 
         public WorkState State { get; set; }
 
@@ -30,11 +30,11 @@ namespace Autonoma.Communication.Hosting
             _targetPlugin = targetPlugin;
 
             // создаем системные точки данных для размещения сведений о состоянии адаптера
-            _dataPointService.CreateTemporaryDataPoint(
+            _dataPointService.CreateSystemDataPoint(
                 new DataPointConfiguration 
                 {
                     AdapterId = Id,
-                    Id = HealthDataPointId,
+                    Id = GetInternalDataPointId(InternalDataPoints.Health),
                     Type = System.TypeCode.Int32
                 }
             );
@@ -42,7 +42,7 @@ namespace Autonoma.Communication.Hosting
 
         public void Dispose()
         {
-            _dataPointService.RemoveDataPoint(HealthDataPointId);
+            _dataPointService.RemoveDataPoint(GetInternalDataPointId(InternalDataPoints.Health));
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)

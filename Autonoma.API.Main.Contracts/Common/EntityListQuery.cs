@@ -11,6 +11,6 @@ namespace Autonoma.API.Main.Contracts.Common
         [DefaultValue(1)]
         public int PageIndex { get; set; }
 
-        public string Ids { get; set; }
+        public string? Ids { get; set; }
     }
 }

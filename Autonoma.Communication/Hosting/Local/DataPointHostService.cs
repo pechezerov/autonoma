@@ -70,7 +70,7 @@ namespace Autonoma.Communication.Hosting.Local
             }
         }
 
-        public void CreateTemporaryDataPoint(DataPointConfiguration config)
+        public void CreateSystemDataPoint(DataPointConfiguration config)
         {
             if (!pointsById.ContainsKey(config.Id))
                 pointsById.TryAdd(config.Id, new SimpleDataPoint(config));

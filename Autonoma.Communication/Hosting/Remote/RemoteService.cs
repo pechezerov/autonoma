@@ -78,7 +78,7 @@ namespace Autonoma.Communication.Hosting.Remote
                 new API.Main.Contracts.DataPoint.DataPointUpdateListQuery(updates.ToList()));
         }
 
-        public void CreateTemporaryDataPoint(DataPointConfiguration config)
+        public void CreateSystemDataPoint(DataPointConfiguration config)
         {
             throw new NotImplementedException("Внешние клиенты не могут создавать точки данных");
         }

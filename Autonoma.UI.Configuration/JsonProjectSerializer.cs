@@ -73,12 +73,10 @@ namespace Autonoma.UI.Configuration
             foreach (var modelElement in flatModel)
                 modelElement.Template = templatesDict[modelElement.TemplateId];
 
-            var treeModel = GenerateModelTree(flatModel);
+            var treeModel = ModelElementConfiguration.GenerateModelTree(flatModel, null);
 
             foreach (var rootElementConfig in treeModel)
-            {
                 project.Topology.AddElement(BuildElementViewModel(rootElementConfig, null));
-            }
         }
 
         private ModelElementViewModel BuildElementViewModel(ModelElementConfiguration elementConfig, ModelElementViewModel? parentElementViewModel)
@@ -96,22 +94,6 @@ namespace Autonoma.UI.Configuration
             }
 
             return element;
-        }
-
-        public IEnumerable<ModelElementConfiguration> GenerateModelTree(
-            IEnumerable<ModelElementConfiguration> items,
-            ModelElementConfiguration? localRoot = null)
-        {
-            var localRootElements = items.Where(c => c.ParentElementId == localRoot?.Id)
-                .ToList();
-            foreach (var localRootChild in localRootElements)
-            {
-                localRoot?.Elements.Add(localRootChild);
-                localRootChild.ParentElement = localRoot;
-                GenerateModelTree(items, localRootChild);
-            }
-
-            return localRootElements;
         }
 
         public string SerializeProject(IProject value)

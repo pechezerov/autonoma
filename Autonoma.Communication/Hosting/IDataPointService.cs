@@ -31,7 +31,7 @@ namespace Autonoma.Communication.Hosting
         /// 
         /// </summary>
         /// <param name="config"></param>
-        void CreateTemporaryDataPoint(DataPointConfiguration config);
+        void CreateSystemDataPoint(DataPointConfiguration config);
 
         /// <summary>
         /// 

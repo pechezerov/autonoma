@@ -23,7 +23,8 @@ namespace Autonoma.Model.Akka.Services
         private readonly IHostApplicationLifetime _applicationLifetime;
 
         private ConcurrentDictionary<int, DataValue> _valuesDict = new ConcurrentDictionary<int, DataValue>();
-        private ConcurrentDictionary<int, IActorRef> _actorsRefDict = new ConcurrentDictionary<int, IActorRef>();
+        private ConcurrentDictionary<int, IActorRef> _actorsIdDict = new ConcurrentDictionary<int, IActorRef>();
+        private ConcurrentDictionary<string, IActorRef> _actorsPathDict = new ConcurrentDictionary<string, IActorRef>();
 
         public AkkaHostService(IServiceProvider serviceProvider, IHostApplicationLifetime appLifetime, IRouterService routerService)
         {
@@ -53,15 +54,16 @@ namespace Autonoma.Model.Akka.Services
                 .AllIncludeAsQueryable(m => m.Attributes)
                 .ToList();
 
-            // instantiate actors
+            var rootElements = ModelElementConfiguration.GenerateModelTree(flatModel, null);
+
+            // assign templates
             foreach (var elementPrototype in flatModel)
-            {
                 elementPrototype.Template = templatesDict[elementPrototype.TemplateId];
 
-                var dataPoint = _system.ActorOf(
-                   Props.Create(() => new DataPointActor(elementPrototype, this)), elementPrototype.Name);
-
-                _actorsRefDict.TryAdd(elementPrototype.Id, dataPoint);
+            // instantiate actors
+            foreach (var rootElementPrototype in rootElements)
+            {
+                Register(rootElementPrototype);
             }
 
             // add a continuation task that will guarantee shutdown of application if ActorSystem terminates
@@ -110,7 +112,7 @@ namespace Autonoma.Model.Akka.Services
 
         public async Task UpdateDataPoint(int id, DataValue value)
         {
-            if (_actorsRefDict.TryGetValue(id, out var target))
+            if (_actorsIdDict.TryGetValue(id, out var target))
                 target.Tell(value);
 
             await _routerService.Enqueue(new DataPointInfo(id, value));
@@ -122,6 +124,16 @@ namespace Autonoma.Model.Akka.Services
                 await UpdateDataPoint(update.id, update.value);
         }
 
+        public void Register(ModelElementConfiguration configuration)
+        {
+            var actor = _system.ActorOf(Props.Create(() => new DataPointActor(configuration, this)), configuration.Name);
+            _actorsIdDict.TryAdd(configuration.Id, actor);
+            _actorsPathDict.TryAdd(configuration.Path, actor);
+
+            foreach (var childElement in configuration.Elements)
+                Register(childElement);
+        }
+
         public void ReceiveUpdateCallback(int id, DataValue value)
         {
             _valuesDict.AddOrUpdate(id, value,
@@ -131,7 +143,7 @@ namespace Autonoma.Model.Akka.Services
                 });
         }
 
-        public void CreateTemporaryDataPoint(DataPointConfiguration config)
+        public void CreateSystemDataPoint(DataPointConfiguration config)
         {
         }
 
