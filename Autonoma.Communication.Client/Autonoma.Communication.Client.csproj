@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Autonoma.API.Main.Contracts\Autonoma.API.Main.Contracts.csproj" />
+    <ProjectReference Include="..\Autonoma.Communication.Client.NSwag\Autonoma.Communication.Client.NSwag.csproj" />
+    <ProjectReference Include="..\Autonoma.Communication.Shared\Autonoma.Communication.Shared.csproj" />
+    <ProjectReference Include="..\Autonoma.Extensibility.Shared\Autonoma.Extensibility.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

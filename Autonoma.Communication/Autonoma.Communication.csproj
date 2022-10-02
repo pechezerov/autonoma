@@ -6,6 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Infrastructure\**" />
+    <EmbeddedResource Remove="Infrastructure\**" />
+    <None Remove="Infrastructure\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.1" />
     <PackageReference Include="IdentityModel" Version="6.0.0" />
     <PackageReference Include="JsonSubTypes" Version="1.9.0" />
@@ -15,16 +21,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Autonoma.API.Main.Client\Autonoma.API.Main.Client.csproj" />
+    <ProjectReference Include="..\Autonoma.Communication.Shared\Autonoma.Communication.Shared.csproj" />
     <ProjectReference Include="..\Autonoma.Core\Autonoma.Core.csproj" />
     <ProjectReference Include="..\Autonoma.Domain\Autonoma.Domain.csproj" />
     <ProjectReference Include="..\Autonoma.Extensibility.Shared\Autonoma.Extensibility.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Api\" />
     <Folder Include="Hosting\Localhost\" />
-    <Folder Include="Infrastructure\" />
   </ItemGroup>
 
 </Project>

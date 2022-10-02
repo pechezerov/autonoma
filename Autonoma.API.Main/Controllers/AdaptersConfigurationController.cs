@@ -32,30 +32,29 @@ namespace Autonoma.API.Main.Controllers
             _adapterDeleteCommandHandler = adapterDeleteCommandHandler;
         }
 
-        // GET api/v1/[controller]/list[?pageSize=30&pageIndex=10]
-        [HttpGet]
-        [Route("list")]
-        [ProducesResponseType(typeof(AdapterConfigurationListQueryResult), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> AdapterList([FromQuery] AdapterConfigurationListQuery query)
-        {
-            return Ok(await _adapterListHandler.ExecuteAsync(query));
-        }
-
-
         // GET api/v1/[controller]/123
         [HttpGet]
         [Route("{id:int}")]
         [ProducesResponseType(typeof(AdapterConfigurationByIdQueryResult), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> AdapterById(int id)
+        public async Task<IActionResult> AdapterConfigurationById(int id)
         {
             var query = new AdapterConfigurationByIdQuery(id);
             return Ok(await _adapterByIdHandler.ExecuteAsync(query));
         }
 
+        // POST api/v1/[controller]/list
+        [HttpPost]
+        [Route("list")]
+        [ProducesResponseType(typeof(AdapterConfigurationListQueryResult), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AdapterConfiguration([FromBody] AdapterConfigurationListQuery query)
+        {
+            return Ok(await _adapterListHandler.ExecuteAsync(query));
+        }
+
         // POST api/v1/[controller]
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.Created)]
-        public async Task<IActionResult> CreateAdapter(AdapterConfigurationItem adapter)
+        public async Task<IActionResult> CreateAdapterConfiguration(AdapterConfigurationItem adapter)
         {
             var command = new AdapterCreateCommand
             {
@@ -63,7 +62,7 @@ namespace Autonoma.API.Main.Controllers
             };
             await _adapterCreateCommandHandler.ExecuteAsync(command);
             return CreatedAtAction(
-                nameof(AdapterById),
+                nameof(AdapterConfigurationById),
                 new { id = command.CreatedId },
                 command.CreatedId);
         }
@@ -72,7 +71,7 @@ namespace Autonoma.API.Main.Controllers
         [HttpDelete]
         [Route("{id:int}")]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
-        public async Task<IActionResult> DeleteAdapter(int id)
+        public async Task<IActionResult> DeleteAdapterConfiguration(int id)
         {
             var command = new AdapterDeleteCommand
             {
@@ -85,7 +84,7 @@ namespace Autonoma.API.Main.Controllers
         // PUT api/v1/[controller]
         [HttpPut]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
-        public async Task<IActionResult> UpdateAdapter(AdapterConfigurationItem adapter)
+        public async Task<IActionResult> UpdateAdapterConfiguration(AdapterConfigurationItem adapter)
         {
             var command = new AdapterUpdateCommand
             {

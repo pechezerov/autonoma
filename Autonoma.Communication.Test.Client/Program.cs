@@ -5,7 +5,6 @@ using Autonoma.Communication.Hosting.Remote;
 using Autonoma.Communication.Infrastructure;
 using Autonoma.Core.Infrastructure;
 using Autonoma.Domain.Entities;
-using IO.Swagger.Api;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -68,10 +67,10 @@ namespace Autonoma.Communication.Test.Client
                                     {
                                         var mapper = provider
                                             .GetRequiredService<IMapper>();
-                                        var adapterConfigurationApi = provider
-                                            .GetRequiredService<IAdaptersConfigurationApi>();
-                                        var adapterConfigurationResult = adapterConfigurationApi
-                                            .AdaptersConfigurationIdGet(adapterId);
+                                        var apiMainClient = provider
+                                            .GetRequiredService<APIMainClient>();
+                                        var adapterConfigurationResult = (apiMainClient
+                                            .AdaptersConfiguration_AdapterConfigurationByIdAsync(adapterId)).Result;
                                         var adapterConfiguration = mapper.Map<AdapterConfiguration>(adapterConfigurationResult.Adapter);
                                         Console.WriteLine("Подключение установлено");
                                         return adapterConfiguration;
@@ -85,12 +84,8 @@ namespace Autonoma.Communication.Test.Client
                             })
 
                             // communication services
-                            .AddSingleton<IAdaptersConfigurationApi>(new AdaptersConfigurationApi(mainApiUrl))
-                            .AddSingleton<IDataPointsApi>(new DataPointsApi(mainApiUrl))
-                            .AddSingleton<IDataPointsConfigurationApi>(new DataPointsConfigurationApi(mainApiUrl))
                             .AddSingleton<IDataPointService, RemoteService>()
-                            .AddSingleton<IMainApi, MainApi>()
-
+                            .AddSingleton<APIMainClient, APIMainClient>()
                             .AddHostedService<TestClient>()
                 )
                 .Build();

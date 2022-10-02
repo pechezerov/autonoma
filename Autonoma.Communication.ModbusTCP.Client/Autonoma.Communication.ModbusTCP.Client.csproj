@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Autonoma.API.Main.Client\Autonoma.API.Main.Client.csproj" />
+    <ProjectReference Include="..\Autonoma.Communication.Client\Autonoma.Communication.Client.csproj" />
     <ProjectReference Include="..\Autonoma.Communication.ModbusTCP\Autonoma.Communication.ModbusTCP.csproj" />
     <ProjectReference Include="..\Autonoma.ConfigurationManagement\Autonoma.ConfigurationManagement.csproj" />
   </ItemGroup>

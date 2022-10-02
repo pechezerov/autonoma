@@ -20,7 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Autonoma.API.Main.Contracts\Autonoma.API.Main.Contracts.csproj" />
     <ProjectReference Include="..\Autonoma.API.Shared\Autonoma.API.Shared.csproj" />
+    <ProjectReference Include="..\Autonoma.Communication\Autonoma.Communication.csproj" />
     <ProjectReference Include="..\Autonoma.ConfigurationManagement\Autonoma.ConfigurationManagement.csproj" />
     <ProjectReference Include="..\Autonoma.Core\Autonoma.Core.csproj" />
     <ProjectReference Include="..\Autonoma.Domain\Autonoma.Domain.csproj" />

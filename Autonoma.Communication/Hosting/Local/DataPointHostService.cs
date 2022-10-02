@@ -37,7 +37,7 @@ namespace Autonoma.Communication.Hosting.Local
             return result;
         }
 
-        public Task<List<DataPointInfo>> GetDataPointValues(List<int>? ids)
+        public Task<List<DataPointInfo>> GetDataPointValues(IEnumerable<int>? ids)
         {
             if (ids != null)
             {

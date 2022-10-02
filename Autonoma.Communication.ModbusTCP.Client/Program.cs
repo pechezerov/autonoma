@@ -6,7 +6,6 @@ using Autonoma.Communication.Infrastructure;
 using Autonoma.Communication.Modbus;
 using Autonoma.Core.Infrastructure;
 using Autonoma.Domain.Entities;
-using IO.Swagger.Api;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -58,10 +57,10 @@ namespace Autonoma.Communication.ModbusTCP.Client
                                     try
                                     {
                                         var mapper = provider.GetRequiredService<IMapper>();
-                                        var adapterConfigurationApi = provider
-                                            .GetRequiredService<IAdaptersConfigurationApi>();
-                                        var adapterConfigurationResult = adapterConfigurationApi
-                                            .AdaptersConfigurationIdGet(adapterId);
+                                        var apiMainClient = provider
+                                            .GetRequiredService<APIMainClient>();
+                                        var adapterConfigurationResult = (apiMainClient
+                                            .AdaptersConfiguration_AdapterConfigurationByIdAsync(adapterId)).Result;
                                         var adapterConfiguration = mapper.Map<AdapterConfiguration>(adapterConfigurationResult.Adapter);
                                         Console.WriteLine("Подключение установлено");
                                         return adapterConfiguration;
@@ -84,11 +83,8 @@ namespace Autonoma.Communication.ModbusTCP.Client
                                 return mapper.CreateMapper();
                             })
                             // communication services
-                            .AddSingleton<IAdaptersConfigurationApi>(new AdaptersConfigurationApi(mainApiUrl))
-                            .AddSingleton<IDataPointsApi>(new DataPointsApi(mainApiUrl))
-                            .AddSingleton<IDataPointsConfigurationApi>(new DataPointsConfigurationApi(mainApiUrl))
+                            .AddSingleton<APIMainClient, APIMainClient>()
                             .AddSingleton<IDataPointService, RemoteService>()
-                            .AddSingleton<IMainApi, MainApi>()
                             .AddSingleton<ModbusClient>()
                 )
                 .Build();

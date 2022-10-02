@@ -1,17 +1,12 @@
 ﻿using Autonoma.API.Main.Contracts.Common;
 using Autonoma.API.Queries;
+using Autonoma.API.Shared.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel;
 
 namespace Autonoma.API.Main.Contracts.Adapter
 {
-    public class AdapterListQuery : Query
+    public class AdapterListQuery : EntityListQuery
     {
-        [DefaultValue(10)]
-        public int PageSize { get; set; }
-
-        [DefaultValue(1)]
-        public int PageIndex { get; set; }
-
-        public string Ids { get; set; }
     }
 }

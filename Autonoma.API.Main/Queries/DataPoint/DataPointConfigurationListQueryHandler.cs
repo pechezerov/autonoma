@@ -24,7 +24,7 @@ namespace Autonoma.API.Main.Queries.DataPoint
 
         public override async Task<DataPointConfigurationListQueryResult> ExecuteAsync(DataPointConfigurationListQuery query)
         {
-            if (String.IsNullOrEmpty(query.Ids))
+            if (query.Ids == null)
             {
                 var totalItems = await _uow.DataPointRepository.AllAsQueryable()
                     .LongCountAsync();
@@ -45,20 +45,13 @@ namespace Autonoma.API.Main.Queries.DataPoint
             }
         }
 
-        private async Task<List<DataPointConfigurationItem>> GetItemsByIdsAsync(string ids)
+        private async Task<List<DataPointConfigurationItem>> GetItemsByIdsAsync(IEnumerable<int> ids)
         {
-            var numIds = ids.Split(',').Select(id => (Ok: int.TryParse(id, out int x), Value: x));
-
-            if (!numIds.All(nid => nid.Ok))
-            {
+            if (ids == null || !ids.Any())
                 return new List<DataPointConfigurationItem>();
-            }
-
-            var idsToSelect = numIds
-                .Select(id => id.Value);
 
             var items = await _uow.DataPointRepository.AllAsQueryable()
-                .Where(ci => idsToSelect.Contains(ci.Id))
+                .Where(ci => ids.Contains(ci.Id))
                 .Select(dp => _mapper.Map<DataPointConfiguration, DataPointConfigurationItem>(dp))
                 .ToListAsync();
 

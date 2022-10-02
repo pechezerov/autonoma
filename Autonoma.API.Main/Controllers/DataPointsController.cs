@@ -4,6 +4,8 @@ using Autonoma.API.Queries;
 using Autonoma.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -40,13 +42,12 @@ namespace Autonoma.API.Main.Controllers
             return Ok(await _dataPointByIdHandler.ExecuteAsync(query));
         }
 
-        // GET api/v1/[controller]/1,2,3
-        [HttpGet]
-        [Route("{ids}")]
+        // POST api/v1/[controller]/list
+        [HttpPost]
+        [Route("[controller]/list")]
         [ProducesResponseType(typeof(DataPointListQueryResult), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> DataPointList(string ids)
+        public async Task<IActionResult> DataPointList(DataPointListQuery query)
         {
-            var query = new DataPointListQuery(ids);
             return Ok(await _dataPointListHandler.ExecuteAsync(query));
         }
 

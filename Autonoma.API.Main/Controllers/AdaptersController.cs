@@ -33,15 +33,6 @@ namespace Autonoma.API.Main.Controllers
             _adapterStopCommandHandler = adapterStopCommandHandler;
         }
 
-        // GET api/v1/[controller]/list[?pageSize=30&pageIndex=10]
-        [HttpGet]
-        [Route("list")]
-        [ProducesResponseType(typeof(AdapterListQueryResult), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> AdapterList([FromQuery] AdapterListQuery query)
-        {
-            return Ok(await _adapterListHandler.ExecuteAsync(query));
-        }
-
         // GET api/v1/[controller]/123
         [HttpGet]
         [Route("{id:int}")]
@@ -50,6 +41,15 @@ namespace Autonoma.API.Main.Controllers
         {
             var query = new AdapterByIdQuery(id);
             return Ok(await _adapterByIdHandler.ExecuteAsync(query));
+        }
+
+        // POST api/v1/[controller]/list
+        [HttpPost]
+        [Route("list")]
+        [ProducesResponseType(typeof(AdapterListQueryResult), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AdapterList([FromBody] AdapterListQuery query)
+        {
+            return Ok(await _adapterListHandler.ExecuteAsync(query));
         }
 
         // POST api/v1/[controller]/123/start

@@ -1,7 +1,5 @@
 ﻿using Autonoma.Domain;
 using Autonoma.Domain.Entities;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Autonoma.Communication.Hosting
 {
@@ -15,7 +13,7 @@ namespace Autonoma.Communication.Hosting
         /// <summary>
         /// Возвращает текущее состояние указанных точек данных
         /// </summary>
-        Task<List<DataPointInfo>> GetDataPointValues(List<int>? ids);
+        Task<List<DataPointInfo>> GetDataPointValues(IEnumerable<int>? ids);
 
         /// <summary>
         /// Обновляет состояние указанной точки данных

@@ -23,7 +23,7 @@ namespace Autonoma.API.Main.Queries.Adapter
 
         public override async Task<AdapterConfigurationListQueryResult> ExecuteAsync(AdapterConfigurationListQuery query)
         {
-            if (String.IsNullOrEmpty(query.Ids))
+            if (query.Ids.Any())
             {
                 var totalItems = await _uow.AdapterRepository.AllAsQueryable()
                     .LongCountAsync();
@@ -47,21 +47,11 @@ namespace Autonoma.API.Main.Queries.Adapter
             }
         }
 
-        private async Task<List<AdapterConfigurationItem>> GetItemsByIdsAsync(string ids)
+        private async Task<List<AdapterConfigurationItem>> GetItemsByIdsAsync(IEnumerable<int> ids)
         {
-            var numIds = ids.Split(',').Select(id => (Ok: int.TryParse(id, out int x), Value: x));
-
-            if (!numIds.All(nid => nid.Ok))
-            {
-                return new List<AdapterConfigurationItem>();
-            }
-
-            var idsToSelect = numIds
-                .Select(id => id.Value);
-
             var items = await _uow.AdapterRepository
                 .AllIncludeAsQueryable(a => a.DataPoints, a => a.AdapterType)
-                .Where(ci => idsToSelect.Contains(ci.Id))
+                .Where(ci => ids.Contains(ci.Id))
                 .Select(dp => _mapper.Map<AdapterConfiguration, AdapterConfigurationItem>(dp))
                 .ToListAsync();
 

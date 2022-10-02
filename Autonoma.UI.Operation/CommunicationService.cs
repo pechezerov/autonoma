@@ -1,4 +1,4 @@
-﻿using Autonoma.API.Main.Infrastructure;
+﻿using Autonoma.Communication.Abstractions;
 using Autonoma.Domain;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.DependencyInjection;

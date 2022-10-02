@@ -1,23 +1,20 @@
 ﻿using AutoMapper;
 using Autonoma.API.Main.Client;
 using Autonoma.API.Main.Contracts.Adapter;
+using Autonoma.API.Main.Contracts.DataPoint;
 using Autonoma.Domain;
 using Autonoma.Domain.Abstractions;
 using Autonoma.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Autonoma.Communication.Hosting.Remote
 {
     public class RemoteService : IAdapterService, IDataPointService
     {
-        public IMainApi MainApi { get; }
+        public APIMainClient MainApi { get; }
 
         public IMapper Mapper { get; }
 
-        public RemoteService(IMainApi mainApi, IMapper mapper)
+        public RemoteService(APIMainClient mainApi, IMapper mapper)
         {
             MainApi = mainApi;
             Mapper = mapper;
@@ -27,15 +24,15 @@ namespace Autonoma.Communication.Hosting.Remote
 
         public IEnumerable<IDataAdapter> Adapters => throw new NotImplementedException();
 
-        public AdapterConfiguration GetAdapter(int id)
+        public async Task<AdapterConfiguration> GetAdapter(int id)
         {
-            var dp = MainApi.AdaptersConfigurationApi.AdaptersConfigurationIdGet(id);
+            var dp = await MainApi.AdaptersConfiguration_AdapterConfigurationByIdAsync(id);
             return Mapper.Map<AdapterConfiguration>(dp);
         }
 
         public async Task UpdateAdapter(AdapterConfiguration adapterConfiguration)
         {
-            await MainApi.AdaptersConfigurationApi.AdaptersConfigurationPutAsync(Mapper.Map<AdapterConfigurationItem>(adapterConfiguration));
+            await MainApi.AdaptersConfiguration_UpdateAdapterConfigurationAsync(Mapper.Map<AdapterConfigurationItem>(adapterConfiguration));
         }
 
         public async Task DeleteAdapter(int id)
@@ -47,34 +44,42 @@ namespace Autonoma.Communication.Hosting.Remote
 
         #region DataPoints
 
-        public IEnumerable<DataPointInfo> DataPoints =>
-            MainApi.AdaptersConfigurationApi.AdaptersConfigurationListGet().Data
-            .SelectMany(a => a.DataPoints
-                .Select(did => MainApi.DataPointsApi.DataPointsIdGet(did.Id))
-                .Select(dp => dp.DataPoint));
+        public async Task<IEnumerable<DataPointInfo>> DataPoints()
+        {
+            var adapters =  (await MainApi.Adapters_AdapterListAsync(new AdapterListQuery())).Data;
+            var dataPoints = new List<DataPointInfo>();
+
+            foreach (var adapter in adapters)
+            {
+                var adapterDataPoints = (await MainApi.DataPoints_DataPointListAsync(
+                    new DataPointListQuery { Ids = adapter.Configuration.DataPoints.Select(dp => dp.Id) })).DataPoints
+                        .Select(dp => new DataPointInfo(dp.DataPointId, dp.Value));
+            }
+            return dataPoints;
+        }
 
         public async Task<DataPointInfo?> GetDataPointValue(int id)
         {
-            var dp = await MainApi.DataPointsApi.DataPointsIdGetAsync(id);
+            var dp = await MainApi.DataPoints_DataPointByIdAsync(id);
             return dp.DataPoint;
         }
 
-        public async Task<List<DataPointInfo>> GetDataPointValues(List<int>? ids)
+        public async Task<List<DataPointInfo>> GetDataPointValues(IEnumerable<int>? ids)
         {
             if (ids == null)
                 return new List<DataPointInfo>();
-            var dps = await MainApi.DataPointsApi.DataPointsIdsGetAsync(String.Join(",", ids.Select(id => id.ToString())));
+            var dps = await MainApi.DataPoints_DataPointListAsync(new API.Main.Contracts.DataPoint.DataPointListQuery { Ids = ids });
             return dps.DataPoints;
         }
 
         public async Task UpdateDataPoint(int id, DataValue value)
         {
-            await MainApi.DataPointsApi.DataPointsUpdatePutAsync(value, id);
+            await MainApi.DataPoints_UpdateDataPointAsync(id, value);
         }
 
         public async Task UpdateDataPoints(IEnumerable<(int id, DataValue value)> updates)
         {
-            await MainApi.DataPointsApi.DataPointsUpdateListPutAsync(
+            await MainApi.DataPoints_UpdateDataPointsAsync(
                 new API.Main.Contracts.DataPoint.DataPointUpdateListQuery(updates.ToList()));
         }
 

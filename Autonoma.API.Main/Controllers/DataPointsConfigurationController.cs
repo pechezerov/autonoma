@@ -35,15 +35,6 @@ namespace Autonoma.API.Main.Controllers
             _dataPointDeleteCommandHandler = dataPointDeleteCommandHandler;
         }
 
-        // GET api/v1/[controller]/list[?pageSize=3&pageIndex=10]
-        [HttpGet]
-        [Route("list")]
-        [ProducesResponseType(typeof(DataPointConfigurationListQueryResult), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> DataPointList([FromQuery] DataPointConfigurationListQuery query)
-        {
-            return Ok(await _dataPointListHandler.ExecuteAsync(query));
-        }
-
         // GET api/v1/[controller]/123
         [HttpGet]
         [Route("{id:int}")]
@@ -52,6 +43,15 @@ namespace Autonoma.API.Main.Controllers
         {
             var query = new DataPointConfigurationByIdQuery(id);
             return Ok(await _dataPointByIdHandler.ExecuteAsync(query));
+        }
+
+        // POST api/v1/[controller]/list
+        [HttpPost]
+        [Route("list")]
+        [ProducesResponseType(typeof(DataPointConfigurationListQueryResult), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DataPointList([FromBody] DataPointConfigurationListQuery query)
+        {
+            return Ok(await _dataPointListHandler.ExecuteAsync(query));
         }
 
         // POST api/v1/[controller]

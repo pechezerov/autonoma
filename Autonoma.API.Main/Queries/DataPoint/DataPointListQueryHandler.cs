@@ -21,7 +21,7 @@ namespace Autonoma.API.Main.Queries.DataPoint
         {
             return new DataPointListQueryResult
             {
-                DataPoints = await _dataPointService.GetDataPointValues(query.SplitIntoNumbers())
+                DataPoints = await _dataPointService.GetDataPointValues(query.Ids)
             };
         }
     }

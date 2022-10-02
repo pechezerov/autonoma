@@ -1,8 +1,6 @@
 ﻿using Autonoma.Domain;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
-namespace Autonoma.API.Main.Infrastructure
+namespace Autonoma.Communication.Abstractions
 {
     public interface IDataRouter
     {
