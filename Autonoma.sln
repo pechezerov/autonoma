@@ -80,6 +80,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autonoma.Communication.Clie
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autonoma.Communication.Shared", "Autonoma.Communication.Shared\Autonoma.Communication.Shared.csproj", "{A25A00EC-6442-4043-BF23-177BD187A750}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{104E29B4-2940-49E1-AC72-2FA1CFDAC758}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IntegrationTests", "IntegrationTests", "{9CA4933D-FDCB-4922-BE05-F8C636EE4C28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autonoma.Testing.IntegrationTests", "Autonoma.Testing.IntegrationTests\Autonoma.Testing.IntegrationTests.csproj", "{285826C6-EC45-45B5-A1FB-B809B88122AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
