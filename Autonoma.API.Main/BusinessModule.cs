@@ -12,6 +12,11 @@ using Autofac.Integration.WebApi;
 using Autofac.Integration.SignalR;
 using Microsoft.Extensions.Hosting;
 using Autonoma.Model.Akka.Services;
+using Autofac.Core;
+using Autonoma.API.Infrastructure;
+using Autonoma.Configuration.Repositories.Abstractions;
+using Autonoma.Configuration.Repositories;
+using Autonoma.Domain.Entities;
 
 namespace Autonoma.API
 {
@@ -40,6 +45,14 @@ namespace Autonoma.API
                 .As<IDataPointService>()
                 .As<IHostedService>()
                 .SingleInstance();
+
+            // Data access
+            builder.RegisterType<UnitOfWork>()
+                .As<IUnitOfWork>();
+            builder.RegisterType<AdapterConfigurationRepository>()
+                .As<IGenericRepository<AdapterConfiguration>>();
+            builder.RegisterType<DataPointConfigurationRepository>()
+                .As<IGenericRepository<DataPointConfiguration>>();
 
             // CQRS
             builder.RegisterGeneric(typeof(QueryHandler<,>)).As(typeof(IQueryHandler<,>)).InstancePerLifetimeScope();

@@ -2,6 +2,7 @@
 using Autonoma.API.Main.Commands.Adapter;
 using Autonoma.API.Main.Contracts.Adapter;
 using Autonoma.API.Queries;
+using Autonoma.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace Autonoma.API.Main.Controllers
         private readonly ICommandHandlerAsync<AdapterUpdateCommand> _adapterUpdateCommandHandler;
         private readonly ICommandHandlerAsync<AdapterDeleteCommand> _adapterDeleteCommandHandler;
 
-        public AdaptersConfigurationController(
+        public AdaptersConfigurationController(ConfigurationContext ctx,
             IQueryHandlerAsync<AdapterConfigurationListQuery, AdapterConfigurationListQueryResult> adapterListHandler,
             IQueryHandlerAsync<AdapterConfigurationByIdQuery, AdapterConfigurationByIdQueryResult> adapterByIdHandler,
             ICommandHandlerAsync<AdapterCreateCommand> adapterCreateCommandHandler,
@@ -29,7 +30,7 @@ namespace Autonoma.API.Main.Controllers
             _adapterByIdHandler = adapterByIdHandler;
             _adapterCreateCommandHandler = adapterCreateCommandHandler;
             _adapterUpdateCommandHandler = adapterUpdateCommandHandler;
-            _adapterDeleteCommandHandler = adapterDeleteCommandHandler;
+            _adapterDeleteCommandHandler = adapterDeleteCommandHandler; 
         }
 
         // GET api/v1/[controller]/123

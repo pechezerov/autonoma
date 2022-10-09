@@ -16,13 +16,7 @@ namespace Autonoma.API
     {
 		public static void AddBusinessServices(this IServiceCollection services, IConfiguration configuration)
         {
-			services
-				.AddTransient<IUnitOfWork, UnitOfWork>()
-				.AddTransient<IGenericRepository<AdapterConfiguration>, AdapterConfigurationRepository>()
-                .AddTransient<IGenericRepository<DataPointConfiguration>, DataPointConfigurationRepository>()
 
-                .AddHostedService<RouterService>()
-                .AddHostedService<AkkaHostService>();
         }
     }
 }

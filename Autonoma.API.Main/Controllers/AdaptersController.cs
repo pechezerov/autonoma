@@ -1,12 +1,10 @@
 ﻿using Autonoma.API.Commands;
 using Autonoma.API.Main.Commands.Adapter;
 using Autonoma.API.Main.Contracts.Adapter;
-using Autonoma.API.Main.Queries.Adapter;
 using Autonoma.API.Queries;
 using Autonoma.Core.Util;
 using Autonoma.Domain;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Threading.Tasks;
 

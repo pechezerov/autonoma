@@ -62,9 +62,7 @@ namespace Autonoma.Model.Akka.Services
 
             // instantiate actors
             foreach (var rootElementPrototype in rootElements)
-            {
                 Register(rootElementPrototype);
-            }
 
             // add a continuation task that will guarantee shutdown of application if ActorSystem terminates
             _system.WhenTerminated.ContinueWith(tr =>
