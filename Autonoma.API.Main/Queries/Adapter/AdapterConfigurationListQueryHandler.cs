@@ -51,7 +51,7 @@ namespace Autonoma.API.Main.Queries.Adapter
         {
             var items = await _uow.AdapterRepository
                 .AllIncludeAsQueryable(a => a.DataPoints, a => a.AdapterType)
-                .Where(ci => ids.Contains(ci.Id))
+                .Where(ci => !ids.Any() || ids.Contains(ci.Id))
                 .Select(dp => _mapper.Map<AdapterConfiguration, AdapterConfigurationItem>(dp))
                 .ToListAsync();
 

@@ -1,6 +1,5 @@
 ﻿using Autonoma.API.Commands;
 using Autonoma.API.Infrastructure;
-using Autonoma.API.Main.Infrastructure;
 using System.Threading.Tasks;
 
 namespace Autonoma.API.Main.Commands.Adapter
@@ -18,7 +17,8 @@ namespace Autonoma.API.Main.Commands.Adapter
 
         public override async Task ExecuteAsync(AdapterDeleteCommand command)
         {
-            await Task.CompletedTask;
+            _uow.AdapterRepository.Delete(command.Id);
+            await _uow.CommitAsync();
         }
     }
 }

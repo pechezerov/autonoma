@@ -17,7 +17,8 @@ namespace Autonoma.API.Main.Commands.DataPoint
 
         public override async Task ExecuteAsync(DataPointDeleteCommand command)
         {
-            await Task.CompletedTask;
+            _uow.DataPointRepository.Delete(command.Id);
+            await _uow.CommitAsync();
         }
     }
 }

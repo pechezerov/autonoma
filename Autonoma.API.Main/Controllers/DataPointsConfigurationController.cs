@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Autonoma.API.Queries;
-using Autonoma.API.Main.Queries.DataPoint;
-using System;
 using System.Net;
 using System.Threading.Tasks;
 using Autonoma.API.Main.Commands.DataPoint;
@@ -54,8 +51,8 @@ namespace Autonoma.API.Main.Controllers
             return Ok(await _dataPointListHandler.ExecuteAsync(query));
         }
 
-        // POST api/v1/[controller]
-        [HttpPost]
+        // POST api/v1/[controller]/create
+        [HttpPost("create")]
         [ProducesResponseType((int)HttpStatusCode.Created)]
         public async Task<IActionResult> CreateDataPoint(DataPointConfigurationItem datapoint)
         {
@@ -70,9 +67,9 @@ namespace Autonoma.API.Main.Controllers
                 command.CreatedId);
         }
 
-        // PUT api/v1/[controller]
+        // PUT api/v1/[controller]/delete/123
         [HttpDelete]
-        [Route("{id:int}")]
+        [Route("delete/{id:int}")]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         public async Task<IActionResult> DeleteDataPoint(int id)
         {
@@ -84,15 +81,12 @@ namespace Autonoma.API.Main.Controllers
             return NoContent();
         }
 
-        // PUT api/v1/[controller]
-        [HttpPut]
+        // PUT api/v1/[controller]/update
+        [HttpPut("update")]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         public async Task<IActionResult> UpdateDataPoint(DataPointConfigurationItem dataPoint)
         {
-            var command = new DataPointUpdateCommand
-            {
-                DataPoint = dataPoint
-            };
+            var command = new DataPointUpdateCommand(dataPoint);
             await _dataPointUpdateCommandHandler.ExecuteAsync(command);
             return NoContent();
         }

@@ -33,9 +33,9 @@ namespace Autonoma.API.Main.Commands.Adapter
                 IpAddress = adapterInfo.IpAddress,
                 Port = adapterInfo.Port
             };
-        // TODO: развернутые сведения о типе (AdapterType)
+            // TODO: развернутые сведения о типе (AdapterType)
 
-        _uow.AdapterRepository.Create(adapter);
+            _uow.AdapterRepository.Create(adapter);
             await _uow.CommitAsync();
 
             command.CreatedId = adapter.Id;

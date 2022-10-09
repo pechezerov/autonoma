@@ -1,10 +1,7 @@
 ﻿using Autonoma.API.Commands;
 using Autonoma.API.Infrastructure;
 using Autonoma.API.Main.Contracts.DataPoint;
-using Autonoma.API.Main.Infrastructure;
-using Autonoma.API.Main.Queries.DataPoint;
 using Autonoma.Domain.Entities;
-using System;
 using System.Threading.Tasks;
 
 namespace Autonoma.API.Main.Commands.DataPoint
@@ -12,6 +9,11 @@ namespace Autonoma.API.Main.Commands.DataPoint
     public class DataPointUpdateCommand : Command
     {
         public DataPointConfigurationItem DataPoint { get; set; }
+
+        public DataPointUpdateCommand(DataPointConfigurationItem dataPoint)
+        {
+            DataPoint = dataPoint;
+        }
     }
 
     public class DataPointUpdateCommandHandler : CommandHandlerAsync<DataPointUpdateCommand>

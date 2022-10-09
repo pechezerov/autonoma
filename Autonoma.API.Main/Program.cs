@@ -1,7 +1,7 @@
 using Autofac;
-using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
 using Autonoma.API.Main.Infrastructure;
+using Autonoma.API.Shared.Infrastructure;
 using Autonoma.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System.Configuration;
+using System;
 
 namespace Autonoma.API
 {
@@ -20,13 +20,18 @@ namespace Autonoma.API
             var builder = WebApplication.CreateBuilder(args);
             builder.Configuration
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: false, reloadOnChange: true)
+                .AddJsonFile("appsettings.Local.json", optional: true, reloadOnChange: true)
                 .AddEnvironmentVariables();
 
             builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
             builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.RegisterModule(new BusinessModule()));
 
-
-            builder.Services.AddControllers()
+            builder.Services.AddControllers(opts =>
+                {
+                    // Post-handling exceptions
+                    opts.Filters.Add<ExceptionFilter>();
+                })
                 // NewtonsoftJson used because it can
                 // map an undefined type to object.
                 // STJ in this case creates JsonElement.
@@ -44,9 +49,7 @@ namespace Autonoma.API
             builder.Services.AddSignalR()
                 .AddNewtonsoftJsonProtocol();
 
-
             var app = builder.Build();
-
 
             if (app.Environment.IsDevelopment())
             {

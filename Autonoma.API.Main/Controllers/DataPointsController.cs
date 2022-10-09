@@ -51,6 +51,7 @@ namespace Autonoma.API.Main.Controllers
             return Ok(await _dataPointListHandler.ExecuteAsync(query));
         }
 
+        // PUT api/v1/[controller]/update
         [HttpPut]
         [Route("update")]
         [ProducesResponseType(typeof(DataPointUpdateQueryResult), (int)HttpStatusCode.OK)]
@@ -59,6 +60,7 @@ namespace Autonoma.API.Main.Controllers
             return Ok(await _dataPointUpdateHandler.ExecuteAsync(new DataPointUpdateQuery(id, data)));
         }
 
+        // PUT api/v1/[controller]/updateList
         [HttpPut]
         [Route("updateList")]
         [ProducesResponseType(typeof(DataPointUpdateQueryResult), (int)HttpStatusCode.OK)]

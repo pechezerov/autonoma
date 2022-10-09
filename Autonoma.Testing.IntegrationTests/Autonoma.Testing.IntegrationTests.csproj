@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Autonoma.API.Main\Autonoma.API.Main.csproj" />
+    <ProjectReference Include="..\Autonoma.Communication.Client.NSwag\Autonoma.Communication.Client.NSwag.csproj" />
   </ItemGroup>
 
 </Project>
