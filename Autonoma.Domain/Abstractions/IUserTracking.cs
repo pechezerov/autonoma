@@ -1,5 +1,4 @@
 ﻿using Autonoma.Domain.Entities;
-using System;
 
 namespace Autonoma.Domain.Abstractions
 {

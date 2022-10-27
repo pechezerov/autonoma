@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Autonoma.Communication.Modbus
+﻿namespace Autonoma.Communication.Modbus
 {
     public static class ModbusExtensions
     {

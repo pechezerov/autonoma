@@ -1,11 +1,7 @@
 ﻿using Autonoma.API.Main.Contracts.DataPoint;
-using Autonoma.API.Main.Queries.DataPoint;
 using Autonoma.API.Queries;
 using Autonoma.Domain;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 

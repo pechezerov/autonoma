@@ -1,5 +1,4 @@
 using Autonoma.Domain;
-using Autonoma.UI.Presentation.Design;
 using Autonoma.UI.Presentation.ViewModels;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;

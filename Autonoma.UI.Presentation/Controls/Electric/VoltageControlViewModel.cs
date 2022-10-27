@@ -1,8 +1,6 @@
 ﻿using Autonoma.Domain;
 using Autonoma.Domain.Electric;
-using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
-using System;
 using System.ComponentModel;
 
 namespace Autonoma.UI.Presentation.Controls.Electric

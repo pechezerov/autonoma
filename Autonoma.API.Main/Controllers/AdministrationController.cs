@@ -1,8 +1,6 @@
 ﻿using Autonoma.API.Commands;
 using Autonoma.API.Main.Commands.Administration;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
 namespace Autonoma.API.Main.Controllers

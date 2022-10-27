@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Autonoma.Runtime.Infrastructure;
 using Autonoma.Core.Infrastructure;

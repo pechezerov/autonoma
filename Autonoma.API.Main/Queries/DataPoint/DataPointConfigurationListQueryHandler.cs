@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Autonoma.API.Main.Infrastructure;
 using Autonoma.Domain.Entities;
 using System;
 using System.Collections.Generic;

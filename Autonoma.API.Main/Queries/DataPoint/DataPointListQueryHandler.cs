@@ -2,7 +2,6 @@
 using Autonoma.API.Main.Contracts.DataPoint;
 using Autonoma.API.Queries;
 using Autonoma.Communication.Hosting;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Autonoma.API.Main.Queries.DataPoint

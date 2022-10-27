@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Autonoma.UI.Presentation.Abstractions
+﻿namespace Autonoma.UI.Presentation.Abstractions
 {
     public interface IElementPrototype
     {

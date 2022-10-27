@@ -5,8 +5,6 @@ using Autonoma.UI.Configuration.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace Autonoma.UI.Configuration

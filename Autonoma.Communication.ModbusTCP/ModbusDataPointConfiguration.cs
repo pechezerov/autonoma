@@ -1,5 +1,4 @@
 ﻿using Autonoma.Core;
-using Autonoma.Domain;
 using Autonoma.Domain.Entities;
 using System;
 

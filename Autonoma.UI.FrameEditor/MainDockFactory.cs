@@ -1,9 +1,7 @@
-﻿using Autonoma.UI.FrameEditor.Models.Tools;
-using Autonoma.UI.FrameEditor.ViewModels;
+﻿using Autonoma.UI.FrameEditor.ViewModels;
 using Autonoma.UI.FrameEditor.ViewModels.Documents;
 using Autonoma.UI.FrameEditor.ViewModels.Tools;
 using Autonoma.UI.Presentation.Design;
-using Autonoma.UI.Presentation.ViewModels;
 using Avalonia.Controls;
 using Avalonia.Data;
 using Dock.Avalonia.Controls;

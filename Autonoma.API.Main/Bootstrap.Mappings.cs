@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Autonoma.API.Main;
 using Autonoma.Communication.Infrastructure;
 using Autonoma.Core.Infrastructure;
 using Microsoft.Extensions.Configuration;

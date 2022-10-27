@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Autonoma.API.Infrastructure;
 using Autonoma.API.Main.Contracts.DataPoint;
-using Autonoma.API.Main.Infrastructure;
 using Autonoma.API.Queries;
 using Autonoma.Domain.Entities;
 using System.Threading.Tasks;

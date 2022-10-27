@@ -1,5 +1,4 @@
 ﻿using Autonoma.API.Queries;
-using System;
 
 namespace Autonoma.API.Main.Contracts.Common
 {

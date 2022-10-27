@@ -1,9 +1,5 @@
-﻿using Autonoma.UI.Presentation.Attributes;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using ReactiveUI;
-using System;
-using System.Reflection;
 
 namespace Autonoma.UI.Configuration.Views.Tools
 {

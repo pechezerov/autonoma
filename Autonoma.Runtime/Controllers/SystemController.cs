@@ -3,7 +3,6 @@ using Autonoma.ProcessManagement;
 using Autonoma.ProcessManagement.Abstractions;
 using Autonoma.Runtime.Queries.Process;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Autonoma.Domain
+﻿namespace Autonoma.Domain
 {
     public interface IUnique
     {

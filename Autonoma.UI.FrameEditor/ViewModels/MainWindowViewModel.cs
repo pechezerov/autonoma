@@ -9,7 +9,6 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Dock.Model.Controls;
 using Dock.Model.ReactiveUI.Controls;
-using DynamicData;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;

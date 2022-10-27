@@ -1,7 +1,5 @@
-﻿using Autonoma.Domain.Entities;
-using Autonoma.UI.Configuration.Abstractions;
+﻿using Autonoma.UI.Configuration.Abstractions;
 using Autonoma.UI.Configuration.ViewModels;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 

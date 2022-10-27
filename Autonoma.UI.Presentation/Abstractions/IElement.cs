@@ -1,5 +1,4 @@
-﻿using Autonoma.Domain;
-using Autonoma.UI.Presentation.Model;
+﻿using Autonoma.UI.Presentation.Model;
 using System.Collections.Generic;
 
 namespace Autonoma.UI.Presentation.Abstractions

@@ -1,5 +1,4 @@
 ﻿using Autonoma.API.Main.Contracts.Common;
-using System;
 
 namespace Autonoma.API.Main.Contracts.Adapter
 {

@@ -1,5 +1,4 @@
-﻿using Autonoma.UI.Presentation.Model;
-using System;
+﻿using System;
 
 namespace Autonoma.UI.Presentation.Attributes
 {

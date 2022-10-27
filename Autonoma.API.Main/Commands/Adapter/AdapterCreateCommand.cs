@@ -1,9 +1,7 @@
 ﻿using Autonoma.API.Commands;
 using Autonoma.API.Infrastructure;
 using Autonoma.API.Main.Contracts.Adapter;
-using Autonoma.API.Main.Queries.Adapter;
 using Autonoma.Domain.Entities;
-using System;
 using System.Threading.Tasks;
 
 namespace Autonoma.API.Main.Commands.Adapter

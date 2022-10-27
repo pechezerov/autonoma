@@ -1,5 +1,4 @@
-﻿using Autonoma.UI.Presentation.ViewModels;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 

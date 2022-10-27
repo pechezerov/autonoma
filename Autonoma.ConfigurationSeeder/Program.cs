@@ -1,5 +1,4 @@
-﻿using Autonoma.Communication.Test.Client;
-using Autonoma.Configuration;
+﻿using Autonoma.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

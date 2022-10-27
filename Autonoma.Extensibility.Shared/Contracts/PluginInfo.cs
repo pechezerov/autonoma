@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Autonoma.Extensibility.Shared.Contracts
+﻿namespace Autonoma.Extensibility.Shared.Contracts
 {
     /// <summary>
     /// Содержит сведения, идентифицирующие плагин в общем перечне.

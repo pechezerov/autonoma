@@ -5,7 +5,6 @@ using Autonoma.Core;
 using Autonoma.Domain;
 using Autonoma.Domain.Entities;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Autonoma.ConfigurationSeeder

@@ -1,5 +1,4 @@
-﻿using Autonoma.Domain.Abstractions;
-using Autonoma.UI.Presentation.ViewModels;
+﻿using Autonoma.UI.Presentation.ViewModels;
 using System;
 
 namespace Autonoma.UI.Presentation.Design

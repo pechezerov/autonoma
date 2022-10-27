@@ -1,5 +1,4 @@
 ﻿using Autonoma.UI.Configuration.ViewModels.Tools;
-using Dock.Model.ReactiveUI.Controls;
 
 namespace Autonoma.UI.Configuration.Design
 {

@@ -3,7 +3,6 @@ using Autonoma.API.Infrastructure;
 using Autonoma.Communication.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using System.Linq;
 
 namespace Autonoma.API
 {

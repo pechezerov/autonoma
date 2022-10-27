@@ -4,7 +4,6 @@ using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using ReactiveUI.Fody.Helpers;
-using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Autonoma.UI.Presentation.Controls

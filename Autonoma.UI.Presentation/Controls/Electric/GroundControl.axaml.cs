@@ -1,11 +1,7 @@
-﻿using Autonoma.Domain;
-using Autonoma.Domain.Electric;
+﻿using Autonoma.Domain.Electric;
 using Autonoma.UI.Presentation.Attributes;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using Avalonia.Media;
-using ReactiveUI.Fody.Helpers;
-using System.ComponentModel;
 
 namespace Autonoma.UI.Presentation.Controls.Electric
 {

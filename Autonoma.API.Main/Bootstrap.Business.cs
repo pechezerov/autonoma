@@ -1,14 +1,5 @@
-﻿using Autonoma.API.Infrastructure;
-using Autonoma.API.Main.Infrastructure;
-using Autonoma.Configuration;
-using Autonoma.Configuration.Repositories;
-using Autonoma.Configuration.Repositories.Abstractions;
-using Autonoma.Domain.Entities;
-using Autonoma.Model.Akka.Services;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace Autonoma.API
 {

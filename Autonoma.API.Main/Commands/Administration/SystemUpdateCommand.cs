@@ -1,6 +1,5 @@
 ﻿using Autonoma.API.Commands;
 using Autonoma.API.Infrastructure;
-using Autonoma.API.Main.Infrastructure;
 using System;
 using System.Threading.Tasks;
 

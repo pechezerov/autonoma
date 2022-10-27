@@ -1,15 +1,9 @@
-using Autonoma.UI.FrameEditor.Models;
 using Autonoma.UI.FrameEditor.ViewModels;
 using Autonoma.UI.FrameEditor.Views;
-using Autonoma.UI.Presentation;
-using Autonoma.UI.Presentation.Abstractions;
-using Autonoma.UI.Presentation.Infrastructure;
-using Autonoma.UI.Presentation.Services;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Dock.Model.Core;
-using ReactiveUI;
 
 namespace Autonoma.UI.FrameEditor
 {

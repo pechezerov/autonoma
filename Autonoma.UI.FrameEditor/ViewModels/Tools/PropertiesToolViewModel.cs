@@ -1,6 +1,5 @@
 ﻿using Dock.Model.ReactiveUI.Controls;
 using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
 
 namespace Autonoma.UI.FrameEditor.ViewModels.Tools
 {

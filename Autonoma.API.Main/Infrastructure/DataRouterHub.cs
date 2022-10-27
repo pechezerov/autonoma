@@ -1,6 +1,5 @@
 ﻿using Autonoma.Communication.Abstractions;
 using Autonoma.Communication.Hosting;
-using Autonoma.Domain;
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;

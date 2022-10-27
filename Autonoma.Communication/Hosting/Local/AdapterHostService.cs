@@ -2,7 +2,6 @@
 using Autonoma.Domain.Abstractions;
 using Autonoma.Domain.Entities;
 using Autonoma.Extensibility.Shared.Abstractions;
-using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;

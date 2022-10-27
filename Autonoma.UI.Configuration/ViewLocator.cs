@@ -1,5 +1,4 @@
 using Autonoma.UI.Presentation;
-using Autonoma.UI.Presentation.Controls;
 using Autonoma.UI.Presentation.ViewModels;
 using Avalonia.Controls;
 using Dock.Model.Core;
