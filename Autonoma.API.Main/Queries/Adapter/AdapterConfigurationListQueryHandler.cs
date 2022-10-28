@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+using Autonoma.API.Infrastructure;
+using Autonoma.API.Main.Contracts.Adapter;
+using Autonoma.API.Queries;
 using Autonoma.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Autonoma.API.Infrastructure;
-using Autonoma.API.Queries;
-using Autonoma.API.Main.Contracts.Adapter;
 
 namespace Autonoma.API.Main.Queries.Adapter
 {
@@ -23,39 +22,22 @@ namespace Autonoma.API.Main.Queries.Adapter
 
         public override async Task<AdapterConfigurationListQueryResult> ExecuteAsync(AdapterConfigurationListQuery query)
         {
-            if (query.Ids.Any())
-            {
-                var totalItems = await _uow.AdapterRepository.AllAsQueryable()
-                    .LongCountAsync();
+            var relevantItemsCount = await _uow.AdapterRepository.AllAsQueryable()
+                .Where(ci => !query.Ids.Any() || query.Ids.Contains(ci.Id))
+                .LongCountAsync();
 
-                var itemsOnPage = _uow.AdapterRepository
-                    .AllIncludeAsQueryable(a => a.DataPoints)
-                    .OrderBy(c => c.Name)
-                    .Skip(query.PageSize * (query.PageIndex - 1))
-                    .Take(query.PageSize);
+            var itemsOnPage = _uow.AdapterRepository
+                .AllIncludeAsQueryable(a => a.DataPoints)
+                .Where(ci => !query.Ids.Any() || query.Ids.Contains(ci.Id))
+                .OrderBy(c => c.Name)
+                .Skip(query.PageSize * (query.PageIndex - 1))
+                .Take(query.PageSize);
 
-                var result = await itemsOnPage
-                    .Select(dp => _mapper.Map<AdapterConfiguration, AdapterConfigurationItem>(dp))
-                    .ToListAsync();
-
-                return new AdapterConfigurationListQueryResult(query.PageIndex, query.PageSize, totalItems, result);
-            }
-            else
-            {
-                var relevantItems = await GetItemsByIdsAsync(query.Ids);
-                return new AdapterConfigurationListQueryResult(1, relevantItems.Count, relevantItems.Count, relevantItems);
-            }
-        }
-
-        private async Task<List<AdapterConfigurationItem>> GetItemsByIdsAsync(IEnumerable<int> ids)
-        {
-            var items = await _uow.AdapterRepository
-                .AllIncludeAsQueryable(a => a.DataPoints, a => a.AdapterType)
-                .Where(ci => !ids.Any() || ids.Contains(ci.Id))
+            var result = await itemsOnPage
                 .Select(dp => _mapper.Map<AdapterConfiguration, AdapterConfigurationItem>(dp))
                 .ToListAsync();
 
-            return items;
+            return new AdapterConfigurationListQueryResult(query.PageIndex, query.PageSize, relevantItemsCount, result);
         }
     }
 }
