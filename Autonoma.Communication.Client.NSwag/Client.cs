@@ -435,15 +435,15 @@ namespace Autonoma.API.Main.Client
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<AdapterConfigurationByIdQueryResult> AdaptersConfiguration_AdapterConfigurationByIdAsync(int id)
+        public virtual System.Threading.Tasks.Task<AdapterConfigurationByIdQueryResult> AdaptersConfiguration_AdapterByIdAsync(int id)
         {
-            return AdaptersConfiguration_AdapterConfigurationByIdAsync(id, System.Threading.CancellationToken.None);
+            return AdaptersConfiguration_AdapterByIdAsync(id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AdapterConfigurationByIdQueryResult> AdaptersConfiguration_AdapterConfigurationByIdAsync(int id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<AdapterConfigurationByIdQueryResult> AdaptersConfiguration_AdapterByIdAsync(int id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -513,15 +513,15 @@ namespace Autonoma.API.Main.Client
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<AdapterConfigurationListQueryResult> AdaptersConfiguration_AdapterConfigurationAsync(AdapterConfigurationListQuery body)
+        public virtual System.Threading.Tasks.Task<AdapterConfigurationListQueryResult> AdaptersConfiguration_AdapterListAsync(AdapterConfigurationListQuery body)
         {
-            return AdaptersConfiguration_AdapterConfigurationAsync(body, System.Threading.CancellationToken.None);
+            return AdaptersConfiguration_AdapterListAsync(body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AdapterConfigurationListQueryResult> AdaptersConfiguration_AdapterConfigurationAsync(AdapterConfigurationListQuery body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<AdapterConfigurationListQueryResult> AdaptersConfiguration_AdapterListAsync(AdapterConfigurationListQuery body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/AdaptersConfiguration/list");
@@ -591,15 +591,15 @@ namespace Autonoma.API.Main.Client
 
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task AdaptersConfiguration_CreateAdapterConfigurationAsync(AdapterConfigurationItem body)
+        public virtual System.Threading.Tasks.Task AdaptersConfiguration_CreateAdapterAsync(AdapterConfigurationItem body)
         {
-            return AdaptersConfiguration_CreateAdapterConfigurationAsync(body, System.Threading.CancellationToken.None);
+            return AdaptersConfiguration_CreateAdapterAsync(body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task AdaptersConfiguration_CreateAdapterConfigurationAsync(AdapterConfigurationItem body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task AdaptersConfiguration_CreateAdapterAsync(AdapterConfigurationItem body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/AdaptersConfiguration/create");
@@ -663,15 +663,15 @@ namespace Autonoma.API.Main.Client
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task AdaptersConfiguration_DeleteAdapterConfigurationAsync(int id)
+        public virtual System.Threading.Tasks.Task AdaptersConfiguration_DeleteAdapterAsync(int id)
         {
-            return AdaptersConfiguration_DeleteAdapterConfigurationAsync(id, System.Threading.CancellationToken.None);
+            return AdaptersConfiguration_DeleteAdapterAsync(id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task AdaptersConfiguration_DeleteAdapterConfigurationAsync(int id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task AdaptersConfiguration_DeleteAdapterAsync(int id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");

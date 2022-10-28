@@ -10,7 +10,7 @@ namespace Autonoma.API.Main.Contracts.Common
     public class EntityListQuery : Query
     {
         [DefaultValue(10)]
-        public int PageSize { get; set; } = 0;
+        public int PageSize { get; set; } = 10;
 
         [DefaultValue(1)]
         public int PageIndex { get; set; } = 1;

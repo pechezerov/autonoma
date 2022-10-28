@@ -25,7 +25,7 @@ namespace Autonoma.Testing.IntegrationTests
         {
             // Read
             var getListRequestObject = new AdapterConfigurationListQuery { };
-            var getListResult = await _httpClient.AdaptersConfiguration_AdapterConfigurationAsync(getListRequestObject);
+            var getListResult = await _httpClient.AdaptersConfiguration_AdapterListAsync(getListRequestObject);
             Assert.True(getListResult.Count == 0);
             Assert.True(getListResult.Data.Count() == 0);
 
@@ -34,15 +34,10 @@ namespace Autonoma.Testing.IntegrationTests
             {
                 Address = "Test",
                 Name = "Test",
-                IpAddress = "",
-                DataPoints = new List<DataPointConfigurationItem>
-                {
-                    new DataPointConfigurationItem { Name = "Test1", Unit = "test", Mapping = "test" },
-                    new DataPointConfigurationItem { Name = "Test2", Unit = "test", Mapping = "test" }
-                }
+                IpAddress = ""
             };
-            await _httpClient.AdaptersConfiguration_CreateAdapterConfigurationAsync(createAdapterRequestObject);
-            getListResult = await _httpClient.AdaptersConfiguration_AdapterConfigurationAsync(getListRequestObject);
+            await _httpClient.AdaptersConfiguration_CreateAdapterAsync(createAdapterRequestObject);
+            getListResult = await _httpClient.AdaptersConfiguration_AdapterListAsync(getListRequestObject);
             Assert.True(getListResult.Count == 1);
             Assert.True(getListResult.Data.Count() == 1);
             Assert.True(getListResult.Data.First().Name == "Test");
@@ -54,22 +49,59 @@ namespace Autonoma.Testing.IntegrationTests
                 Id = createdId,
                 Address = "UpdatedTest",
                 Name = "UpdatedTest",
-                IpAddress = "",
-                DataPoints = new List<DataPointConfigurationItem>
-                {
-                    new DataPointConfigurationItem { Name = "UpdatedTest1", Unit = "updatedtest", Mapping = "updatedtest" },
-                    new DataPointConfigurationItem { Name = "UpdatedTest3", Unit = "newtest", Mapping = "newtest" }
-                }
+                IpAddress = ""
             };
             await _httpClient.AdaptersConfiguration_UpdateAdapterConfigurationAsync(updateAdapterRequestObject);
-            getListResult = await _httpClient.AdaptersConfiguration_AdapterConfigurationAsync(getListRequestObject);
+            getListResult = await _httpClient.AdaptersConfiguration_AdapterListAsync(getListRequestObject);
             Assert.True(getListResult.Count == 1);
             Assert.True(getListResult.Data.Count() == 1);
             Assert.True(getListResult.Data.First().Name == "UpdatedTest");
 
             // Delete
-            await _httpClient.AdaptersConfiguration_DeleteAdapterConfigurationAsync(createdId);
-            getListResult = await _httpClient.AdaptersConfiguration_AdapterConfigurationAsync(getListRequestObject);
+            await _httpClient.AdaptersConfiguration_DeleteAdapterAsync(createdId);
+            getListResult = await _httpClient.AdaptersConfiguration_AdapterListAsync(getListRequestObject);
+            Assert.True(getListResult.Count == 0);
+            Assert.True(getListResult.Data.Count() == 0);
+        }
+
+        [Fact]
+        public async Task DataPointConfigurationList_CrudLifeCycle()
+        {
+            // Read
+            var getListRequestObject = new DataPointConfigurationListQuery { };
+            var getListResult = await _httpClient.DataPointsConfiguration_DataPointListAsync(getListRequestObject);
+            Assert.True(getListResult.Count == 0);
+            Assert.True(getListResult.Data.Count() == 0);
+
+            // Create
+            var createDataPointRequestObject = new DataPointConfigurationItem
+            {
+                Name = "Test",
+                Mapping = "Test",
+            };
+            await _httpClient.DataPointsConfiguration_CreateDataPointAsync(createDataPointRequestObject);
+            getListResult = await _httpClient.DataPointsConfiguration_DataPointListAsync(getListRequestObject);
+            Assert.True(getListResult.Count == 1);
+            Assert.True(getListResult.Data.Count() == 1);
+            Assert.True(getListResult.Data.First().Name == "Test");
+            var createdId = getListResult.Data.First().Id;
+
+            // Update
+            var updateDataPointRequestObject = new DataPointConfigurationItem
+            {
+                Id = createdId,
+                Name = "UpdatedTest",
+                Mapping = "UpdatedTest",
+            };
+            await _httpClient.DataPointsConfiguration_UpdateDataPointAsync(updateDataPointRequestObject);
+            getListResult = await _httpClient.DataPointsConfiguration_DataPointListAsync(getListRequestObject);
+            Assert.True(getListResult.Count == 1);
+            Assert.True(getListResult.Data.Count() == 1);
+            Assert.True(getListResult.Data.First().Name == "UpdatedTest");
+
+            // Delete
+            await _httpClient.DataPointsConfiguration_DeleteDataPointAsync(createdId);
+            getListResult = await _httpClient.DataPointsConfiguration_DataPointListAsync(getListRequestObject);
             Assert.True(getListResult.Count == 0);
             Assert.True(getListResult.Data.Count() == 0);
         }

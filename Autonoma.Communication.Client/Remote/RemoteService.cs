@@ -26,7 +26,7 @@ namespace Autonoma.Communication.Hosting.Remote
 
         public async Task<AdapterConfiguration> GetAdapter(int id)
         {
-            var dp = await MainApi.AdaptersConfiguration_AdapterConfigurationByIdAsync(id);
+            var dp = await MainApi.AdaptersConfiguration_AdapterByIdAsync(id);
             return Mapper.Map<AdapterConfiguration>(dp);
         }
 

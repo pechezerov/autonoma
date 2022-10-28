@@ -37,7 +37,7 @@ namespace Autonoma.API.Main.Controllers
         [HttpGet]
         [Route("{id:int}")]
         [ProducesResponseType(typeof(AdapterConfigurationByIdQueryResult), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> AdapterConfigurationById(int id)
+        public async Task<IActionResult> AdapterById(int id)
         {
             var query = new AdapterConfigurationByIdQuery(id);
             return Ok(await _adapterByIdHandler.ExecuteAsync(query));
@@ -47,7 +47,7 @@ namespace Autonoma.API.Main.Controllers
         [HttpPost]
         [Route("list")]
         [ProducesResponseType(typeof(AdapterConfigurationListQueryResult), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> AdapterConfiguration([FromBody] AdapterConfigurationListQuery query)
+        public async Task<IActionResult> AdapterList([FromBody] AdapterConfigurationListQuery query)
         {
             return Ok(await _adapterListHandler.ExecuteAsync(query));
         }
@@ -55,7 +55,7 @@ namespace Autonoma.API.Main.Controllers
         // POST api/v1/[controller]/create
         [HttpPost("create")]
         [ProducesResponseType((int)HttpStatusCode.Created)]
-        public async Task<IActionResult> CreateAdapterConfiguration(AdapterConfigurationItem adapter)
+        public async Task<IActionResult> CreateAdapter(AdapterConfigurationItem adapter)
         {
             var command = new AdapterCreateCommand
             {
@@ -63,7 +63,7 @@ namespace Autonoma.API.Main.Controllers
             };
             await _adapterCreateCommandHandler.ExecuteAsync(command);
             return CreatedAtAction(
-                nameof(AdapterConfigurationById),
+                nameof(AdapterById),
                 new { id = command.CreatedId },
                 command.CreatedId);
         }
@@ -72,7 +72,7 @@ namespace Autonoma.API.Main.Controllers
         [HttpDelete]
         [Route("delete/{id:int}")]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
-        public async Task<IActionResult> DeleteAdapterConfiguration(int id)
+        public async Task<IActionResult> DeleteAdapter(int id)
         {
             var command = new AdapterDeleteCommand
             {

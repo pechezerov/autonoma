@@ -70,7 +70,7 @@ namespace Autonoma.Communication.Test.Client
                                         var apiMainClient = provider
                                             .GetRequiredService<APIMainClient>();
                                         var adapterConfigurationResult = (apiMainClient
-                                            .AdaptersConfiguration_AdapterConfigurationByIdAsync(adapterId)).Result;
+                                            .AdaptersConfiguration_AdapterByIdAsync(adapterId)).Result;
                                         var adapterConfiguration = mapper.Map<AdapterConfiguration>(adapterConfigurationResult.Adapter);
                                         Console.WriteLine("Подключение установлено");
                                         return adapterConfiguration;
