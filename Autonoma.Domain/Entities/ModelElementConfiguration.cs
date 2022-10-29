@@ -144,11 +144,12 @@ namespace Autonoma.Domain.Entities
 
         public int? BaseTemplateId { get; set; }
 
+        public string Name { get; set; } = "";
+        
         public string Description { get; set; } = "";
 
         public List<ModelElementConfiguration> Elements { get; set; }
 
-        public string Name { get; set; } = "";
         public ModelElementTemplateConfiguration()
         {
             Attributes = new List<ModelAttributeTemplateConfiguration>();
