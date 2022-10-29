@@ -27,7 +27,7 @@ namespace Autonoma.API.Main.Queries.Adapter
                 .AllIncludeAsQueryable(a => a.DataPoints, a => a.AdapterType)
                 .Where(ci => idsToSelect.Contains(ci.Id))
                 .Select(dp => _mapper.Map<AdapterConfiguration, AdapterConfigurationItem>(dp))
-                .FirstOrDefaultAsync();
+                .FirstAsync();
 
             return new AdapterConfigurationByIdQueryResult
             {

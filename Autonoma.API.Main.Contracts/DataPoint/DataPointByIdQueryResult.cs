@@ -5,6 +5,6 @@ namespace Autonoma.API.Main.Contracts.DataPoint
 {
     public class DataPointByIdQueryResult : IQueryResult
     {
-        public DataPointInfo DataPoint { get; set; }
+        public DataPointInfo DataPoint { get; set; } = null!;
     }
 }
