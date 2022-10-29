@@ -4,6 +4,7 @@ using Autonoma.Configuration;
 using Autonoma.Core;
 using Autonoma.Domain;
 using Autonoma.Domain.Entities;
+using Newtonsoft.Json;
 using System;
 using System.Linq;
 
@@ -43,7 +44,6 @@ namespace Autonoma.ConfigurationSeeder
             _context.Adapters.Add(new AdapterConfiguration
             {
                 Id = Globals.IdleAdapterId,
-                IpAddress = "",
                 Name = "Пассивный",
                 AdapterType = idleAdapterType,
             });
@@ -53,13 +53,12 @@ namespace Autonoma.ConfigurationSeeder
                 Id = Globals.TestAdapterTypeId,
                 Name = "Тестовый",
                 AssemblyQualifiedAdapterTypeName = typeof(TestClient).AssemblyQualifiedName,
-                AssemblyQualifiedConfigurationTypeName = typeof(TestClientConfiguration).AssemblyQualifiedName,
+                AssemblyQualifiedSettingsTypeName = typeof(TestClientConfiguration).AssemblyQualifiedName,
             };
             _context.AdapterTypes.Add(testAdapterType);
             _context.Adapters.Add(new AdapterConfiguration
             {
                 Id = Globals.TestAdapterId,
-                IpAddress = "",
                 Name = "Тестовый",
                 AdapterType = testAdapterType,
             });
@@ -69,16 +68,19 @@ namespace Autonoma.ConfigurationSeeder
                 Id = 3,
                 Name = "Modbus",
                 AssemblyQualifiedAdapterTypeName = typeof(ModbusClient).AssemblyQualifiedName,
-                AssemblyQualifiedConfigurationTypeName = typeof(ModbusClientConfiguration).AssemblyQualifiedName,
+                AssemblyQualifiedSettingsTypeName = typeof(ModbusClientConfiguration).AssemblyQualifiedName,
             };
             _context.AdapterTypes.Add(modbusAdapterType);
             _context.Adapters.Add(new AdapterConfiguration
             {
                 Id = 31,
-                IpAddress = "",
                 Name = "Modbus #1",
                 AdapterType = modbusAdapterType,
-                Configuration = ""
+                Settings = JsonConvert.SerializeObject(new ModbusClientConfiguration 
+                {
+                    AdapterType = ModbusAdapterType.ModbusTcp,
+                    IpAddress = "192.168.0.1"
+                })
             });
 
             _context.SaveChanges();
@@ -199,7 +201,7 @@ namespace Autonoma.ConfigurationSeeder
             if (_context.ModelElements.Any())
                 return;
 
-            for (int j = 0; j <= 3; j++)
+            for (int j = 1; j <= 3; j++)
             {
                 var groupElement = new ModelElementConfiguration
                 {

@@ -29,10 +29,9 @@ namespace Autonoma.UI.Presentation.Converters
 
             if (value != null)
             {
-                var basicObject = value as ViewModelBase;
-                if (basicObject != null)
+                if (value != null)
                 {
-                    var properties = basicObject
+                    var properties = value
                         .GetType().GetProperties().OrderBy(o => o.Name);
                     foreach (var property in properties)
                     {
@@ -42,7 +41,7 @@ namespace Autonoma.UI.Presentation.Converters
                             continue;
 
                         var isReadOnly = property.GetCustomAttribute<ReadOnlyAttribute>()?.IsReadOnly == true;
-                        var propertyViewModel = CreatePropertyViewModel(basicObject, property);
+                        var propertyViewModel = CreatePropertyViewModel(value, property);
                         if (propertyViewModel != null)
                         {
                             propertyViewModel.IsReadOnly = isReadOnly;
@@ -50,7 +49,7 @@ namespace Autonoma.UI.Presentation.Converters
                         }
                     }
 
-                    if (basicObject is ElementViewModel basicElement)
+                    if (value is ElementViewModel basicElement)
                     {
                         var controlObject = basicElement.Content;
                         if (controlObject != null)

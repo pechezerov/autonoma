@@ -30,9 +30,7 @@ namespace Autonoma.Testing.IntegrationTests
             // Create
             var createAdapterRequestObject = new AdapterConfigurationItem
             {
-                Address = "Test",
                 Name = "Test",
-                IpAddress = ""
             };
             await _httpClient.AdaptersConfiguration_CreateAdapterAsync(createAdapterRequestObject);
             getListResult = await _httpClient.AdaptersConfiguration_AdapterListAsync(getListRequestObject);
@@ -45,9 +43,7 @@ namespace Autonoma.Testing.IntegrationTests
             var updateAdapterRequestObject = new AdapterConfigurationItem
             {
                 Id = createdId,
-                Address = "UpdatedTest",
                 Name = "UpdatedTest",
-                IpAddress = ""
             };
             await _httpClient.AdaptersConfiguration_UpdateAdapterConfigurationAsync(updateAdapterRequestObject);
             getListResult = await _httpClient.AdaptersConfiguration_AdapterListAsync(getListRequestObject);
@@ -74,9 +70,7 @@ namespace Autonoma.Testing.IntegrationTests
             // Create
             var createAdapterRequestObject = new AdapterConfigurationItem
             {
-                Address = "Test",
                 Name = "Test",
-                IpAddress = ""
             };
             for (int i = 0; i < 10; i++)
                 await _httpClient.AdaptersConfiguration_CreateAdapterAsync(createAdapterRequestObject);
@@ -124,9 +118,7 @@ namespace Autonoma.Testing.IntegrationTests
             // Create adapter before work with datapoints
             var createAdapterRequestObject = new AdapterConfigurationItem
             {
-                Address = "Test",
                 Name = "Test",
-                IpAddress = ""
             };
             await _httpClient.AdaptersConfiguration_CreateAdapterAsync(createAdapterRequestObject);
             var getAdapterListRequestObject = new AdapterConfigurationListQuery { };
@@ -182,9 +174,7 @@ namespace Autonoma.Testing.IntegrationTests
             // Create adapter before work with datapoints
             var createAdapterRequestObject = new AdapterConfigurationItem
             {
-                Address = "Test",
                 Name = "Test",
-                IpAddress = ""
             };
             await _httpClient.AdaptersConfiguration_CreateAdapterAsync(createAdapterRequestObject);
             var getAdapterListRequestObject = new AdapterConfigurationListQuery { };

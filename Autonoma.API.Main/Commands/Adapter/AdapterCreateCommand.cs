@@ -27,9 +27,7 @@ namespace Autonoma.API.Main.Commands.Adapter
             {
                 AdapterTypeId = adapterInfo.AdapterTypeId,
                 Name = adapterInfo.Name,
-                Address = adapterInfo.Address,
-                IpAddress = adapterInfo.IpAddress,
-                Port = adapterInfo.Port
+                Settings = adapterInfo.Settings,
             };
             // TODO: развернутые сведения о типе (AdapterType)
 

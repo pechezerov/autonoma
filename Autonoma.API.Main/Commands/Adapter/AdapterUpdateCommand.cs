@@ -31,9 +31,7 @@ namespace Autonoma.API.Main.Commands.Adapter
                 Id = adapterInfo.Id,
                 AdapterTypeId = adapterInfo.AdapterTypeId,
                 Name = adapterInfo.Name,
-                Address = adapterInfo.Address,
-                IpAddress = adapterInfo.IpAddress,
-                Port = adapterInfo.Port
+                Settings = adapterInfo.Settings
             };
 
             _uow.AdapterRepository.Update(adapter);

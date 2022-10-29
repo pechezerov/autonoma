@@ -3,9 +3,9 @@
     public class AdapterType : Entity
     {
         /// <summary>
-        /// Имя класса-конфигурации адаптера
+        /// Имя класса, хранящего настройки адаптера
         /// </summary>
-        public string AssemblyQualifiedConfigurationTypeName { get; set; } = "";
+        public string AssemblyQualifiedSettingsTypeName { get; set; } = "";
 
         /// <summary>
         /// Имя класса-адаптера

@@ -28,6 +28,7 @@ namespace Autonoma.UI.Configuration.Abstractions
     {
         public string? Name { get; }
         AdapterType? AdapterType { get; }
+        public object? Settings { get; }
     }
 
     /// <summary>

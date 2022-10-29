@@ -21,19 +21,19 @@ namespace Autonoma.UI.Configuration.Design
         public int? AdapterTypeId => 1;
 
         [Browsable(false)]
-        public IList<IAdapter> Adapters
-            => new List<IAdapter>()
-            {
-                new DesignAdapter("1"),
-                new DesignAdapter("2"),
-                new DesignAdapter("3"),
-            };
+        public IList<IAdapter> Adapters { get; set; }
 
         public string Name { get; set; }
 
         public DesignRouter(string name)
         {
             Name = name;
+            Adapters = new List<IAdapter>()
+            {
+                new DesignAdapter("1"),
+                new DesignAdapter("2"),
+                new DesignAdapter("3"),
+            };
         }
     }
 
@@ -41,11 +41,18 @@ namespace Autonoma.UI.Configuration.Design
     {
         public string Name { get; set; }
         public AdapterType AdapterType { get; set; }
+        public object? Settings { get; set; }
 
         public DesignAdapter(string name)
         {
             Name = name;
             AdapterType = new AdapterType();
+            Settings = new
+            {
+                Property1 = "abc123",
+                Property2 = 234,
+                Property3 = true,
+            };
         }
     }
 }

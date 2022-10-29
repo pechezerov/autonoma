@@ -24,9 +24,7 @@ namespace Autonoma.Communication.Modbus
         {
             Map = new ModbusMap(config);
             UseUDP = Options.AdapterType == ModbusAdapterType.ModbusUdp;
-
-            if (Byte.TryParse(Configuration.Address, out byte slaveAddr))
-                SlaveAddress = slaveAddr;
+            SlaveAddress = Options.Address;
         }
 
         protected override Task ExecuteAsync(System.Threading.CancellationToken cancellationToken)
@@ -41,14 +39,14 @@ namespace Autonoma.Communication.Modbus
                     if (!UseUDP)
                     {
                         client = new TcpClient();
-                        ((TcpClient)client).Connect(IPAddress.Parse(Configuration.IpAddress), Configuration.Port);
+                        ((TcpClient)client).Connect(IPAddress.Parse(Options.IpAddress), Options.Port);
                         var factory = new ModbusFactory();
                         master = factory.CreateMaster(((TcpClient)client));
                     }
                     else
                     {
                         client = new UdpClient();
-                        ((UdpClient)client).Connect(IPAddress.Parse(Configuration.IpAddress), Configuration.Port);
+                        ((UdpClient)client).Connect(IPAddress.Parse(Options.IpAddress), Options.Port);
                         var factory = new ModbusFactory();
                         master = factory.CreateMaster(((UdpClient)client));
                     }

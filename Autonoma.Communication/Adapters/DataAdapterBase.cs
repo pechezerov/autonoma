@@ -39,7 +39,7 @@ namespace Autonoma.Communication
             if (GetType() != Type.GetType(config.AdapterType.AssemblyQualifiedAdapterTypeName))
                 throw new InvalidOperationException();
 
-            var cfg = config.Configuration;
+            var cfg = config.Settings;
 
             TOptions? options;
             try

@@ -62,7 +62,10 @@
 				<Grid Grid.Column="2" RowDefinitions="200, Auto, *"
 					  DataContext="{Binding #treeTechnology.SelectedItem}">
 					
-					<pc:PropertiesEditor Grid.Row="0" DataContext="{Binding .}"/>
+					<Grid Grid.Row="0" RowDefinitions="Auto, Auto" ColumnDefinitions="*,2*" DataContext="{Binding .}">
+						<TextBlock Grid.Row="0" Text="Settings"/>
+						<pc:PropertiesEditor Grid.Row="0" Grid.Column="1" DataContext="{Binding Settings}"/>
+					</Grid>
 
 					<GridSplitter Grid.Row="1" 
 						HorizontalAlignment="Stretch" Height="3" Margin="0"/>

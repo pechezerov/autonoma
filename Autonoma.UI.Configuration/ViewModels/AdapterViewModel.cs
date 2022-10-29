@@ -1,7 +1,9 @@
 ﻿using Autonoma.Domain.Entities;
 using Autonoma.UI.Configuration.Abstractions;
 using Autonoma.UI.Presentation.ViewModels;
+using Newtonsoft.Json;
 using ReactiveUI.Fody.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -13,11 +15,11 @@ namespace Autonoma.UI.Configuration.ViewModels
         public AdapterViewModel(AdapterConfiguration configuration)
         {
             AdapterType = configuration.AdapterType;
-            Address = configuration.Address;
-            IpAddress = configuration.IpAddress;
             Name = configuration.Name;
-            Configuration = configuration.Configuration;
-            Port = configuration.Port;
+
+            var settingsType = Type.GetType(configuration.AdapterType.AssemblyQualifiedSettingsTypeName);
+            if (settingsType != null)
+                Settings = JsonConvert.DeserializeObject(configuration.Settings, settingsType);
 
             foreach (var dp in configuration.DataPoints)
                 DataPoints.Add(new DataPointViewModel(dp));
@@ -31,19 +33,13 @@ namespace Autonoma.UI.Configuration.ViewModels
         public string Address { get; set; }
 
         [Reactive]
-        public string IpAddress { get; set; }
-
-        [Reactive]
         public string Name { get; set; }
-
-        [Reactive]
-        public string Configuration { get; set; }
-
-        [Reactive]
-        public int Port { get; set; }
 
         [Browsable(false)]
         [Reactive]
         public IList<IDataPoint> DataPoints { get; set; } = new ObservableCollection<IDataPoint>();
+
+        [Reactive]
+        public object Settings { get; set; }
     }
 }
