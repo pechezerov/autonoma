@@ -15,6 +15,10 @@ namespace Autonoma.UI.Configuration
 {
     public partial class App : Application
     {
+        private IHost _host = null!;
+        private IServiceScope _serviceScope = null!;
+        private IServiceProvider _provider = null!;
+
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
@@ -28,7 +32,7 @@ namespace Autonoma.UI.Configuration
                     .AddJsonFile("appsettings.json")
                     .Build();
 
-                using IHost host = Host.CreateDefaultBuilder()
+                _host = Host.CreateDefaultBuilder()
                    .ConfigureServices((_, services) =>
                    {
                         // configuration file
@@ -39,12 +43,12 @@ namespace Autonoma.UI.Configuration
                    })
                    .Build();
 
-                IServiceScope serviceScope = host.Services.CreateScope();
-                IServiceProvider provider = serviceScope.ServiceProvider;
+                _serviceScope = _host.Services.CreateScope();
+                _provider = _serviceScope.ServiceProvider;
 
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = new MainWindowViewModel(new MainDockFactory(), provider),
+                    DataContext = new MainWindowViewModel(new MainDockFactory(), _provider),
                 };
             }
 

@@ -1,4 +1,4 @@
-using Autonoma.UI.Configuration.Abstractions;
+п»їusing Autonoma.UI.Configuration.Abstractions;
 using Autonoma.UI.Presentation.Model;
 using Autonoma.UI.Presentation.ViewModels;
 using Avalonia.Controls;
@@ -57,10 +57,10 @@ namespace Autonoma.UI.Configuration.ViewModels
             Provider = provider;
             Tools = new ObservableCollection<Tool>();
             dockFactory.MainContext = this;
-            Layout = dockFactory.CreateLayout() ?? throw new InvalidOperationException("Не удалось инициализировать панель управления");
+            Layout = dockFactory.CreateLayout() ?? throw new InvalidOperationException("РќРµ СѓРґР°Р»РѕСЃСЊ РёРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°С‚СЊ РїР°РЅРµР»СЊ СѓРїСЂР°РІР»РµРЅРёСЏ");
             dockFactory.InitLayout(Layout);
 
-            // команды
+            // РєРѕРјР°РЅРґС‹
 
             NewCommand = dockFactory.MainDocumentDock?.CreateDocument;
 
@@ -75,7 +75,7 @@ namespace Autonoma.UI.Configuration.ViewModels
 
                     File.Copy(path, "configuration.db3", true);
 
-                    var serializer = provider.GetRequiredService<IProjectSerializer>();
+                    var serializer = Provider.GetRequiredService<IProjectSerializer>();
                     var project = serializer.DeserializeProject<IProject>(path);
                     if (project is ProjectViewModel projectVm)
                         dockFactory.LoadProject(projectVm);
@@ -115,11 +115,11 @@ namespace Autonoma.UI.Configuration.ViewModels
                 var result = await ShowConnectionManagerDialog?.Handle(store);
             });
 
-            // диалоги
+            // РґРёР°Р»РѕРіРё
 
             ShowConnectionManagerDialog = new Interaction<ConnectionManagerViewModel, DataPointConnection?>();
 
-            // события
+            // СЃРѕР±С‹С‚РёСЏ
 
             this.WhenAnyValue(x => x.Project)
                 .Subscribe(doc =>
