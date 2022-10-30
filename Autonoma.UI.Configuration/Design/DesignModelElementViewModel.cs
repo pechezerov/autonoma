@@ -11,7 +11,7 @@ namespace Autonoma.UI.Configuration.Design
             DataPoint = new DataPointViewModel(new DataPointConfiguration
             {
                 Id = -1,
-                Mapping = "params(1) params(2) [0..9]",
+                Settings = "params(1) params(2) [0..9]",
                 Source = Domain.DataSource.Device,
                 Type = TypeCode.Double,
                 Unit = "kW",

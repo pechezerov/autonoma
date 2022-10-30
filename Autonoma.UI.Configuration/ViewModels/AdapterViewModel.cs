@@ -17,20 +17,40 @@ namespace Autonoma.UI.Configuration.ViewModels
             AdapterType = configuration.AdapterType;
             Name = configuration.Name;
 
-            var settingsType = Type.GetType(configuration.AdapterType.AssemblyQualifiedSettingsTypeName);
-            if (settingsType != null)
-                Settings = JsonConvert.DeserializeObject(configuration.Settings, settingsType);
+            var adapterSettingsType = Type.GetType(configuration.AdapterType.AssemblyQualifiedSettingsTypeName);
+            var datapointSettingsType = Type.GetType(configuration.AdapterType.AssemblyQualifiedDataPointSettingsTypeName);
+
+            if (adapterSettingsType != null)
+            {
+                try
+                {
+                    Settings = JsonConvert.DeserializeObject(configuration.Settings, adapterSettingsType);
+                }
+                catch
+                {
+                }
+            }
 
             foreach (var dp in configuration.DataPoints)
-                DataPoints.Add(new DataPointViewModel(dp));
+            {
+                var datapoint = new DataPointViewModel(dp);
+                if (datapointSettingsType != null)
+                {
+                    try
+                    {
+                        datapoint.Settings = JsonConvert.DeserializeObject(dp.Settings, datapointSettingsType);
+                    }
+                    catch
+                    {
+                    }
+                }
+                DataPoints.Add(datapoint);
+            }
         }
 
         [Browsable(false)]
         [Reactive]
         public AdapterType? AdapterType { get; set; }
-
-        [Reactive]
-        public string Address { get; set; }
 
         [Reactive]
         public string Name { get; set; }
@@ -40,6 +60,6 @@ namespace Autonoma.UI.Configuration.ViewModels
         public IList<IDataPoint> DataPoints { get; set; } = new ObservableCollection<IDataPoint>();
 
         [Reactive]
-        public object Settings { get; set; }
+        public object? Settings { get; set; }
     }
 }

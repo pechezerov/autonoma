@@ -8,6 +8,11 @@
         public string AssemblyQualifiedSettingsTypeName { get; set; } = "";
 
         /// <summary>
+        /// Имя класса, хранящего настройки точки данных
+        /// </summary>
+        public string AssemblyQualifiedDataPointSettingsTypeName { get; set; } = "";
+
+        /// <summary>
         /// Имя класса-адаптера
         /// </summary>
         /// <remarks>

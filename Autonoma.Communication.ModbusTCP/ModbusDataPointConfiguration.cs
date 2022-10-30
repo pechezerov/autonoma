@@ -1,42 +1,32 @@
 ﻿using Autonoma.Core;
 using Autonoma.Domain.Entities;
+using Newtonsoft.Json;
 using System;
+using System.Runtime.Intrinsics.Arm;
 
 namespace Autonoma.Communication.Modbus
 {
-    public record ModbusDataPointConfiguration
+    internal record ModbusDataPointConfiguration
     {
-        public ModbusDataPointConfiguration(int pointId, TypeCode type)
+        public ModbusDataPointConfiguration()
         {
-            Id = pointId;
-            ValueType = type;
         }
 
-        public static ModbusDataPointConfiguration Create(DataPointConfiguration baseConfig)
+        public ModbusDataPointConfiguration(DataPointConfiguration c)
         {
-            var result = new ModbusDataPointConfiguration(baseConfig.Id, baseConfig.Type);
+            Id = c.Id;
+            ValueType = c.Type;
 
             try
             {
-                string param = baseConfig.Mapping;
-                string[] paramParts = param.Split(new string[] { "\\", "/", ":", ";", " " }, StringSplitOptions.None);
-                if (paramParts.Length < 2)
-                    throw new InvalidOperationException("Неверный формат записи: недостаточно элементов");
-                var address = paramParts[0];
-                if (address.ToLower().Equals("i"))
-                    result.RegisterType = ModbusType.Input;
-                else if (address.ToLower().Equals("h"))
-                    result.RegisterType = ModbusType.Holding;
-                result.Address = UInt16.Parse(paramParts[1]);
-                if (paramParts.Length > 2)
-                    result.BitAddress = Int32.Parse(paramParts[2]);
+                var settings = JsonConvert.DeserializeObject<ModbusDataPointSettings>(c.Settings);
+                RegisterType = settings.RegisterType;
+                Address = settings.Address;
+                BitAddress = settings.BitAddress;
             }
             catch
             {
-                result.Invalid = true;
             }
-
-            return result;
         }
 
         public int Id { get; }

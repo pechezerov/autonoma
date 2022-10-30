@@ -12,6 +12,6 @@ namespace Autonoma.UI.Configuration.ViewModels
         public IList<IRouter> Routers { get; set; } = new ObservableCollection<IRouter>();
 
         [Reactive]
-        public object? SelectedTechnologyElement { get; set; }
+        public object? SelectedElement { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace Autonoma.UI.Configuration.ViewModels
             Name = configuration.Name;
             Type = configuration.Type;
             Unit = configuration.Unit;
-            Mapping = configuration.Mapping;
+            Mapping = configuration.Settings;
         }
 
         public bool AllowEditElements => false;
@@ -29,6 +29,10 @@ namespace Autonoma.UI.Configuration.ViewModels
         public IModelElement? Parent { get; set; }
 
         public IList<IModelElement> Elements => Array.Empty<IModelElement>();
+
+        public object? Settings { get; set; }
+
+        public bool Invalid { get; set; }
 
         public void AddElement(IModelElement element)
         {

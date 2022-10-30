@@ -50,7 +50,10 @@ namespace Autonoma.UI.Presentation.ViewModels
                     var v = _property.GetMethod?.Invoke(_source, null);
                     if (v is T)
                         _value = (T)v;
-                    _value =  Activator.CreateInstance<T>();
+                    if (typeof(T) == typeof(string))
+                        _value = default;
+                    else
+                        _value = Activator.CreateInstance<T>();
                 }
                 return _value;
             }

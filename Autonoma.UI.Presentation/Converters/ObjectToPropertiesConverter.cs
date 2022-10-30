@@ -35,9 +35,14 @@ namespace Autonoma.UI.Presentation.Converters
                         .GetType().GetProperties().OrderBy(o => o.Name);
                     foreach (var property in properties)
                     {
-                        if (!property.CanWrite && !(property.PropertyType.IsGenericType
+                        if (!property.CanWrite && 
+                            !(property.PropertyType.IsGenericType
                             && typeof(IEnumerable).IsAssignableFrom(property.PropertyType))
                             || property.GetCustomAttribute<BrowsableAttribute>()?.Browsable == false)
+                            continue;
+                        if (property.PropertyType.IsInterface)
+                            continue;
+                        if (property.PropertyType == typeof(object))
                             continue;
 
                         var isReadOnly = property.GetCustomAttribute<ReadOnlyAttribute>()?.IsReadOnly == true;
@@ -62,6 +67,10 @@ namespace Autonoma.UI.Presentation.Converters
                                 if (!controlProperty.CanWrite && !(controlProperty.PropertyType.IsGenericType
                                     && typeof(IEnumerable).IsAssignableFrom(controlProperty.PropertyType))
                                     || controlProperty.GetCustomAttribute<BrowsableAttribute>()?.Browsable == false)
+                                    continue;
+                                if (controlProperty.PropertyType.IsInterface)
+                                    continue;
+                                if (controlProperty.PropertyType == typeof(object))
                                     continue;
 
                                 var propertyViewModel = CreatePropertyViewModel(controlObject, controlProperty);

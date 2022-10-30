@@ -6,7 +6,7 @@
         ModbusUdp
     }
 
-    public class ModbusClientConfiguration
+    public class ModbusClientSettings
     {
         public ModbusAdapterType AdapterType { get; set; }
 
@@ -14,7 +14,7 @@
 
         public byte Address { get; } = 1;
 
-        public string IpAddress { get; set; }
+        public string IpAddress { get; set; } = "";
 
         public int Port { get; set; } = 502;
     }

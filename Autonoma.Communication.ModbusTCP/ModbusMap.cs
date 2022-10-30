@@ -17,7 +17,7 @@ namespace Autonoma.Communication.Modbus
             if (config.DataPoints == null)
                 throw new ArgumentNullException(nameof(config.DataPoints));
 
-            var modbusConfigs = config.DataPoints.Select(c => ModbusDataPointConfiguration.Create(c))
+            var modbusConfigs = config.DataPoints.Select(c => new ModbusDataPointConfiguration(c))
                 .Where(c => !c.Invalid)
                 .ToList();
 

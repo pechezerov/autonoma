@@ -13,7 +13,7 @@ namespace Autonoma.Communication.Modbus
             StartAddress = null;
         }
 
-        public List<ModbusDataPointConfiguration> Points { get; }
+        internal List<ModbusDataPointConfiguration> Points { get; }
         public bool IsFull => Length >= MaxLength;
         public bool IsEmpty => !Points.Any();
 

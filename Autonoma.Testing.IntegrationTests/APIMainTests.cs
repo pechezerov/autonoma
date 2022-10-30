@@ -2,6 +2,7 @@ using Autonoma.API;
 using Autonoma.API.Main.Client;
 using Autonoma.API.Main.Contracts.Adapter;
 using Autonoma.API.Main.Contracts.DataPoint;
+using Autonoma.Domain;
 using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace Autonoma.Testing.IntegrationTests
@@ -132,13 +133,7 @@ namespace Autonoma.Testing.IntegrationTests
             Assert.True(getListResult.Data.Count() == 0);
 
             // Create
-            var createDataPointRequestObject = new DataPointConfigurationItem
-            {
-                AdapterId = adapterId,
-                Name = "Test",
-                Mapping = "Test",
-                Unit = "Test"
-            };
+            var createDataPointRequestObject = new DataPointConfigurationItem(adapterId, "Test", "Test", DataSource.Device, TypeCode.Int32);
             await _httpClient.DataPointsConfiguration_CreateDataPointAsync(createDataPointRequestObject);
             getListResult = await _httpClient.DataPointsConfiguration_DataPointListAsync(getListRequestObject);
             Assert.True(getListResult.Count == 1);
@@ -147,14 +142,7 @@ namespace Autonoma.Testing.IntegrationTests
             var createdId = getListResult.Data.First().Id;
 
             // Update
-            var updateDataPointRequestObject = new DataPointConfigurationItem
-            {
-                AdapterId = adapterId,
-                Id = createdId,
-                Name = "UpdatedTest",
-                Mapping = "UpdatedTest",
-                Unit = "UpdatedTest"
-            };
+            var updateDataPointRequestObject = new DataPointConfigurationItem(adapterId, "UpdatedTest", "UpdatedTest", DataSource.Device, TypeCode.Int32);
             await _httpClient.DataPointsConfiguration_UpdateDataPointAsync(updateDataPointRequestObject);
             getListResult = await _httpClient.DataPointsConfiguration_DataPointListAsync(getListRequestObject);
             Assert.True(getListResult.Count == 1);
@@ -188,13 +176,7 @@ namespace Autonoma.Testing.IntegrationTests
             Assert.True(getListResult.Data.Count() == 0);
 
             // Create
-            var createDataPointRequestObject = new DataPointConfigurationItem
-            {
-                AdapterId = adapterId,
-                Name = "Test",
-                Mapping = "Test",
-                Unit = "Test"
-            };
+            var createDataPointRequestObject = new DataPointConfigurationItem(adapterId, "Test", "Test", DataSource.Device, TypeCode.Int32);
             for (int i = 0; i < 10; i++)
                 await _httpClient.DataPointsConfiguration_CreateDataPointAsync(createDataPointRequestObject);
 

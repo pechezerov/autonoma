@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Autonoma.Communication.Modbus
 {
-    public class ModbusClient : DataAdapterBase<ModbusClientConfiguration>
+    public class ModbusClient : DataAdapterBase<ModbusClientSettings>
     {
         public override int AdapterTypeId => 3;
 
@@ -92,8 +92,8 @@ namespace Autonoma.Communication.Modbus
 
                 foreach (var point in requestContext.Bucket.Points)
                 {
-                    var valueLength = (ushort)Math.Ceiling((double)point.Length / 2.0);
-                    var pointRawData = result.SubArray<ushort>(point.Address - requestContext.Bucket.StartAddress.Value, valueLength);
+                    var valueLength = (ushort)Math.Ceiling(point.Length / 2.0);
+                    var pointRawData = result.SubArray(point.Address - requestContext.Bucket.StartAddress.Value, valueLength);
                     var dataValue = DataValue.NoData;
 
                     switch (point.ValueType)

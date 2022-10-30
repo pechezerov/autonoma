@@ -33,7 +33,7 @@ namespace Autonoma.API.Main.Commands.DataPoint
                 Name = dataPointInfo.Name,
                 Type = dataPointInfo.Type,
                 Unit = dataPointInfo.Unit,
-                Mapping = dataPointInfo.Mapping,
+                Settings = dataPointInfo.Mapping,
                 Source = dataPointInfo.Source
             };
 

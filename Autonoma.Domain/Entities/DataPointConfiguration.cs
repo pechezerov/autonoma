@@ -8,7 +8,7 @@ namespace Autonoma.Domain.Entities
 
         public int AdapterId { get; set; }
 
-        public string Mapping { get; set; } = "";
+        public string Settings { get; set; } = "";
 
         public string Name { get; set; } = "";
 

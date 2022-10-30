@@ -44,6 +44,12 @@
 								<DataTemplate DataType="x:Int16">
 									<NumericUpDown Value="{Binding $parent[2].DataContext.Value,Mode=TwoWay}" IsReadOnly="{Binding $parent[2].DataContext.IsReadOnly}"/>
 								</DataTemplate>
+								<DataTemplate DataType="x:UInt32">
+									<NumericUpDown Value="{Binding $parent[2].DataContext.Value,Mode=TwoWay}" IsReadOnly="{Binding $parent[2].DataContext.IsReadOnly}"/>
+								</DataTemplate>
+								<DataTemplate DataType="x:UInt16">
+									<NumericUpDown Value="{Binding $parent[2].DataContext.Value,Mode=TwoWay}" IsReadOnly="{Binding $parent[2].DataContext.IsReadOnly}"/>
+								</DataTemplate>
 								<DataTemplate DataType="x:Byte">
 									<NumericUpDown Value="{Binding $parent[2].DataContext.Value,Mode=TwoWay}" IsReadOnly="{Binding $parent[2].DataContext.IsReadOnly}"/>
 								</DataTemplate>
@@ -75,7 +81,7 @@
 									</Grid>
 								</DataTemplate>
 								<DataTemplate>
-									<TextBlock Text="Unknown type" />
+									<TextBlock Text="Unsupported value type" />
 								</DataTemplate>
 
 							</ContentControl.DataTemplates>

@@ -68,7 +68,8 @@ namespace Autonoma.ConfigurationSeeder
                 Id = 3,
                 Name = "Modbus",
                 AssemblyQualifiedAdapterTypeName = typeof(ModbusClient).AssemblyQualifiedName,
-                AssemblyQualifiedSettingsTypeName = typeof(ModbusClientConfiguration).AssemblyQualifiedName,
+                AssemblyQualifiedSettingsTypeName = typeof(ModbusClientSettings).AssemblyQualifiedName,
+                AssemblyQualifiedDataPointSettingsTypeName = typeof(ModbusDataPointSettings).AssemblyQualifiedName,
             };
             _context.AdapterTypes.Add(modbusAdapterType);
             _context.Adapters.Add(new AdapterConfiguration
@@ -76,7 +77,7 @@ namespace Autonoma.ConfigurationSeeder
                 Id = 31,
                 Name = "Modbus #1",
                 AdapterType = modbusAdapterType,
-                Settings = JsonConvert.SerializeObject(new ModbusClientConfiguration 
+                Settings = JsonConvert.SerializeObject(new ModbusClientSettings 
                 {
                     AdapterType = ModbusAdapterType.ModbusTcp,
                     IpAddress = "192.168.0.1"
@@ -92,27 +93,25 @@ namespace Autonoma.ConfigurationSeeder
             if (_context.DataPoints.Any())
                 return;
 
-            for (int i = 1; i <= 20; i++)
+            for (int i = 1; i <= 10; i++)
             {
                 _context.DataPoints.Add(new DataPointConfiguration
                 {
-                    Id = i,
                     Name = $"Variable{i}",
                     Type = TypeCode.Double,
                     AdapterId = Globals.TestAdapterId,
-                    Mapping = $"mappingparams({i})"
+                    Settings = $"mappingparams({i})"
                 });
             }
 
-            for (int i = 21; i <= 40; i++)
+            for (ushort i = 101; i <= 110; i++)
             {
                 _context.DataPoints.Add(new DataPointConfiguration
                 {
-                    Id = i,
                     Name = $"Variable{i}",
-                    Type = TypeCode.Double,
+                    Type = TypeCode.Int16,
                     AdapterId = 31,
-                    Mapping = $"mappingparams({i})"
+                    Settings = JsonConvert.SerializeObject(new ModbusDataPointSettings{ Address = i })
                 });
             }
 
@@ -120,12 +119,11 @@ namespace Autonoma.ConfigurationSeeder
             {
                 _context.DataPoints.Add(new DataPointConfiguration
                 {
-                    Id = i,
                     Name = $"Command{i}",
                     Type = TypeCode.Boolean,
                     Source = DataSource.Control,
                     AdapterId = Globals.TestAdapterId,
-                    Mapping = $"mappingparams({i})"
+                    Settings = $"mappingparams({i})"
                 });
             }
 
@@ -201,11 +199,10 @@ namespace Autonoma.ConfigurationSeeder
             if (_context.ModelElements.Any())
                 return;
 
-            for (int j = 1; j <= 3; j++)
+            for (int j = 0; j < 3; j++)
             {
                 var groupElement = new ModelElementConfiguration
                 {
-                    Id = j * 1000,
                     Name = $"ElementOwner_{j}",
                     Template = measuredValueDoubleTemplate,
                 };
@@ -215,7 +212,6 @@ namespace Autonoma.ConfigurationSeeder
                 {
                     var element = new ModelElementConfiguration
                     {
-                        Id = j * 10 + i,
                         Name = $"Element{j * 10 + i}",
                         Template = measuredValueDoubleTemplate,
                         ParentElement = groupElement,
@@ -228,7 +224,6 @@ namespace Autonoma.ConfigurationSeeder
                 {
                     var element = new ModelElementConfiguration
                     {
-                        Id = j * 10 + i,
                         Name = $"Element{j * 10 + i}",
                         Template = measuredValueDoubleQualifiedTemplate,
                         ParentElement = groupElement,

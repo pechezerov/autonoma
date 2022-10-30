@@ -13,21 +13,21 @@
 			 xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
 			 xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
 			 x:Name="propertiesToolViewHost">
-	
+
 	<Design.DataContext>
 		<design:DesignProjectViewModel />
 	</Design.DataContext>
 
 	<TabControl x:Name="tabProject">
 
-		<TabItem x:Name="tabTechnology" TabIndex="1" Header="TechnologyTree" 
+		<TabItem x:Name="tabTechnology" TabIndex="1" Header="TechnologyTree"
 				 DataContext="{Binding Technology}">
-			
-			<Grid x:Name="grdTechnology" DataContext="{Binding Technology}"
-				  ColumnDefinitions="*,Auto,2*">
 
-				<Grid Grid.Column="0" Grid.RowSpan="2">
-					<TreeView x:Name="treeTechnology" Items="{Binding Routers}" SelectionMode="Single" SelectedItem="{Binding SelectedElement}">
+			<Grid x:Name="grdTechnology" DataContext="{Binding Technology}"
+				  ColumnDefinitions="300,Auto,*">
+
+				<Grid Grid.Column="0" RowDefinitions="*,Auto,Auto">
+					<TreeView x:Name="treeTechnology" Items="{Binding Routers}" SelectionMode="Single">
 						<TreeView.DataTemplates>
 							<TreeDataTemplate DataType="a:IRouter" ItemsSource="{Binding Adapters}">
 								<TextBlock Text="{Binding Name}">
@@ -55,23 +55,19 @@
 							</ContextMenu>
 						</TreeView.ContextMenu>
 					</TreeView>
+					
+					<GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" Height="3" Margin="0"/>
+					
+					<pc:PropertiesEditor Grid.Row="2" DataContext="{Binding #treeTechnology.SelectedItem.Settings}"/>
+					
 				</Grid>
 
 				<GridSplitter Grid.Column="1" VerticalAlignment="Stretch" Width="3" Margin="0"/>
 
-				<Grid Grid.Column="2" RowDefinitions="200, Auto, *"
+				<Grid Grid.Column="2" RowDefinitions="*, Auto, Auto"
 					  DataContext="{Binding #treeTechnology.SelectedItem}">
 					
-					<Grid Grid.Row="0" RowDefinitions="Auto, Auto" ColumnDefinitions="*,2*" DataContext="{Binding .}">
-						<TextBlock Grid.Row="0" Text="Settings"/>
-						<pc:PropertiesEditor Grid.Row="0" Grid.Column="1" DataContext="{Binding Settings}"/>
-					</Grid>
-
-					<GridSplitter Grid.Row="1" 
-						HorizontalAlignment="Stretch" Height="3" Margin="0"/>
-
-					<DataGrid Grid.Row="2"
-						Items="{Binding DataPoints}">
+					<DataGrid x:Name="gridDataPoints" Grid.Row="0" Items="{Binding DataPoints}">
 						<DataGrid.Columns>
 							<DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
 							<DataGridTextColumn Header="Type" Binding="{Binding Type}"/>
@@ -79,15 +75,18 @@
 							<DataGridTextColumn Header="Unit" Binding="{Binding Unit}"/>
 						</DataGrid.Columns>
 					</DataGrid>
+					
+					<GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" Height="3" Margin="0"/>
 
+					<pc:PropertiesEditor Grid.Row="2" DataContext="{Binding #gridDataPoints.SelectedItem.Settings}"/>
 				</Grid>
-				
+			
 			</Grid>
-
+		
 		</TabItem>
-
+		
 		<TabItem x:Name="tabTopology" TabIndex="2" Header="TopologyTree"  DataContext="{Binding Topology}">
-
+			
 			<Grid x:Name="grdTopology" DataContext="{Binding Topology}"
 				  ColumnDefinitions="*,Auto,2*">
 
@@ -117,14 +116,14 @@
 				<GridSplitter Grid.Column="1" VerticalAlignment="Stretch" Width="3" Margin="0"/>
 
 				<Grid Grid.Column="2">
-					
+
 					<Grid RowDefinitions="Auto, Auto, *">
 						<pc:PropertiesEditor Grid.Row="0" DataContext="{Binding #treeTopology.SelectedItem}"
 							HorizontalAlignment="Stretch"/>
-						
+
 						<pc:DataPointNavigator Grid.Row="1" DataContext="{Binding #treeTopology.SelectedItem.DataPoint}"
 							HorizontalAlignment="Stretch"/>
-						
+
 						<DataGrid Grid.Row="2" Items="{Binding #treeTopology.SelectedItem.Attributes}">
 							<DataGrid.Columns>
 								<DataGridTextColumn Binding="{Binding Name}"/>
@@ -137,7 +136,7 @@
 			</Grid>
 
 		</TabItem>
-		
+
 	</TabControl>
 
 </UserControl>
