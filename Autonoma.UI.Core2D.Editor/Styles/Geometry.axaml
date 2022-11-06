@@ -1,0 +1,16 @@
+﻿<Style xmlns="https://github.com/avaloniaui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Style.Resources>
+    <DrawingImage x:Key="ElectricSwitch">
+      <DrawingGroup>
+        <GeometryDrawing Brush="{DynamicResource IconTransparentBrush}" Geometry="F1M0,0L16,0L16,16L0,16z" />
+        <GeometryDrawing Brush="{DynamicResource IconAccentBrush1}"
+                         Geometry="F1M2,2L15,2L15,15L2,15z M3,3L3,14L14,14L14,3z" />
+        <GeometryDrawing Brush="{DynamicResource IconAccentBrush1}"
+                                 Geometry="F1M5,8L12,8L12,10L5,10z" />
+		  <GeometryDrawing Brush="{DynamicResource IconAccentBrush1}"
+                                 Geometry="F1M5,8L12,8L12,10L5,10z" />
+      </DrawingGroup>
+    </DrawingImage>
+  </Style.Resources>
+</Style>

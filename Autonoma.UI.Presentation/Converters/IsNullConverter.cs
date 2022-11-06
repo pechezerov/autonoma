@@ -6,8 +6,6 @@ namespace Autonoma.UI.Presentation.Converters
 {
     public class IsNullConverter : IValueConverter
     {
-        public readonly static PinToPointConverter Instance = new();
-
         public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             return value == null;

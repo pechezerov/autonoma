@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Autonoma.Core.MVVM": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:1067;http://localhost:1071"
+    }
+  }
+}

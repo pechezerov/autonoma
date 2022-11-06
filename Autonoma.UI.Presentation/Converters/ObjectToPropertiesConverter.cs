@@ -53,32 +53,6 @@ namespace Autonoma.UI.Presentation.Converters
                             result.Add(propertyViewModel);
                         }
                     }
-
-                    if (value is ElementViewModel basicElement)
-                    {
-                        var controlObject = basicElement.Content;
-                        if (controlObject != null)
-                        {
-                            var controlProperties = controlObject
-                                .GetType().GetProperties()
-                                .OrderBy(o => o.Name);
-                            foreach (var controlProperty in controlProperties)
-                            {
-                                if (!controlProperty.CanWrite && !(controlProperty.PropertyType.IsGenericType
-                                    && typeof(IEnumerable).IsAssignableFrom(controlProperty.PropertyType))
-                                    || controlProperty.GetCustomAttribute<BrowsableAttribute>()?.Browsable == false)
-                                    continue;
-                                if (controlProperty.PropertyType.IsInterface)
-                                    continue;
-                                if (controlProperty.PropertyType == typeof(object))
-                                    continue;
-
-                                var propertyViewModel = CreatePropertyViewModel(controlObject, controlProperty);
-                                if (propertyViewModel != null)
-                                    result.Add(propertyViewModel);
-                            }
-                        }
-                    }
                 }
             }
 

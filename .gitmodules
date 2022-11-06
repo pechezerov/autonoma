@@ -1,0 +1,4 @@
+[submodule "Autonoma.UI.Core2D"]
+	path = Autonoma.UI.Core2D
+	url = https://github.com/pechezerov/Core2D
+	branch = develop

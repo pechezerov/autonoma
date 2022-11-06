@@ -5,7 +5,7 @@
              xmlns:pcv="clr-namespace:Autonoma.UI.Presentation.Converters;assembly=Autonoma.UI.Presentation"
              x:Class="Autonoma.UI.Configuration.App">
     <Application.DataTemplates>
-		<local:EnhancedViewLocator/>
+		<local:ViewLocator/>
     </Application.DataTemplates>
 
 	<Application.Resources>
@@ -17,7 +17,6 @@
 	<Application.Styles>
 		<StyleInclude Source="avares://Autonoma.UI.Presentation/Themes/FluentDark.axaml" />
 		<StyleInclude Source="avares://Dock.Avalonia/Themes/DockFluentTheme.axaml"/>
-		<StyleInclude Source="avares://Autonoma.UI.Presentation/Themes/EditorTheme.axaml" />
 	</Application.Styles>
 
 

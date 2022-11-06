@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="Autonoma.UI.Operation.Views.MainView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:idc="clr-namespace:Dock.Avalonia.Controls;assembly=Dock.Avalonia"
+             xmlns:vme="using:Core2D.ViewModels.Editor;assembly=Core2D"
+             xmlns:vmd="using:Core2D.ViewModels.Designer;assembly=Core2D"
+             xmlns:cd="clr-namespace:Core2D.Controls.Dialog;assembly=Core2D"
+             mc:Ignorable="d"
+             d:DesignWidth="1200" d:DesignHeight="580">
+  <Panel>
+    <Panel>
+      <idc:DockControl Layout="{Binding RootDock}" />
+    </Panel>
+    <cd:DialogPresenterView IsVisible="{Binding !!Dialogs.Count}" />
+  </Panel>
+</UserControl>

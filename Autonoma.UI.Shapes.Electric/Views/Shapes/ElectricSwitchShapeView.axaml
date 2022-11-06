@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="Autonoma.UI.Shapes.Electric.Views.Shapes.ElectricSwitchShapeView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vmse="using:Autonoma.UI.Shapes.Electric.ViewModels.Shapes"
+             mc:Ignorable="d"
+             d:DesignWidth="250" d:DesignHeight="400"
+             x:DataType="vmse:ElectricSwitchShapeViewModel" x:CompileBindings="True">
+  <TabControl>
+    <TabItem Header="Line">
+      <StackPanel Margin="{DynamicResource ContentMargin}">
+        <Label Content="Name" 
+               Margin="{DynamicResource TextControlThemePadding}" />
+        <TextBox Text="{Binding Name, Mode=TwoWay}" />
+        <Label Content="SwitchType"
+               Margin="{DynamicResource TextControlThemePadding}" />
+        <ComboBox Items="{x:Static vmse:ElectricSwitchShapeViewModel.SwitchTypeValues}"
+                 SelectedItem="{Binding SwitchType, Mode=TwoWay}"
+                 HorizontalAlignment="Stretch" />
+        <Label Content="VoltageClass"
+               Margin="{DynamicResource TextControlThemePadding}" />
+        <ComboBox Items="{x:Static vmse:ElectricSwitchShapeViewModel.VoltageClassValues}"
+                 SelectedItem="{Binding VoltageClass, Mode=TwoWay}"
+                 HorizontalAlignment="Stretch" />
+        <Label Content="SwitchState"
+               Margin="{DynamicResource TextControlThemePadding}" />
+        <ComboBox Items="{x:Static vmse:ElectricSwitchShapeViewModel.SwitchStateValues}"
+                 SelectedItem="{Binding SwitchState, Mode=TwoWay}"
+                 HorizontalAlignment="Stretch" />
+      </StackPanel>
+    </TabItem>
+  </TabControl>
+</UserControl>

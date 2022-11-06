@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <OutputType>WinExe</OutputType>
+    <IsPackable>False</IsPackable>
+    <Nullable>enable</Nullable>
+    <NoWarn>$(NoWarn);NU1701</NoWarn>
+    <ApplicationIcon>Assets\Core2D.ico</ApplicationIcon>
+    <DisableImplicitNamespaceImports>True</DisableImplicitNamespaceImports>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>Autonoma.UI.Core2D.Editor</PackageId>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PublishTrimmed>False</PublishTrimmed>
+    <PublishSingleFile>False</PublishSingleFile>
+    <PublishReadyToRun>True</PublishReadyToRun>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.21308.1" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.0-preview1" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.0.0-preview1" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.0.0-preview1" />
+    <PackageReference Include="Avalonia.Diagnostics" Version="11.0.0-preview1" Condition="'$(Configuration)' == 'Debug'" />
+    <PackageReference Include="Avalonia.Headless" Version="11.0.0-preview1" />
+    <PackageReference Include="Avalonia.Headless.Vnc" Version="11.0.0-preview1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Autonoma.UI.Core2D\src\Core2D\Core2D.csproj" />
+    <ProjectReference Include="..\Autonoma.UI.Shapes.Electric\Autonoma.UI.Shapes.Electric.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Controls\Editor\ToolsView.axaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Docking\Documents\PageView.axaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);USE_PDFSHARP</DefineConstants>
+  </PropertyGroup>
+
+</Project>

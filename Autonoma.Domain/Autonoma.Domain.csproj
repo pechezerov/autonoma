@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Autonoma.Core\Autonoma.Core.csproj" />
+    <ProjectReference Include="..\Autonoma.Primitives\Autonoma.Primitives.csproj" />
   </ItemGroup>
 
 </Project>

@@ -8,9 +8,7 @@
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
-    <Folder Include="Services\" />
     <None Remove=".gitignore" />
   </ItemGroup>
   <ItemGroup>
@@ -21,23 +19,49 @@
     <TrimmableAssembly Include="Avalonia.Themes.Default" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.10.18" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.10.18" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.18" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.18" />
+    <PackageReference Include="Autofac" Version="6.4.0" />
+    <PackageReference Include="Avalonia" Version="11.0.0-preview1" />
+    <PackageReference Include="Avalonia.AvaloniaEdit" Version="11.0.0-preview1" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.0.0-preview1" />
+    <PackageReference Include="Avalonia.Controls.PanAndZoom" Version="11.0.0-preview1" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.0.0-preview1" />
+    <PackageReference Include="Avalonia.Diagnostics" Version="11.0.0-preview1" />
+    <PackageReference Include="Avalonia.Headless" Version="11.0.0-preview1" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0-preview1" />
+    <PackageReference Include="Avalonia.Skia" Version="11.0.0-preview1" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.0-preview1" />
+    <PackageReference Include="Avalonia.Xaml.Interactions" Version="11.0.0-preview1" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.NewtonsoftJson" Version="6.0.8" />
     <PackageReference Include="ReactiveUI.Fody" Version="18.3.1" />
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.21308.1" />
     <PackageReference Include="XamlNameReferenceGenerator" Version="1.3.4" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Autonoma.Communication\Autonoma.Communication.csproj" />
+    <ProjectReference Include="..\Autonoma.UI.Core2D\src\Core2D\Core2D.csproj" />
     <ProjectReference Include="..\Autonoma.UI.Presentation\Autonoma.UI.Presentation.csproj" />
+    <ProjectReference Include="..\Autonoma.UI.Shapes.Electric\Autonoma.UI.Shapes.Electric.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="Controls\LampIndicatorControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
+    <Compile Update="Views\Docking\Documents\PageView.axaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Docking\Views\HomeMenuView.axaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Docking\Views\HomeStatusBarView.axaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Docking\Views\HomeView.axaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="Monitor\Views\FrameView.axaml.cs">
+      <DependentUpon>FrameView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\MainView.axaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

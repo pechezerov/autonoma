@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="Autonoma.UI.Operation.Views.Docking.Views.HomeMenuView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vm="clr-namespace:Core2D.ViewModels.Docking.Views;assembly=Core2D"
+             xmlns:ce="clr-namespace:Core2D.Controls.Editor;assembly=Core2D"
+             mc:Ignorable="d"
+             d:DesignWidth="800" d:DesignHeight="32"
+             x:DataType="vm:HomeMenuViewModel" x:CompileBindings="True">
+  <ce:MenuView DataContext="{Binding Context}"/>
+</UserControl>

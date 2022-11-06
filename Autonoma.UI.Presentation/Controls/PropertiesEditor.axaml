@@ -76,12 +76,9 @@
 											<TextBlock Text=" items" />
 										</StackPanel>
 										<Button Grid.Column="2">
-											<DrawingPresenter Width="8" Height="8" Drawing="{DynamicResource MaterialDesign.Edit}" />
+											<Image Width="8" Height="8" Source="{DynamicResource MaterialDesign.Edit}" />
 										</Button>
 									</Grid>
-								</DataTemplate>
-								<DataTemplate>
-									<TextBlock Text="Unsupported value type" />
 								</DataTemplate>
 
 							</ContentControl.DataTemplates>

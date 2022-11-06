@@ -1,0 +1,113 @@
+﻿<UserControl x:Class="Autonoma.UI.Operation.Monitor.Views.FrameView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="using:Avalonia.Xaml.Interactivity"
+             xmlns:iac="using:Avalonia.Xaml.Interactions.Custom"
+             xmlns:idd="using:Avalonia.Xaml.Interactions.DragAndDrop"
+             xmlns:dd="using:Core2D.Behaviors.DragAndDrop"
+             xmlns:behaviors="using:Core2D.Behaviors"
+             xmlns:paz="using:Avalonia.Controls.PanAndZoom"
+             xmlns:renderer="using:Core2D.Views.Renderer"
+             xmlns:vme="using:Core2D.ViewModels.Editor"
+             xmlns:vmd="using:Core2D.ViewModels.Designer"
+             mc:Ignorable="d"
+             d:DesignWidth="800" d:DesignHeight="600"
+            x:DataType="vme:ProjectEditorViewModel" x:CompileBindings="True">
+  <UserControl.Resources>
+    <VisualBrush x:Key="TemplateCheckerBoard" TileMode="Tile" SourceRect="0,0,20,20" DestinationRect="0,0,20,20">
+      <VisualBrush.Visual>
+        <Path Data="M 0,0 L 0,10 L 10,10 L 10,0 Z M 10,10 L 10,20 L 20,20 L 20,10 Z" Fill="#FFF0F0F0" />
+      </VisualBrush.Visual>
+    </VisualBrush>
+  </UserControl.Resources>
+  <Panel>
+    <Panel Background="Transparent"
+           d:DataContext="{x:Static vmd:DesignerContext.Editor}"
+           x:DataType="vme:ProjectEditorViewModel" 
+           x:CompileBindings="False">
+      <i:Interaction.Behaviors>
+        <behaviors:AttachEditorBehavior />
+        <iac:FocusOnAttachedToVisualTreeBehavior />
+        <!--<iac:FocusOnPointerMovedBehavior />-->
+      </i:Interaction.Behaviors>
+      <Panel Background="#FFF5F5F5" />
+      <Panel Background="{DynamicResource TemplateCheckerBoard}" />
+      <Panel>
+        <Panel ClipToBounds="True">
+          <ScrollViewer x:Name="PageScrollViewer" 
+                        HorizontalScrollBarVisibility="Auto"
+                        VerticalScrollBarVisibility="Auto">
+            <paz:ZoomBorder x:Name="PageZoomBorder"
+                            Stretch="None"
+                            ZoomSpeed="1.5" 
+                            PanButton="Middle" 
+                            EnablePan="True" 
+                            EnableZoom="True"
+                            Background="Transparent" 
+                            ClipToBounds="False"
+                            VerticalAlignment="Stretch" 
+                            HorizontalAlignment="Stretch">
+              <paz:ZoomBorder.ContextMenu>
+                <ContextMenu x:Name="TemplateContextMenu" DataContext="{Binding #PageZoomBorder.DataContext}">
+                  <MenuItem Header="Cu_t" Command="{Binding ClipboardService.OnCut}" InputGesture="Ctrl+X" />
+                  <MenuItem Header="_Copy" Command="{Binding ClipboardService.OnCopy}" InputGesture="Ctrl+C" />
+                  <MenuItem Header="_Paste" Command="{Binding ClipboardService.OnPaste}" InputGesture="Ctrl+V" />
+                  <MenuItem Header="_Delete" Command="{Binding ClipboardService.OnDelete}" CommandParameter="{Binding}" InputGesture="Delete" />
+                </ContextMenu>
+              </paz:ZoomBorder.ContextMenu>
+              <i:Interaction.Behaviors>
+                <behaviors:EnableContextMenuBehavior IsEnabled="{Binding $parent[UserControl].DataContext.IsToolIdle}"
+                                                     ContextMenu="{Binding #TemplateContextMenu}"/>
+              <idd:ContextDropBehavior Context="{Binding FallbackValue={x:Null}}">
+                <idd:ContextDropBehavior.Handler>
+                  <dd:PageDropHandler RelativeTo="{Binding #ContainerPanel}" />
+                </idd:ContextDropBehavior.Handler>
+              </idd:ContextDropBehavior>
+              </i:Interaction.Behaviors>
+              <Panel DataContext="{Binding Project.CurrentContainer}" 
+                     VerticalAlignment="Stretch"
+                     HorizontalAlignment="Stretch"
+                     ClipToBounds="False">
+                <Panel.Transitions>
+                  <Transitions>
+                    <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.1" />
+                  </Transitions>
+                </Panel.Transitions>
+                <Panel x:Name="ContainerPanel"
+                       Background="Transparent"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Width="{Binding Template.Width, TargetNullValue={Binding Width}}"
+                       Height="{Binding Template.Height, TargetNullValue={Binding Height}}"
+                       ClipToBounds="False">
+                  <renderer:RenderView x:Name="RenderViewData"
+                                       Renderer="{Binding $parent[UserControl].DataContext.Renderer}"
+                                       Selection="{Binding $parent[UserControl].DataContext.Project}"
+                                       DataFlow="{Binding $parent[UserControl].DataContext.DataFlow}"
+                                       Container="{Binding}"
+                                       RenderType="Data"
+                                       ClipToBounds="False" />
+                  <renderer:RenderView x:Name="RenderViewTemplate"
+                                       Renderer="{Binding $parent[UserControl].DataContext.Renderer}"
+                                       Selection="{Binding $parent[UserControl].DataContext.Project}"
+                                       DataFlow="{Binding $parent[UserControl].DataContext.DataFlow}"
+                                       Container="{Binding}"
+                                       RenderType="Template"
+                                       ClipToBounds="False" />
+                  <renderer:RenderView x:Name="RenderViewEditor"
+                                       Renderer="{Binding $parent[UserControl].DataContext.Renderer}"
+                                       Selection="{Binding $parent[UserControl].DataContext.Project}"
+                                       DataFlow="{Binding $parent[UserControl].DataContext.DataFlow}"
+                                       Container="{Binding}"
+                                       RenderType="Editor"
+                                       ClipToBounds="False" />
+                </Panel>
+              </Panel>
+            </paz:ZoomBorder>
+          </ScrollViewer>
+        </Panel>
+      </Panel>
+    </Panel>
+  </Panel>
+</UserControl>

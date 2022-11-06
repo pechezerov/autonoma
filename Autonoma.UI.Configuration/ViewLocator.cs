@@ -1,16 +1,25 @@
-using Autonoma.UI.Presentation;
 using Autonoma.UI.Presentation.ViewModels;
 using Avalonia.Controls;
-using Dock.Model.Core;
+using Avalonia.Controls.Templates;
+using Core2D.ViewModels.Docking.Documents;
+using Core2D.ViewModels.Editor;
+using Dock.Model.ReactiveUI.Core;
 using System;
 
 namespace Autonoma.UI.Configuration
 {
-    public class EnhancedViewLocator : ViewLocator
+    public class ViewLocator : IDataTemplate
     {
-        public override IControl Build(object data)
+        public ViewLocator()
         {
+
+        }
+
+        public virtual IControl Build(object data)
+        {
+
             var name = data.GetType().AssemblyQualifiedName!
+                .Replace("ControlViewModel", "Control")
                 .Replace("ViewModel", "View");
 
             var type = Type.GetType(name);
@@ -21,14 +30,13 @@ namespace Autonoma.UI.Configuration
             }
             else
             {
-                return new TextBlock { Text = "Not Found: " + data.GetType().Name };
+                return new TextBlock { Text = "Not Found: " + name };
             }
         }
 
-        public override bool Match(object data)
+        public virtual bool Match(object data)
         {
-            return data is ViewModelBase
-                || data is IDockable; // аппендикс для того, чтобы загружались также представления менеджеров инструментов (Tools)
+            return data is ViewModelBase || data is DockableBase;
         }
     }
 }

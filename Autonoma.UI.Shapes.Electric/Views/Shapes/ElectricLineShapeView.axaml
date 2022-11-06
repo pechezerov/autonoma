@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="Autonoma.UI.Shapes.Electric.Views.Shapes.ElectricLineShapeView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vmse="using:Autonoma.UI.Shapes.Electric.ViewModels.Shapes"
+             mc:Ignorable="d"
+             d:DesignWidth="250" d:DesignHeight="400"
+             x:DataType="vmse:ElectricLineShapeViewModel" x:CompileBindings="True">
+  <TabControl>
+    <TabItem Header="Line">
+      <StackPanel Margin="{DynamicResource ContentMargin}">
+        <Label Content="Name" 
+               Margin="{DynamicResource TextControlThemePadding}" />
+        <TextBox Text="{Binding Name, Mode=TwoWay}" />
+      </StackPanel>
+    </TabItem>
+  </TabControl>
+</UserControl>
